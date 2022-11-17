@@ -10,7 +10,8 @@ import 'package:fms_employee/screens/profile/my_profile_screen.dart';
 
 class TabProfile extends StatefulWidget {
   static const String routeName = '/tab_profile';
-  const TabProfile({Key? key}) : super(key: key);
+  final int employeeId;
+  const TabProfile(this.employeeId, {Key? key}) : super(key: key);
 
   @override
   State<TabProfile> createState() => _TabProfileState();
@@ -63,7 +64,8 @@ class _TabProfileState extends State<TabProfile> {
           getButtonWithIcon(context, Colors.white, "Thông tin cá nhân", Colors.black,
               () {
             /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
-                Navigator.of(context).pushNamed(MyProfileScreen.routeName);
+                /*Navigator.of(context).pushNamed(MyProfileScreen.routeName);*/
+                Constant.sendToScreen(MyProfileScreen(widget.employeeId), context);
           }, 16,
               weight: FontWeight.w400,
               buttonHeight: FetchPixels.getPixelHeight(60),
@@ -80,6 +82,25 @@ class _TabProfileState extends State<TabProfile> {
               sufixIcon: true,
               suffixImage: "arrow_right.svg"),
           getVerSpace(FetchPixels.getPixelHeight(20)),
+          getButtonWithIcon(context, Colors.white, "Lịch sử đơn hàng", Colors.black,
+                  () {
+                /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
+                Navigator.of(context).pushNamed(MyProfileScreen.routeName);
+              }, 16,
+              weight: FontWeight.w400,
+              buttonHeight: FetchPixels.getPixelHeight(60),
+              borderRadius:
+              BorderRadius.circular(FetchPixels.getPixelHeight(12)),
+              boxShadow: [
+                const BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0.0, 4.0)),
+              ],
+              prefixIcon: true,
+              prefixImage: "documnet.svg",
+              sufixIcon: true,
+              suffixImage: "arrow_right.svg"),
           /*getButtonWithIcon(
               context, Colors.white, "Privacy Policy", Colors.black, () {
             Constant.sendToNext(context, Routes.privacyRoute);
@@ -164,5 +185,6 @@ class _TabProfileState extends State<TabProfile> {
         alignment: Alignment.topCenter,
         child: getCustomFont("Tài khoản", 24, Colors.black, 1,
             fontWeight: FontWeight.w900));
+
   }
 }

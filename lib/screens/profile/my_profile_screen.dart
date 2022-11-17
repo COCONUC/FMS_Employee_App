@@ -8,17 +8,18 @@ import 'package:fms_employee/models/account_data.dart';
 
 class MyProfileScreen extends StatefulWidget {
   static const String routeName = '/my-profile_screen';
-  const MyProfileScreen({Key? key}) : super(key: key);
+  final int employeeId;
+  const MyProfileScreen(this.employeeId, {Key? key}) : super(key: key);
 
   @override
   State<MyProfileScreen> createState() => _MyProfileScreenState();
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  AccountData accountData = AccountData();
+  AccountData accountData = new AccountData();
 
   Future<AccountData> getFutureService() async {
-    accountData = await AccountServices().getAccountDataByEmployeeId(2);
+    accountData = await AccountServices().getAccountDataByEmployeeId(widget.employeeId);
     return accountData;
   }
 
@@ -84,7 +85,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    snapshot.data!.employeeId.toString(),
+                    snapshot.data!.employeeId.toString() ?? "api: employeeId",
                     16,
                     Colors.black,
                     1,
@@ -136,7 +137,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                     "api: Địa chỉ",
+                    "api: Địa chỉ",
                     16,
                     Colors.black,
                     1,

@@ -13,8 +13,6 @@ class AccountServices {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
       final parsed = AccountData.fromJson(json.decode(response.body));
       return parsed;

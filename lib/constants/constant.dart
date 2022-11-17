@@ -73,4 +73,5 @@ class Constant {
       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
     });
   }
+
 }

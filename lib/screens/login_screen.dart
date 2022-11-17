@@ -1,12 +1,5 @@
-//import 'package:computer_service_system/screens/widgets/otp_vertify_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:fms_employee/constants/constant.dart';
-import 'package:fms_employee/constants/pref_data.dart';
-import 'package:fms_employee/constants/pref_data.dart';
-import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
-import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/staff_home_page.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:fms_employee/widgets/custom_button.dart';
 import 'package:fms_employee/widgets/custom_text_field.dart';
@@ -106,16 +99,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           CustomButton(
                             text: 'Đăng nhập',
                             onTap: () {
-                              Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
                               if (_signInFormKey.currentState!.validate()) {
                                 signInUser();
                               }
                             },
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 20,
                           ),
-                          const InkWell(
+                          InkWell(
                            child:  Text(
                             'Quên mật khẩu ?',
                           ),

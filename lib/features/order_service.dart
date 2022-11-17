@@ -9,7 +9,7 @@ class OrderServices {
   Future<List<OrderData>> getOrderListForStaff(employeeId) async {
     try {
       http.Response response = await http.get(
-        Uri.parse('${backEndUrl}/employee/ViewAssign/employeeId/2'),
+        Uri.parse('${backEndUrl}/employee/ViewAssign/employeeId/$employeeId'),
         headers: <String, String>{
           'content-encoding': 'gzip',
           'Content-Type': 'application/json; charset=UTF-8',
