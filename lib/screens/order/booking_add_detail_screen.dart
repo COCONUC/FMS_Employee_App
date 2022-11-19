@@ -58,6 +58,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   late CollectionReference imgRef;
   late firebase_storage.Reference ref;
+
   Future uploadFile() async{
     try {
       FirebaseStorage storage = FirebaseStorage.instance;
@@ -82,7 +83,6 @@ class _DetailScreenState extends State<DetailScreen> {
           print("Unknown error.${e.message}");
       }
     }
-
   }
 
   getPrefData() async {
