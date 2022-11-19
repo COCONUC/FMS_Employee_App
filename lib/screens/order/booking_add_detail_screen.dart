@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
@@ -10,7 +11,12 @@ import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../features/order_service.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class DetailScreen extends StatefulWidget {
   static const String routeName = '/detail_report_screen';
@@ -29,6 +35,55 @@ class _DetailScreenState extends State<DetailScreen> {
   var index = 0;
 
   final TextEditingController descriptionController = TextEditingController();
+
+  final ImagePicker imgPicker = ImagePicker();
+
+  List<XFile>? imageFiles;
+  bool isLoading = false;
+  openImages() async {
+    try {
+      var pickedFiles =
+      await imgPicker.pickMultiImage(maxWidth: 1024, maxHeight: 1024);
+      //you can use ImageCourse.camera for Camera capture
+      if (imageFiles == null) {
+        imageFiles = pickedFiles;
+      } else {
+        imageFiles!.addAll(pickedFiles);
+      }
+      setState(() {});
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  late CollectionReference imgRef;
+  late firebase_storage.Reference ref;
+  Future uploadFile() async{
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      for(var img in imageFiles!){
+        final imgPath = img.path; //Getting the path of XFile
+        File file = File(imgPath);
+        String url;
+        Reference ref = storage.ref().child("image${DateTime.now()}");
+        UploadTask uploadTask = ref.putFile(file);
+        uploadTask.whenComplete(() async{
+          url = await ref.getDownloadURL();
+        }).catchError((onError) {
+          print(onError);
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("Unknown error.${e.message}");
+      }
+    }
+
+  }
 
   getPrefData() async {
     index = await PrefData.getDefIndex();
@@ -140,7 +195,28 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
             getButton(
-                context, Colors.white, "Chụp ảnh", blueColor, () {}, 14,
+                context, Colors.white, "Lưu ảnh", blueColor, ()
+            {
+              uploadFile();
+            },
+                14,
+                weight: FontWeight.w400,
+                boxShadow: [
+                  const BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0.0, 4.0)),
+                ],
+                borderRadius:
+                BorderRadius.circular(FetchPixels.getPixelHeight(20)),
+                buttonHeight: FetchPixels.getPixelHeight(40),
+                insetsGeometrypadding: EdgeInsets.symmetric(
+                    horizontal: FetchPixels.getPixelWidth(18))
+            ),
+            getButton(
+                context, Colors.white, "Chụp ảnh", blueColor, () {
+              openImages();
+            }, 14,
                 weight: FontWeight.w400,
                 boxShadow: [
                   const BoxShadow(
