@@ -162,7 +162,11 @@ class _DetailScreenState extends State<DetailScreen> {
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getPaddingWidget(edgeInsets, totalContainer(),),
-        sendOrderButton(context),
+        /*sendOrderButton(context),*/
+        ElevatedButton(
+          onPressed: () => OrderServices().sendReportOrder(4, "mô tả", "assets/images/add1.svg"),
+          child: Text("Gửi quản lý"),
+        ),
         getVerSpace(FetchPixels.getPixelHeight(30))
         // packageList(context)
       ],
@@ -523,6 +527,8 @@ class _DetailScreenState extends State<DetailScreen> {
         insetsGeometry: EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)));
   }
+  
+  
 
   /*Hero productImage(int index) {
     return Hero(

@@ -54,4 +54,33 @@ class OrderServices {
     }
   }
 
+  Future<void> sendReportOrder(orderId, description, urlImage) async{
+    try{
+      final response = await http.put(
+        Uri.parse(
+            '$backEndUrl/report_order_assigned/$orderId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+            'description': description,
+          'urlImage' : urlImage,
+          'listService' : [{
+            "serviceId": 1,
+            "quantity": 1
+          }]
+        })
+      );
+      if(response.statusCode == 200){
+        print("Gửi thành công");
+      } else{
+        print("gửi không thành công");
+        print(response.body);
+      }
+    } catch (e){
+      throw Exception(e);
+    }
+
+  }
+
 }
