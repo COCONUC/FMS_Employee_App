@@ -34,7 +34,7 @@ class _TabBookingState extends State<TabBooking> {
   AccountData accountData = new AccountData();
 
   Future<AccountData> getAccountService() async {
-    accountData = await AccountServices().getAccountDataByEmployeeId(2);
+    accountData = await AccountServices().getAccountDataByEmployeeId(widget.employeeId);
     return accountData;
   }
 

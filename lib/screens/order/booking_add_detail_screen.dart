@@ -8,6 +8,7 @@ import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/models/model_cart.dart';
 import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../features/order_service.dart';
@@ -35,6 +36,8 @@ class _DetailScreenState extends State<DetailScreen> {
   var index = 0;
 
   final TextEditingController descriptionController = TextEditingController();
+
+  final ReportOrder _reportOrder = ReportOrder(listService: []);
 
   final ImagePicker imgPicker = ImagePicker();
 
