@@ -7,6 +7,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/models/model_cart.dart';
 import 'package:fms_employee/models/model_salon.dart';
+import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
@@ -167,7 +168,7 @@ class _DetailScreenState extends State<DetailScreen> {
         getPaddingWidget(edgeInsets, totalContainer(),),
         /*sendOrderButton(context),*/
         ElevatedButton(
-          onPressed: () => OrderServices().sendReportOrder(4, "mô tả", "assets/images/add1.svg"),
+          onPressed: () => OrderServices().sendReportOrder(4, reportOrder),
           child: Text("Gửi quản lý"),
         ),
         getVerSpace(FetchPixels.getPixelHeight(30))
@@ -543,4 +544,5 @@ class _DetailScreenState extends State<DetailScreen> {
         // FetchPixels.getPixelWidth(374), FetchPixels.getPixelHeight(225),
         // boxFit: BoxFit.fill),);
   }*/
+ ReportOrder reportOrder = new ReportOrder(description: "", urlImage: "", listService: []);
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:fms_employee/constants/backend_querry.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/report_order_data.dart';
 import 'package:http/http.dart' as http;
 
 class OrderServices {
@@ -54,7 +55,7 @@ class OrderServices {
     }
   }
 
-  Future<void> sendReportOrder(orderId, description, urlImage) async{
+  Future<void> sendReportOrder(orderId, ReportOrder service) async{
     try{
       final response = await http.put(
         Uri.parse(
@@ -62,14 +63,7 @@ class OrderServices {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
-            'description': description,
-          'urlImage' : urlImage,
-          'listService' : [{
-            "serviceId": 1,
-            "quantity": 1
-          }]
-        })
+        body: service.toJson()
       );
       if(response.statusCode == 200){
         print("Gửi thành công");
