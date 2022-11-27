@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
@@ -6,6 +7,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/features/service_service.dart';
 import 'package:fms_employee/models/model_color.dart';
+import 'package:fms_employee/models/report_order_data.dart';
 import '../../models/model_cart.dart';
 import '../../models/service_data.dart';
 
@@ -31,39 +33,48 @@ class _ServiceDialogState extends State<ServiceDialog> {
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
-    return Wrap(
-      children: [
-        Container(
-          child: getPaddingWidget(
-            EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
-            Column(
-              children: [
-                getVerSpace(FetchPixels.getPixelHeight(34)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    getCustomFont("Chọn dịch vụ muốn thêm", 20, Colors.black, 1,
-                         fontWeight: FontWeight.w900),
-                    GestureDetector(
-                        onTap: () {
-                          Constant.backToPrev(context);
-                        },
-                        child: getSvgImage("close.svg",
-                            height: FetchPixels.getPixelHeight(24),
-                            width: FetchPixels.getPixelHeight(24)))
-                  ],
+    return Scaffold(
+      backgroundColor: Colors.white24.withOpacity(0),
+      body: Align(
+        alignment: Alignment.bottomCenter,
+        child: Wrap(
+          children: [
+            Container(
+              child: getPaddingWidget(
+                EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      getVerSpace(FetchPixels.getPixelHeight(34)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          getCustomFont("Chọn dịch vụ muốn thêm", 20, Colors.black, 1,
+                               fontWeight: FontWeight.w900),
+                          GestureDetector(
+                              onTap: () {
+                                Constant.backToPrev(context);
+                              },
+                              child: getSvgImage("close.svg",
+                                  height: FetchPixels.getPixelHeight(24),
+                                  width: FetchPixels.getPixelHeight(24)))
+                        ],
+                      ),
+                      getVerSpace(FetchPixels.getPixelHeight(20)),
+                      serviceToChooseList(),
+                      getVerSpace(FetchPixels.getPixelHeight(10)),
+                      totalContainer(),
+                      addServicesButton(context),
+                      getVerSpace(FetchPixels.getPixelHeight(30))
+                    ],
+                  ),
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(20)),
-                serviceToChooseList(),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-                totalContainer(),
-                addServicesButton(context),
-                getVerSpace(FetchPixels.getPixelHeight(30))
-              ],
-            ),
-          ),
-        )
-      ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -81,7 +92,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      itemCount: snapshot.data!.length,
+      itemCount: snapshot.data!.length - 3,
       itemBuilder: (context, index) {
         ModelColor modelColor = hairColorLists[index];
         return Container(
@@ -114,7 +125,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                           fontWeight: FontWeight.w900, ),
                       getVerSpace(FetchPixels.getPixelHeight(4)),
                       getCustomFont(
-                          snapshot.data![index].category ?? "api: Category", 14, textColor, 1,
+                          snapshot.data![index].categoryName ?? "api: Category", 14, textColor, 1,
                            fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(4)),
                       getCustomFont(
@@ -144,7 +155,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                           modelColor.rating,
                           modelColor.price,
                           modelColor.quantity);
-
+                      listService.add(ListService(serviceId: snapshot.data![index].serviceId, quantity: modelColor.quantity));
                       setState(() {});
                     }, 14,
                         weight: FontWeight.w600,
@@ -231,9 +242,13 @@ class _ServiceDialogState extends State<ServiceDialog> {
     );
   }
 
+  List<ListService> listService = [];
+
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {
-      Constant.backToPrev(context);
+      
+      Navigator.pop(context, listService);
+      /*Constant.backToPrev(context);*/
       /*Constant.sendToNext(context, Routes.cartRoute);*/
     }, 18,
         weight: FontWeight.w600,

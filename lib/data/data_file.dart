@@ -58,6 +58,12 @@ class DataFile {
   static List<ModelColor> hairColorList = [
     ModelColor("blackhair.png", "Black", "Black Hair Color", "4.5", 6.00, 0),
     ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
+    ModelColor("brownhair.png", "Brown", "Brown Hair Color", "4.5", 10.00, 0),
   ];
 
   static List<ModelDayOff> scheduleList = [

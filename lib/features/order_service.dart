@@ -63,7 +63,8 @@ class OrderServices {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: service.toJson()
+        body: jsonEncode(service.toJson())
+
       );
       if(response.statusCode == 200){
         print("Gửi thành công");

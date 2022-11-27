@@ -38,9 +38,10 @@ class _DetailScreenState extends State<DetailScreen> {
 
   final TextEditingController descriptionController = TextEditingController();
 
-  final ReportOrder _reportOrder = ReportOrder(listService: []);
+  final ReportOrder _reportOrder = ReportOrder();
 
   final ImagePicker imgPicker = ImagePicker();
+
 
   List<XFile>? imageFiles;
   bool isLoading = false;
@@ -100,6 +101,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     getPrefData();
+    _reportOrder.orderId = widget.orderId;
   }
 
   var total = 0.00;
@@ -162,13 +164,19 @@ class _DetailScreenState extends State<DetailScreen> {
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         viewCartButton(context),
+        ElevatedButton(onPressed:  getNewService, child: Text("Thêm dịch vụ")),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getPaddingWidget(edgeInsets, totalContainer(),),
         /*sendOrderButton(context),*/
         ElevatedButton(
-          onPressed: () => OrderServices().sendReportOrder(4, reportOrder),
+          onPressed: () {
+            _reportOrder.description = descriptionController.text;
+            _reportOrder.urlImage = "assets/images/add.svg";
+
+            OrderServices().sendReportOrder(4, _reportOrder);
+          },
           child: Text("Gửi quản lý"),
         ),
         getVerSpace(FetchPixels.getPixelHeight(30))
@@ -249,6 +257,7 @@ class _DetailScreenState extends State<DetailScreen> {
         getVerSpace(FetchPixels.getPixelHeight(16)),
         TextFormField(decoration:
           const InputDecoration(hintText:"api thợ nhập vào mô tả"),
+          controller: descriptionController,
         ),
         getVerSpace(FetchPixels.getPixelHeight(4)),
       ],
@@ -509,6 +518,19 @@ class _DetailScreenState extends State<DetailScreen> {
             horizontal: FetchPixels.getDefaultHorSpace(context)));
   }
 
+
+
+  void getNewService() async {
+    var result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialog()));
+    if(result != null){
+      setState(() {
+        _reportOrder.listService = result;
+
+      });
+    }
+    print(_reportOrder.toJson());
+  }
+
   Widget sendOrderButton(BuildContext context) {
     return getButton(context, blueColor, "Gửi cho quản lý", Colors.white, () {
       showModalBottomSheet(
@@ -544,5 +566,5 @@ class _DetailScreenState extends State<DetailScreen> {
         // FetchPixels.getPixelWidth(374), FetchPixels.getPixelHeight(225),
         // boxFit: BoxFit.fill),);
   }*/
- ReportOrder reportOrder = new ReportOrder(description: "", urlImage: "", listService: []);
+
 }
