@@ -10,8 +10,6 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/data/data_file.dart';
-
 import '../features/account_service.dart';
 import '../models/account_data.dart';
 

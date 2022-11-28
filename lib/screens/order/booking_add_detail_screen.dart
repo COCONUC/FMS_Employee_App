@@ -164,7 +164,10 @@ class _DetailScreenState extends State<DetailScreen> {
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         viewCartButton(context),
-        ElevatedButton(onPressed:  getNewService, child: Text("Thêm dịch vụ")),
+        ElevatedButton(
+            onPressed:  getNewService,
+            child: Text("Thêm dịch vụ"),
+        ),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
