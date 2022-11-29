@@ -4,6 +4,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
+import 'package:fms_employee/screens/order/booking_active.dart';
 import 'package:fms_employee/screens/tab_booking.dart';
 
 class BookingHistory extends StatefulWidget {
@@ -92,7 +93,7 @@ class _BookingHistoryState extends State<BookingHistory>
           ActiveBookingScreen(),
           CompleteBookingScreen(),
           CancelBookingScreen()*/
-          TabBooking(widget.employeeId),
+          BookingActive(widget.employeeId),
           TabBooking(widget.employeeId),
           TabBooking(widget.employeeId),
         ],
