@@ -44,20 +44,10 @@ class _BookingHistoryState extends State<BookingHistory>
       backgroundColor: backGroundColor,
       body: Column(
         children: [
-          getVerSpace(FetchPixels.getPixelHeight(30)),
+          getVerSpace(FetchPixels.getPixelHeight(40)),
           getPaddingWidget(
             EdgeInsets.symmetric(
                 horizontal: FetchPixels.getDefaultHorSpace(context)),
-            /*withoutleftIconToolbar(context,
-                isrightimage: true,
-                title: "Bookings",
-                weight: FontWeight.w900,
-                textColor: Colors.black,
-                fontsize: 24,
-                istext: true,
-                rightimage: "notification.svg", rightFunction: () {
-                  *//*Constant.sendToNext(context, Routes.notificationRoutes);*//*
-                }),*/
               gettoolbarMenu(context, "back.svg", () {
                 Constant.backToPrev(context);
               },
@@ -75,7 +65,7 @@ class _BookingHistoryState extends State<BookingHistory>
           ),*/
           getVerSpace(FetchPixels.getPixelHeight(30)),
           tabBar(),
-          getVerSpace(FetchPixels.getPixelHeight(10)),
+          /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
           pageViewer()
         ],
       ),
@@ -94,8 +84,8 @@ class _BookingHistoryState extends State<BookingHistory>
           CompleteBookingScreen(),
           CancelBookingScreen()*/
           BookingActive(widget.employeeId),
-          TabBooking(widget.employeeId),
-          TabBooking(widget.employeeId),
+          BookingActive(widget.employeeId),
+          BookingActive(widget.employeeId),
         ],
         onPageChanged: (value) {
           tabController.animateTo(value);
@@ -146,81 +136,6 @@ class _BookingHistoryState extends State<BookingHistory>
                 )),
           );
         }),
-        // Tab(
-        //   child: Container(
-        //       alignment: Alignment.center,
-        //       child: Column(
-        //         children: [
-        //           getCustomFont(
-        //               "All", 16, position == 0 ? blueColor : Colors.black, 1,
-        //               fontWeight: FontWeight.w400,
-        //               overflow: TextOverflow.visible),
-        //           getVerSpace(FetchPixels.getPixelHeight(7)),
-        //           Container(
-        //             height: FetchPixels.getPixelHeight(2),
-        //             color:
-        //                 position == 0 ? blueColor : const Color(0xFFE5E8F1),
-        //           )
-        //         ],
-        //       )),
-        // ),
-        // Tab(
-        //   child: Container(
-        //       alignment: Alignment.center,
-        //       child: Column(
-        //         children: [
-        //           getCustomFont("Active", 16,
-        //               position == 1 ? blueColor : Colors.black, 1,
-        //
-        //               fontWeight: FontWeight.w400,
-        //               overflow: TextOverflow.visible),
-        //           getVerSpace(FetchPixels.getPixelHeight(7)),
-        //           Container(
-        //             height: FetchPixels.getPixelHeight(2),
-        //             color:
-        //                 position == 1 ? blueColor : const Color(0xFFE5E8F1),
-        //           )
-        //         ],
-        //       )),
-        // ),
-        // Tab(
-        //   child: Container(
-        //       alignment: Alignment.center,
-        //       child: Column(
-        //         children: [
-        //           getCustomFont("Completed", 16,
-        //               position == 2 ? blueColor : Colors.black, 1,
-        //
-        //               fontWeight: FontWeight.w400,
-        //               overflow: TextOverflow.visible),
-        //           getVerSpace(FetchPixels.getPixelHeight(7)),
-        //           Container(
-        //             height: FetchPixels.getPixelHeight(2),
-        //             color:
-        //                 position == 2 ? blueColor : const Color(0xFFE5E8F1),
-        //           )
-        //         ],
-        //       )),
-        // ),
-        // Tab(
-        //   child: Container(
-        //       alignment: Alignment.center,
-        //       child: Column(
-        //         children: [
-        //           getCustomFont("Cancelled", 16,
-        //               position == 3 ? blueColor : Colors.black, 1,
-        //
-        //               fontWeight: FontWeight.w400,
-        //               overflow: TextOverflow.visible),
-        //           getVerSpace(FetchPixels.getPixelHeight(7)),
-        //           Container(
-        //             height: FetchPixels.getPixelHeight(2),
-        //             color:
-        //                 position == 3 ? blueColor : const Color(0xFFE5E8F1),
-        //           )
-        //         ],
-        //       )),
-        // )
       ),
     );
   }
