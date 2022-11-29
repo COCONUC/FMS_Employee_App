@@ -62,11 +62,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                         ],
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
-                      SingleChildScrollView(
-                        child: serviceToChooseList(),
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
+                      serviceToChooseList(),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       totalContainer(),
                       addServicesButton(context),
@@ -250,7 +246,6 @@ class _ServiceDialogState extends State<ServiceDialog> {
 
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {
-      
       Navigator.pop(context, listService);
       /*Constant.backToPrev(context);*/
       /*Constant.sendToNext(context, Routes.cartRoute);*/
