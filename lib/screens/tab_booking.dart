@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
 import 'package:fms_employee/models/order_data.dart';
+import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
@@ -77,9 +78,12 @@ class _TabBookingState extends State<TabBooking> {
                 child: getCustomFont(snapshot.data!.employeeName ?? "api: Tên Nhân Viên", 16, Colors.black, 1,
                     fontWeight: FontWeight.w400),
               ),
-              getSvgImage("notification.svg",
+              InkWell(
+                  child: getSvgImage("notification.svg",
                   height: FetchPixels.getPixelHeight(24),
-                  width: FetchPixels.getPixelHeight(24))
+                  width: FetchPixels.getPixelHeight(24)),
+                onTap: () => {Constant.sendToScreen(NotificationScreen(), context)},
+              ),
             ],
           ),
         );
