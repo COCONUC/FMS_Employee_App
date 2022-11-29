@@ -5,6 +5,7 @@ import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/login_screen.dart';
+import 'package:fms_employee/screens/order/booking_history.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
 
 
@@ -27,7 +28,7 @@ class _TabProfileState extends State<TabProfile> {
             horizontal: FetchPixels.getDefaultHorSpace(context)),
         child: Column(
           children: [
-            getVerSpace(FetchPixels.getPixelHeight(20)),
+            getVerSpace(FetchPixels.getPixelHeight(10)),
             buildHeader(),
             getVerSpace(FetchPixels.getPixelHeight(40)),
             buildExpand(context),
@@ -85,7 +86,8 @@ class _TabProfileState extends State<TabProfile> {
           getButtonWithIcon(context, Colors.white, "Lịch sử đơn hàng", Colors.black,
                   () {
                 /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
-                Navigator.of(context).pushNamed(MyProfileScreen.routeName);
+                /*Navigator.of(context).pushNamed(MyProfileScreen.routeName);*/
+                    Constant.sendToScreen(BookingHistory(widget.employeeId), context);
               }, 16,
               weight: FontWeight.w400,
               buttonHeight: FetchPixels.getPixelHeight(60),
@@ -159,6 +161,7 @@ class _TabProfileState extends State<TabProfile> {
           getVerSpace(FetchPixels.getPixelHeight(20)),
           getButtonWithIcon(context, Colors.white, "Báo cáo sự cố", Colors.black, () {
             /*Constant.sendToNext(context, Routes.reportRoute);*/
+            Navigator.of(context).pushNamed(MyProfileScreen.routeName);
           }, 16,
               weight: FontWeight.w400,
               buttonHeight: FetchPixels.getPixelHeight(60),
@@ -183,7 +186,7 @@ class _TabProfileState extends State<TabProfile> {
   Align buildHeader() {
     return Align(
         alignment: Alignment.topCenter,
-        child: getCustomFont("Tài khoản", 24, Colors.black, 1,
+        child: getCustomFont("Tài Khoản", 24, Colors.black, 1,
             fontWeight: FontWeight.w900));
 
   }
