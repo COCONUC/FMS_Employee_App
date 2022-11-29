@@ -37,7 +37,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
       backgroundColor: Colors.white24.withOpacity(0),
       body: Align(
         alignment: Alignment.bottomCenter,
-        child: Wrap(
+        child: ListView(
           children: [
             Container(
               child: getPaddingWidget(
@@ -62,7 +62,11 @@ class _ServiceDialogState extends State<ServiceDialog> {
                         ],
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
-                      serviceToChooseList(),
+                      SingleChildScrollView(
+                        child: serviceToChooseList(),
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                      ),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       totalContainer(),
                       addServicesButton(context),
@@ -92,7 +96,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      itemCount: snapshot.data!.length - 3,
+      itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
         ModelColor modelColor = hairColorLists[index];
         return Container(
