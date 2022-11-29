@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
+import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/screens/staff_home_page.dart';
 import 'package:fms_employee/screens/tab_booking.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
@@ -9,14 +10,17 @@ import 'package:fms_employee/screens/tab_profile.dart';
 
 class NavScreen extends StatefulWidget {
   static const String routeName = '/actual-home';
-  const NavScreen( {Key? key}) : super(key: key);
+  final  int employeeId;
+  const NavScreen(this.employeeId, {Key? key}) : super(key: key);
 
   @override
   State<NavScreen> createState() => _NavScreenState();
 }
 
 class _NavScreenState extends State<NavScreen> {
+
   int currentIndex = 0;
+
   List<Widget> tabPages = [
     const TabBooking(2),
     const TabDayOff(),

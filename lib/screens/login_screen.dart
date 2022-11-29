@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
+import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:fms_employee/widgets/custom_button.dart';
 import 'package:fms_employee/widgets/custom_text_field.dart';
@@ -48,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resultText == 'OK';
       print('OK');
       Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
+      Constant.sendToScreen(NavScreen(2), context);
     }
   }
 

@@ -52,11 +52,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const StaffHomePage(),
       );
-    case NavScreen.routeName:
+    /*case NavScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const NavScreen(),
-      );
+      );*/
     case NotificationScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
