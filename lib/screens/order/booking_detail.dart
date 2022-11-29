@@ -90,7 +90,7 @@ class _BookingDetailState extends State<BookingDetail> {
                   success,
                   1,
                   fontWeight: FontWeight.w600,
-                ),
+                )
               ),
               getVerSpace(FetchPixels.getPixelHeight(40)),
               Expanded(
@@ -271,7 +271,7 @@ class _BookingDetailState extends State<BookingDetail> {
                   borderWidth: 1.5)),
           getHorSpace(FetchPixels.getPixelWidth(20)),
           Expanded(
-              child: getButton(context, blueColor, "Bắt Đầu", Colors.white, () {
+              child: getButton(context, blueColor, "Khảo Sát", Colors.white, () {
             // addressList.removeAt(selection!.getInt("index")!);
             // setState(() {});
             /*Constant.backToPrev(context);*/

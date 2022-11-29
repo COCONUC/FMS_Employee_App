@@ -59,8 +59,22 @@ class DataFile {
     ModelSalon("hair1.png", "Vệ sinh sopha", "Vệ sinh nội thất", "1", 10.00, 0),
     ModelSalon("shaving.png", "Hàn ghế inox", "Hàn", "1", 8.00, 0),
     ModelSalon("facecare.png", "Sơn mặt bàn ghỗ", "Sơn nội thất", "1", 12.00, 0),
-    ModelSalon(
-        "haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
+    ModelSalon("haircolor.png", "Sơn chân bàn kim loại", "Sơn nội thất", "1", 8.00, 0),
   ];
 
   static List<ModelPopularService> popularServiceList = [

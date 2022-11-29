@@ -230,8 +230,7 @@ class _TabBookingState extends State<TabBooking> {
                     ),
                     onTap: () {
                       PrefData.setDefIndex(index);
-                      Constant.sendToScreen(
-                          BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                      Constant.sendToScreen(BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
                       /*Navigator.push(
                           context,
                           MaterialPageRoute(

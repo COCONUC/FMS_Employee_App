@@ -10,6 +10,7 @@ import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
+import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../features/order_service.dart';
@@ -153,6 +154,10 @@ class _DetailScreenState extends State<DetailScreen> {
                 isrightimage: true,
                 rightimage: "more.svg",
                 rightFunction: () {})),
+        getVerSpace(FetchPixels.getPixelHeight(10)),
+        Center(
+          child: getCustomFont(serviceLists.statusName ?? "api: trạng thái đơn hàng", 16, success, 1, fontWeight: FontWeight.w600)
+        ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
         /*getPaddingWidget(edgeInsets, productImage(index)),*/
         getVerSpace(FetchPixels.getPixelHeight(20)),
@@ -179,6 +184,7 @@ class _DetailScreenState extends State<DetailScreen> {
             _reportOrder.urlImage = "assets/images/add.svg";
 
             OrderServices().sendReportOrder(4, _reportOrder);
+            Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
           },
           child: Text("Gửi quản lý"),
         ),
@@ -200,7 +206,7 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             Row(
               children: [
-                getSvgImage("trash.svg",
+                getSvgImage("check.svg",
                     width: FetchPixels.getPixelHeight(25),
                     height: FetchPixels.getPixelHeight(25)),
                 getHorSpace(FetchPixels.getPixelWidth(10)),
@@ -257,7 +263,7 @@ class _DetailScreenState extends State<DetailScreen> {
             Colors.black,
             fontWeight: FontWeight.bold,
             txtHeight: 1.3),
-        getVerSpace(FetchPixels.getPixelHeight(16)),
+        getVerSpace(FetchPixels.getPixelHeight(3)),
         TextFormField(decoration:
           const InputDecoration(hintText:"api thợ nhập vào mô tả"),
           controller: descriptionController,
@@ -328,7 +334,7 @@ class _DetailScreenState extends State<DetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getCustomFont(
-            'api: service name',
+            snapshot.data!.listOrderServiceDto![index].serviceName ?? 'api: service name',
             16,
             Colors.black,
             1,
@@ -361,7 +367,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont('Giá tiền: api: category', 14, textColor, 1,
+          getCustomFont(snapshot.data!.listOrderServiceDto![index].price! + " VNĐ" ?? 'Giá tiền: api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
         ],
       );
