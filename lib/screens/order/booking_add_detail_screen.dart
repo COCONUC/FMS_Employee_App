@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
@@ -7,10 +8,17 @@ import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/models/model_cart.dart';
 import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/report_order_data.dart';
+import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../features/order_service.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class DetailScreen extends StatefulWidget {
   static const String routeName = '/detail_report_screen';
@@ -30,6 +38,58 @@ class _DetailScreenState extends State<DetailScreen> {
 
   final TextEditingController descriptionController = TextEditingController();
 
+  final ReportOrder _reportOrder = ReportOrder();
+
+  final ImagePicker imgPicker = ImagePicker();
+
+
+  List<XFile>? imageFiles;
+  bool isLoading = false;
+  openImages() async {
+    try {
+      var pickedFiles =
+      await imgPicker.pickMultiImage(maxWidth: 1024, maxHeight: 1024);
+      //you can use ImageCourse.camera for Camera capture
+      if (imageFiles == null) {
+        imageFiles = pickedFiles;
+      } else {
+        imageFiles!.addAll(pickedFiles);
+      }
+      setState(() {});
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  late CollectionReference imgRef;
+  late firebase_storage.Reference ref;
+
+  Future uploadFile() async{
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      for(var img in imageFiles!){
+        final imgPath = img.path; //Getting the path of XFile
+        File file = File(imgPath);
+        String url;
+        Reference ref = storage.ref().child("image${DateTime.now()}");
+        UploadTask uploadTask = ref.putFile(file);
+        uploadTask.whenComplete(() async{
+          url = await ref.getDownloadURL();
+        }).catchError((onError) {
+          print(onError);
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("Unknown error.${e.message}");
+      }
+    }
+  }
+
   getPrefData() async {
     index = await PrefData.getDefIndex();
     setState(() {
@@ -41,6 +101,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     getPrefData();
+    _reportOrder.orderId = widget.orderId;
   }
 
   var total = 0.00;
@@ -92,6 +153,10 @@ class _DetailScreenState extends State<DetailScreen> {
                 isrightimage: true,
                 rightimage: "more.svg",
                 rightFunction: () {})),
+        getVerSpace(FetchPixels.getPixelHeight(10)),
+        Center(
+          child: getCustomFont(serviceLists.statusName ?? "api: trạng thái đơn hàng", 16, success, 1, fontWeight: FontWeight.w600)
+        ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
         /*getPaddingWidget(edgeInsets, productImage(index)),*/
         getVerSpace(FetchPixels.getPixelHeight(20)),
@@ -103,11 +168,25 @@ class _DetailScreenState extends State<DetailScreen> {
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         viewCartButton(context),
+        ElevatedButton(
+            onPressed:  getNewService,
+            child: Text("Thêm dịch vụ"),
+        ),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getPaddingWidget(edgeInsets, totalContainer(),),
-        sendOrderButton(context),
+        /*sendOrderButton(context),*/
+        ElevatedButton(
+          onPressed: () {
+            _reportOrder.description = descriptionController.text;
+            _reportOrder.urlImage = "assets/images/add.svg";
+
+            OrderServices().sendReportOrder(4, _reportOrder);
+            Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
+          },
+          child: Text("Gửi quản lý"),
+        ),
         getVerSpace(FetchPixels.getPixelHeight(30))
         // packageList(context)
       ],
@@ -126,7 +205,7 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             Row(
               children: [
-                getSvgImage("trash.svg",
+                getSvgImage("check.svg",
                     width: FetchPixels.getPixelHeight(25),
                     height: FetchPixels.getPixelHeight(25)),
                 getHorSpace(FetchPixels.getPixelWidth(10)),
@@ -140,7 +219,28 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
             getButton(
-                context, Colors.white, "Chụp ảnh", blueColor, () {}, 14,
+                context, Colors.white, "Lưu ảnh", blueColor, ()
+            {
+              uploadFile();
+            },
+                14,
+                weight: FontWeight.w400,
+                boxShadow: [
+                  const BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0.0, 4.0)),
+                ],
+                borderRadius:
+                BorderRadius.circular(FetchPixels.getPixelHeight(20)),
+                buttonHeight: FetchPixels.getPixelHeight(40),
+                insetsGeometrypadding: EdgeInsets.symmetric(
+                    horizontal: FetchPixels.getPixelWidth(18))
+            ),
+            getButton(
+                context, Colors.white, "Chụp ảnh", blueColor, () {
+              openImages();
+            }, 14,
                 weight: FontWeight.w400,
                 boxShadow: [
                   const BoxShadow(
@@ -162,9 +262,10 @@ class _DetailScreenState extends State<DetailScreen> {
             Colors.black,
             fontWeight: FontWeight.bold,
             txtHeight: 1.3),
-        getVerSpace(FetchPixels.getPixelHeight(16)),
+        getVerSpace(FetchPixels.getPixelHeight(3)),
         TextFormField(decoration:
           const InputDecoration(hintText:"api thợ nhập vào mô tả"),
+          controller: descriptionController,
         ),
         getVerSpace(FetchPixels.getPixelHeight(4)),
       ],
@@ -232,7 +333,7 @@ class _DetailScreenState extends State<DetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getCustomFont(
-            'api: service name',
+            snapshot.data!.listOrderServiceDto![index].serviceName ?? 'api: service name',
             16,
             Colors.black,
             1,
@@ -265,7 +366,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont('Giá tiền: api: category', 14, textColor, 1,
+          getCustomFont(snapshot.data!.listOrderServiceDto![index].price! + " VNĐ" ?? 'Giá tiền: api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
         ],
       );
@@ -425,6 +526,19 @@ class _DetailScreenState extends State<DetailScreen> {
             horizontal: FetchPixels.getDefaultHorSpace(context)));
   }
 
+
+
+  void getNewService() async {
+    var result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialog()));
+    if(result != null){
+      setState(() {
+        _reportOrder.listService = result;
+
+      });
+    }
+    print(_reportOrder.toJson());
+  }
+
   Widget sendOrderButton(BuildContext context) {
     return getButton(context, blueColor, "Gửi cho quản lý", Colors.white, () {
       showModalBottomSheet(
@@ -458,4 +572,5 @@ class _DetailScreenState extends State<DetailScreen> {
         // FetchPixels.getPixelWidth(374), FetchPixels.getPixelHeight(225),
         // boxFit: BoxFit.fill),);
   }*/
+
 }

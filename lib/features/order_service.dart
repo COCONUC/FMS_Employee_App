@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:fms_employee/constants/backend_querry.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/report_order_data.dart';
 import 'package:http/http.dart' as http;
 
 class OrderServices {
@@ -52,6 +53,29 @@ class OrderServices {
     } else {
       throw('Dữ liệu lỗi');
     }
+  }
+
+  Future<void> sendReportOrder(orderId, ReportOrder service) async{
+    try{
+      final response = await http.put(
+        Uri.parse(
+            '$backEndUrl/report_order_assigned/$orderId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(service.toJson())
+
+      );
+      if(response.statusCode == 200){
+        print("Gửi thành công");
+      } else{
+        print("gửi không thành công");
+        print(response.body);
+      }
+    } catch (e){
+      throw Exception(e);
+    }
+
   }
 
 }

@@ -6,6 +6,7 @@ class OrderDetailData {
   dynamic serviceName;
   dynamic estimateTimeFinish;
   String? address;
+  String? description;
   String? customerPhone;
   String? customerName;
   String? totalPrice;
@@ -14,7 +15,7 @@ class OrderDetailData {
   List<ListOrderServiceDto>? listOrderServiceDto;
   List<ListEmployeeDto>? listEmployeeDto;
 
-  OrderDetailData({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.estimateTimeFinish, this.address, this.customerPhone, this.customerName, this.totalPrice, this.price, this.statusName, this.listOrderServiceDto, this.listEmployeeDto});
+  OrderDetailData({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.estimateTimeFinish, this.address, this.description, this.customerPhone, this.customerName, this.totalPrice, this.price, this.statusName, this.listOrderServiceDto, this.listEmployeeDto});
 
   OrderDetailData.fromJson(Map<String, dynamic> json) {
     orderServiceId = json["orderServiceId"];
@@ -23,6 +24,7 @@ class OrderDetailData {
     serviceName = json["serviceName"];
     estimateTimeFinish = json["estimateTimeFinish"];
     address = json["address"];
+    description = json["description"];
     customerPhone = json["customerPhone"];
     customerName = json["customerName"];
     totalPrice = json["totalPrice"];
@@ -44,6 +46,7 @@ class OrderDetailData {
     _data["serviceName"] = serviceName;
     _data["estimateTimeFinish"] = estimateTimeFinish;
     _data["address"] = address;
+    _data["description"] = description;
     _data["customerPhone"] = customerPhone;
     _data["customerName"] = customerName;
     _data["totalPrice"] = totalPrice;

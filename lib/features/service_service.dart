@@ -9,7 +9,7 @@ class ServiceServices {
   Future<List<ServiceData>> getServiceListForStaff() async {
     try {
       http.Response response = await http.get(
-        Uri.parse('${backEndUrl}/getAllService'),
+        Uri.parse('${backEndUrl}/api/service/getAllService'),
         headers: <String, String>{
           'content-encoding': 'gzip',
           'Content-Type': 'application/json; charset=UTF-8',
