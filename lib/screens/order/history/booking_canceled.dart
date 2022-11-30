@@ -8,6 +8,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/order/history/booking_detail_history.dart';
 
 
 class BookingCanceled extends StatefulWidget {
@@ -171,7 +172,7 @@ class _BookingCanceledState extends State<BookingCanceled> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(BookingDetailHistory("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
