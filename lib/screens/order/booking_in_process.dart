@@ -12,6 +12,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:intl/intl.dart';
 
 
@@ -176,7 +177,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
