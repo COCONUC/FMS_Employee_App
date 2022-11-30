@@ -4,6 +4,7 @@ import 'package:fms_employee/features/account_service.dart';
 import 'package:fms_employee/features/order_service.dart';
 import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/order_data.dart';
+import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
@@ -29,12 +30,12 @@ class _BookingInProcessState extends State<BookingInProcess> {
     super.initState();
   }
 
-  AccountData accountData = new AccountData();
+  /*AccountData accountData = new AccountData();
 
   Future<AccountData> getAccountService() async {
     accountData = await AccountServices().getAccountDataByEmployeeId(widget.employeeId);
     return accountData;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -63,15 +64,15 @@ class _BookingInProcessState extends State<BookingInProcess> {
     );
   }
 
-  List<OrderData> bookingLists = [];
+  List<OrderWithStatusData> bookingLists = [];
 
-  Future<List<OrderData>> getFutureService() async {
-    bookingLists = await OrderServices().getOrderListForStaff(widget.employeeId);
+  Future<List<OrderWithStatusData>> getFutureService() async {
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 3);
     return bookingLists;
   }
 
   Widget bookingList() {
-    return FutureBuilder<List<OrderData>> (
+    return FutureBuilder<List<OrderWithStatusData>> (
         future: getFutureService(),
         builder: (context, snapshot){
           if (!snapshot.hasData) {
