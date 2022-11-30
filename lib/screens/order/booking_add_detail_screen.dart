@@ -368,7 +368,7 @@ class _DetailScreenState extends State<DetailScreen> {
             fontWeight: FontWeight.w900,
           ),
           getVerSpace(FetchPixels.getPixelHeight(4)),
-          getCustomFont('api: category', 14, textColor, 1,
+          getCustomFont( snapshot.data!.listOrderServiceDto![index].categoryName ?? 'api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
           Row(

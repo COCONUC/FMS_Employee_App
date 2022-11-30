@@ -106,9 +106,10 @@ class ListOrderServiceDto {
   int? serviceId;
   String? serviceName;
   String? price;
+  String? categoryName;
   String? estimateTimeFinish;
 
-  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.estimateTimeFinish});
+  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
     orderServiceId = json["orderServiceId"];
@@ -116,6 +117,7 @@ class ListOrderServiceDto {
     serviceId = json["serviceId"];
     serviceName = json["serviceName"];
     price = json["price"];
+    categoryName = json["categoryName"];
     estimateTimeFinish = json["estimateTimeFinish"];
   }
 
@@ -130,6 +132,7 @@ class ListOrderServiceDto {
     _data["serviceId"] = serviceId;
     _data["serviceName"] = serviceName;
     _data["price"] = price;
+    _data["categoryName"] = categoryName;
     _data["estimateTimeFinish"] = estimateTimeFinish;
     return _data;
   }
