@@ -162,12 +162,16 @@ class _DetailScreenState extends State<DetailScreen> {
         getVerSpace(FetchPixels.getPixelHeight(20)),
         getPaddingWidget(edgeInsets, productDescription(context)),
         getVerSpace(FetchPixels.getPixelHeight(29)),
-        getPaddingWidget(
+        /*getPaddingWidget(
             edgeInsets,
             getCustomFont("Dịch vụ: ${buildListView(defSpace).semanticChildCount}", 16, Colors.black, 1,
+                fontWeight: FontWeight.w900)),*/
+        getPaddingWidget(
+            edgeInsets,
+            getCustomFont("Dịch vụ: ", 16, Colors.black, 1,
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
-        viewCartButton(context),
+        addServiceButton(context),
         ElevatedButton(
             onPressed:  getNewService,
             child: Text("Thêm dịch vụ"),
@@ -205,9 +209,9 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             Row(
               children: [
-                getSvgImage("check.svg",
+                /*getSvgImage("check.svg",
                     width: FetchPixels.getPixelHeight(25),
-                    height: FetchPixels.getPixelHeight(25)),
+                    height: FetchPixels.getPixelHeight(25)),*/
                 getHorSpace(FetchPixels.getPixelWidth(10)),
                 getCustomFont(
                   "*api thợ chụp hình ảnh*",
@@ -273,63 +277,73 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   // List dịch vụ được employee chọn
-  ListView buildListView(double defSpace) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      primary: false,
-      itemCount: salonProductLists.length,
-      itemBuilder: (context, index) {
-        ModelSalon modelSalon = salonProductLists[index];
-        return Container(
-          margin: EdgeInsets.only(
-              bottom: FetchPixels.getPixelHeight(20),
-              left: defSpace,
-              right: defSpace),
-          width: FetchPixels.getPixelWidth(374),
-          padding: EdgeInsets.only(
-              left: FetchPixels.getPixelWidth(16),
-              right: FetchPixels.getPixelWidth(16),
-              top: FetchPixels.getPixelHeight(16),
-              bottom: FetchPixels.getPixelHeight(16)),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    offset: Offset(0.0, 4.0)),
-              ],
-              borderRadius: BorderRadius.circular(
-                  FetchPixels.getPixelHeight(12))),
-          child: Row(
-            children: [
-              /*packageImage(context, modelSalon),*/
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(
-                      left: FetchPixels.getPixelWidth(16)),
-                  child: packageDescription(modelSalon),
+  Widget buildListView(double defSpace) {
+    return FutureBuilder<OrderDetailData>(
+        future: getOrderDetailService(),
+    builder: (context, snapshot){
+    if (!snapshot.hasData) {
+    return const Center();
+    } else {
+      return snapshot.data!.listOrderServiceDto!.isNotEmpty?
+      ListView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        scrollDirection: Axis.vertical,
+        primary: false,
+        itemCount: /*salonProductLists.length*/ snapshot.data!.listOrderServiceDto!.length,
+        itemBuilder: (context, index) {
+          ModelSalon modelSalon = salonProductLists[index];
+          return Container(
+            margin: EdgeInsets.only(
+                bottom: FetchPixels.getPixelHeight(20),
+                left: defSpace,
+                right: defSpace),
+            width: FetchPixels.getPixelWidth(374),
+            padding: EdgeInsets.only(
+                left: FetchPixels.getPixelWidth(16),
+                right: FetchPixels.getPixelWidth(16),
+                top: FetchPixels.getPixelHeight(16),
+                bottom: FetchPixels.getPixelHeight(16)),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0.0, 4.0)),
+                ],
+                borderRadius: BorderRadius.circular(
+                    FetchPixels.getPixelHeight(12))),
+            child: Row(
+              children: [
+                /*packageImage(context, modelSalon),*/
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        left: FetchPixels.getPixelWidth(16)),
+                    child: packageDescription(),
+                  ),
                 ),
-              ),
-              addButton(modelSalon, context, index)
-            ],
-          ),
-        );
-      },
+                addButton(modelSalon, context, index)
+              ],
+            ),
+          );
+        },
+      ) : nullServiceView();
+    }
+        }
     );
   }
 
-  Widget packageDescription(ModelSalon modelSalon) {
+  Widget packageDescription() {
     return FutureBuilder<OrderDetailData>(
       future: getOrderDetailService(),
     builder: (context, snapshot){
     if (!snapshot.hasData) {
     return const Center();
     } else {
-      return Column(
+      return  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getCustomFont(
@@ -496,7 +510,7 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget viewCartButton(BuildContext context) {
+  Widget addServiceButton(BuildContext context) {
     return getButton(context, Colors.white, "Thêm dịch vụ", Colors.blue, () {
       showModalBottomSheet(
           backgroundColor: Colors.white,
@@ -573,29 +587,29 @@ class _DetailScreenState extends State<DetailScreen> {
         // boxFit: BoxFit.fill),);
   }*/
 
-  Widget nullListView() {
+  Widget nullServiceView() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         getSvgImage("booking_null.svg",
-            height: FetchPixels.getPixelHeight(124),
-            width: FetchPixels.getPixelHeight(84.77)),
+            height: FetchPixels.getPixelHeight(110),
+            width: FetchPixels.getPixelHeight(84)),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getCustomFont("Chưa Có Đơn Hàng !", 20, Colors.black, 1,
+        getCustomFont("Chưa Có Dịch Vụ Được Chọn.", 18, Colors.black, 1,
             fontWeight: FontWeight.w900, textAlign: TextAlign.center),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getCustomFont(
-          "Vui lòng chờ cập nhật mới từ hệ thống! ",
-          16,
+          "Vui lòng chọn dịch vụ sau khi khảo sát !",
+          14,
           Colors.black,
           2,
           fontWeight: FontWeight.w400,
         ),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
+        /*getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
           setState(() {
-            /*schedule = true;*/
+            *//*schedule = true;*//*
           });
         }, 18,
             weight: FontWeight.w600,
@@ -606,7 +620,7 @@ class _DetailScreenState extends State<DetailScreen> {
             BorderRadius.circular(FetchPixels.getPixelHeight(14)),
             isBorder: true,
             borderColor: blueColor,
-            borderWidth: 1.5)
+            borderWidth: 1.5)*/
       ],
     );
   }
