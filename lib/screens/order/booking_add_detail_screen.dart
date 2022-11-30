@@ -12,6 +12,7 @@ import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:fms_employee/widgets/dialog/service_dialog_temp.dart';
 import '../../features/order_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -31,8 +32,6 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   static List<ModelSalon> salonProductLists = DataFile.salonProductList;
-  /*List<ModelPopularService> popularServiceLists = DataFile.popularServiceList;*/
-
   // SharedPreferences? selection;
   var index = 0;
 
@@ -123,6 +122,8 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: backGroundColor,
+          floatingActionButton: floatingSendOrderButton(context),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SafeArea(
             child: buildPage(edgeInsets, context, index, defSpace),
           ),
@@ -171,17 +172,26 @@ class _DetailScreenState extends State<DetailScreen> {
             getCustomFont("Dịch vụ: ", 16, Colors.black, 1,
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
-        addServiceButton(context),
+        /*addServiceButton(context),*/
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+          ),
             onPressed:  getNewService,
-            child: Text("Thêm dịch vụ"),
+            child: Text("Thêm dịch vụ", style: TextStyle(
+                color: Colors.blue,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),),
         ),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getPaddingWidget(edgeInsets, totalContainer(),),
         /*sendOrderButton(context),*/
-        ElevatedButton(
+        /*FloatingActionButton(
+          backgroundColor: mSecondaryColor,
+          shape: RoundedRectangleBorder(),
           onPressed: () {
             _reportOrder.description = descriptionController.text;
             _reportOrder.urlImage = "assets/images/add.svg";
@@ -189,9 +199,13 @@ class _DetailScreenState extends State<DetailScreen> {
             OrderServices().sendReportOrder(4, _reportOrder);
             Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
           },
-          child: Text("Gửi quản lý"),
-        ),
-        getVerSpace(FetchPixels.getPixelHeight(30))
+          child: Text("Gửi quản lý", style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+           *//* fontWeight: FontWeight.w600,*//*
+          ),),
+        ),*/
+        getVerSpace(FetchPixels.getPixelHeight(70))
         // packageList(context)
       ],
     );
@@ -540,10 +554,8 @@ class _DetailScreenState extends State<DetailScreen> {
             horizontal: FetchPixels.getDefaultHorSpace(context)));
   }
 
-
-
   void getNewService() async {
-    var result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialog()));
+    var result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
     if(result != null){
       setState(() {
         _reportOrder.listService = result;
@@ -574,6 +586,29 @@ class _DetailScreenState extends State<DetailScreen> {
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)),
         insetsGeometry: EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)));
+  }
+
+  Widget floatingSendOrderButton(BuildContext context){
+    return Container(
+      height: FetchPixels.getPixelHeight(50),
+      width: FetchPixels.getPixelWidth(370),
+      child: FloatingActionButton(
+        backgroundColor: mSecondaryColor,
+        shape: RoundedRectangleBorder(),
+        onPressed: () {
+          _reportOrder.description = descriptionController.text;
+          _reportOrder.urlImage = "assets/images/add.svg";
+
+          OrderServices().sendReportOrder(4, _reportOrder);
+          Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
+        },
+        child: Text("Gửi cho quản lý", style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          /* fontWeight: FontWeight.w600,*/
+        ),),
+      ),
+    );
   }
 
   /*Hero productImage(int index) {
