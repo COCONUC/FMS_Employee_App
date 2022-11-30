@@ -47,23 +47,6 @@ class _BookingActiveState extends State<BookingActive> {
     );
   }
 
-
-
-  Widget nullListView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        getSvgImage("booking_null.svg",
-            height: FetchPixels.getPixelHeight(124),
-            width: FetchPixels.getPixelHeight(84.77)),
-        getVerSpace(FetchPixels.getPixelHeight(30)),
-        getCustomFont("Chưa Có Đơn!", 20, Colors.black, 1,
-            fontWeight: FontWeight.w900, textAlign: TextAlign.center)
-      ],
-    );
-  }
-
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
@@ -120,9 +103,9 @@ class _BookingActiveState extends State<BookingActive> {
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
-                                getSvgImage("check_complete.svg",
+                                /*getSvgImage("check_complete.svg",
                                     width: FetchPixels.getPixelHeight(24),
-                                    height: FetchPixels.getPixelHeight(24)),
+                                    height: FetchPixels.getPixelHeight(24)),*/
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
@@ -240,6 +223,44 @@ class _BookingActiveState extends State<BookingActive> {
               )
           ],
         ));
+  }
+
+  Widget nullListView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        getSvgImage("booking_null.svg",
+            height: FetchPixels.getPixelHeight(124),
+            width: FetchPixels.getPixelHeight(84.77)),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getCustomFont("Chưa Có Đơn Hàng !", 20, Colors.black, 1,
+            fontWeight: FontWeight.w900, textAlign: TextAlign.center),
+        getVerSpace(FetchPixels.getPixelHeight(10)),
+        getCustomFont(
+          "Vui lòng chờ cập nhật mới từ hệ thống! ",
+          16,
+          Colors.black,
+          2,
+          fontWeight: FontWeight.w400,
+        ),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
+          setState(() {
+            /*schedule = true;*/
+          });
+        }, 18,
+            weight: FontWeight.w600,
+            buttonHeight: FetchPixels.getPixelHeight(60),
+            insetsGeometry: EdgeInsets.symmetric(
+                horizontal: FetchPixels.getPixelWidth(98)),
+            borderRadius:
+            BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+            isBorder: true,
+            borderColor: blueColor,
+            borderWidth: 1.5)
+      ],
+    );
   }
 
 }

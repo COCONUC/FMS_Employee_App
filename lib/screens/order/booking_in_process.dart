@@ -12,6 +12,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:intl/intl.dart';
 
 
 class BookingInProcess extends StatefulWidget {
@@ -104,13 +105,14 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                       fontWeight: FontWeight.w900),
                                 ),
                                 getSvgImage("check_complete.svg",
+                                    color: mSecondaryColor,
                                     width: FetchPixels.getPixelHeight(24),
                                     height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  success,
+                                  mSecondaryColor,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )

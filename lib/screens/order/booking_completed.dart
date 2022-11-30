@@ -100,6 +100,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                                       fontWeight: FontWeight.w900),
                                 ),
                                 getSvgImage("check_complete.svg",
+                                    color: completed,
                                     width: FetchPixels.getPixelHeight(24),
                                     height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
