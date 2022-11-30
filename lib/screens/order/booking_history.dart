@@ -3,9 +3,9 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/screens/order/booking_active.dart';
-import 'package:fms_employee/screens/tab_booking.dart';
+import 'package:fms_employee/screens/order/booking_canceled.dart';
+import 'package:fms_employee/screens/order/booking_completed.dart';
 
 class BookingHistory extends StatefulWidget {
   final int employeeId;
@@ -23,11 +23,11 @@ class _BookingHistoryState extends State<BookingHistory> with SingleTickerProvid
   late TabController tabController;
   var position = 0;
 
-  List<String> tabsList = ["Tất cả", "Hoàn thành", "Đã hủy"];
+  List<String> tabsList = ["Hoàn thành", "Đã hủy"];
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     setState(() {});
     super.initState();
   }
@@ -84,9 +84,8 @@ class _BookingHistoryState extends State<BookingHistory> with SingleTickerProvid
           ActiveBookingScreen(),
           CompleteBookingScreen(),
           CancelBookingScreen()*/
-          BookingActive(widget.employeeId),
-          BookingActive(widget.employeeId),
-          BookingActive(widget.employeeId),
+          BookingCompleted(widget.employeeId),
+          BookingCanceled(widget.employeeId),
         ],
         onPageChanged: (value) {
           tabController.animateTo(value);
