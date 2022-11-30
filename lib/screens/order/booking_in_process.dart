@@ -124,7 +124,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                     height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
-                                  "Chờ Khảo Sát",
+                                  snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
                                   success,
                                   1,
