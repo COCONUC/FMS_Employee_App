@@ -573,4 +573,42 @@ class _DetailScreenState extends State<DetailScreen> {
         // boxFit: BoxFit.fill),);
   }*/
 
+  Widget nullListView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        getSvgImage("booking_null.svg",
+            height: FetchPixels.getPixelHeight(124),
+            width: FetchPixels.getPixelHeight(84.77)),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getCustomFont("Chưa Có Đơn Hàng !", 20, Colors.black, 1,
+            fontWeight: FontWeight.w900, textAlign: TextAlign.center),
+        getVerSpace(FetchPixels.getPixelHeight(10)),
+        getCustomFont(
+          "Vui lòng chờ cập nhật mới từ hệ thống! ",
+          16,
+          Colors.black,
+          2,
+          fontWeight: FontWeight.w400,
+        ),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
+          setState(() {
+            /*schedule = true;*/
+          });
+        }, 18,
+            weight: FontWeight.w600,
+            buttonHeight: FetchPixels.getPixelHeight(60),
+            insetsGeometry: EdgeInsets.symmetric(
+                horizontal: FetchPixels.getPixelWidth(98)),
+            borderRadius:
+            BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+            isBorder: true,
+            borderColor: blueColor,
+            borderWidth: 1.5)
+      ],
+    );
+  }
+
 }
