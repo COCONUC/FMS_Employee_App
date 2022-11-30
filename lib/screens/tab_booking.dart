@@ -10,6 +10,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/order/booking_in_process.dart';
 import '../features/account_service.dart';
 import '../models/account_data.dart';
 
@@ -22,10 +23,20 @@ class TabBooking extends StatefulWidget {
   State<TabBooking> createState() => _TabBookingState();
 }
 
-class _TabBookingState extends State<TabBooking> {
+class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateMixin {
+
+  final PageController _controller = PageController(
+    initialPage: 0,
+  );
+
+  late TabController tabController;
+  var position = 0;
+
+  List<String> tabsList = ["Đơn mới", "Đang thực hiện"];
 
   @override
   void initState() {
+    tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -45,9 +56,28 @@ class _TabBookingState extends State<TabBooking> {
           getVerSpace(FetchPixels.getPixelHeight(16)),
           buildTopRow(context),
           getVerSpace(FetchPixels.getPixelHeight(16)),
+          tabBar(),
           Expanded(
             flex: 1,
-            child: BookingActive(widget.employeeId),
+            /*child: BookingActive(widget.employeeId),*/
+            child: PageView(
+              physics: const BouncingScrollPhysics(),
+              controller: _controller,
+              scrollDirection: Axis.horizontal,
+              children: /*const*/ [
+                /*AllBookingScreen(),
+          ActiveBookingScreen(),
+          CompleteBookingScreen(),
+          CancelBookingScreen()*/
+                BookingActive(widget.employeeId),
+                BookingInProcess(widget.employeeId),
+              ],
+              onPageChanged: (value) {
+                tabController.animateTo(value);
+                position = value;
+                setState(() {});
+              },
+            ),
           )
         ],
       ),
@@ -147,6 +177,48 @@ class _TabBookingState extends State<TabBooking> {
               )
           ],
         ));
+  }
+
+  Widget tabBar() {
+    return getPaddingWidget(
+      EdgeInsets.symmetric(horizontal: FetchPixels.getDefaultHorSpace(context)),
+      TabBar(
+        indicatorColor: Colors.transparent,
+        physics: const BouncingScrollPhysics(),
+        controller: tabController,
+        labelPadding: EdgeInsets.zero,
+        onTap: (index) {
+          _controller.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
+          position = index;
+          setState(() {});
+        },
+        tabs: List.generate(tabsList.length, (index) {
+          return Tab(
+            child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    getCustomFont(tabsList[index], 16,
+                        position == index ? blueColor : Colors.black, 1,
+                        fontWeight: FontWeight.w400,
+                        overflow: TextOverflow.visible),
+                    getVerSpace(FetchPixels.getPixelHeight(7)),
+                    Container(
+                      height: FetchPixels.getPixelHeight(2),
+                      color: position == index
+                          ? blueColor
+                          : const Color(0xFFE5E8F1),
+                    )
+                  ],
+                )),
+          );
+        }),
+      ),
+    );
   }
 
 }

@@ -15,8 +15,7 @@ class BookingHistory extends StatefulWidget {
   State<BookingHistory> createState() => _BookingHistoryState();
 }
 
-class _BookingHistoryState extends State<BookingHistory>
-    with SingleTickerProviderStateMixin {
+class _BookingHistoryState extends State<BookingHistory> with SingleTickerProviderStateMixin {
   final PageController _controller = PageController(
     initialPage: 0,
   );
@@ -24,9 +23,11 @@ class _BookingHistoryState extends State<BookingHistory>
   late TabController tabController;
   var position = 0;
 
+  List<String> tabsList = ["Tất cả", "Hoàn thành", "Đã hủy"];
+
   @override
   void initState() {
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     setState(() {});
     super.initState();
   }
@@ -96,7 +97,7 @@ class _BookingHistoryState extends State<BookingHistory>
     );
   }
 
-  List<String> tabsList = ["Tất cả", "Hoàn thành", "Đã hủy"];
+
 
   Widget tabBar() {
     return getPaddingWidget(
@@ -139,4 +140,5 @@ class _BookingHistoryState extends State<BookingHistory>
       ),
     );
   }
+
 }
