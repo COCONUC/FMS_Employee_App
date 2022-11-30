@@ -205,7 +205,7 @@ class _DetailScreenState extends State<DetailScreen> {
            *//* fontWeight: FontWeight.w600,*//*
           ),),
         ),*/
-        getVerSpace(FetchPixels.getPixelHeight(70))
+        getVerSpace(FetchPixels.getPixelHeight(60))
         // packageList(context)
       ],
     );
