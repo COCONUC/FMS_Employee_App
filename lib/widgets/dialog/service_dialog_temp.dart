@@ -7,6 +7,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/features/service_service.dart';
 import 'package:fms_employee/models/model_color.dart';
+import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import '../../models/model_cart.dart';
 import '../../models/service_data.dart';
@@ -24,6 +25,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   static List<ModelColor> hairColorLists = DataFile.hairColorList;
 
   List<ServiceData> serviceLists = [];
+  List<ChosenService> listChosenService = [];
 
   Future<List<ServiceData>> getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
@@ -156,7 +158,13 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                                       modelColor.rating,
                                       modelColor.price,
                                       modelColor.quantity);
-                                  listService.add(ListService(serviceId: snapshot.data![index].serviceId, quantity: modelColor.quantity));
+                                  listChosenService.add(ChosenService(
+                                      quantity: modelColor.quantity!, service:
+                                  ListOrderServiceDto(serviceId: snapshot.data![index].serviceId,
+                                  serviceName: snapshot.data![index].serviceName,
+                                  categoryName: snapshot.data![index].categoryName,
+                                  price: snapshot.data![index].price)
+                                  ));
                                   setState(() {});
                                 }, 14,
                                 weight: FontWeight.w600,
@@ -243,11 +251,9 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
     );
   }
 
-  List<ListService> listService = [];
-
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {
-      Navigator.pop(context, listService);
+      Navigator.pop(context, listChosenService);
       /*Constant.backToPrev(context);*/
       /*Constant.sendToNext(context, Routes.cartRoute);*/
     }, 18,
@@ -265,7 +271,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
             height: FetchPixels.getPixelHeight(124),
             width: FetchPixels.getPixelHeight(84.77)),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getCustomFont("Không load được dịch vụ!", 20, Colors.black, 1,
+        getCustomFont("Không tải được dịch vụ!", 20, Colors.black, 1,
             fontWeight: FontWeight.w900, textAlign: TextAlign.center)
       ],
     );

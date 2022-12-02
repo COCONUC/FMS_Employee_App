@@ -276,7 +276,11 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                 // setState(() {});
                 /*Constant.backToPrev(context);*/
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                Constant.sendToScreen(DetailScreen(widget.orderId), context);
+
+
+                /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
+
+
               }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

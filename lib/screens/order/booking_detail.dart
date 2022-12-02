@@ -60,9 +60,16 @@ class _BookingDetailState extends State<BookingDetail> {
         });
   }
 
+  late final OrderDetailData detailData;
+
+  Future<OrderDetailData> futureDetailData() async{
+    detailData = await OrderServices().getOrderDetailById(widget.orderId);
+    return detailData;
+  }
+
    Widget buildBookingDetail(BuildContext context, ModelBooking modelBooking) {
     return FutureBuilder<OrderDetailData>(
-      future: OrderServices().getOrderDetailById(widget.orderId),
+      future: futureDetailData(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -276,7 +283,10 @@ class _BookingDetailState extends State<BookingDetail> {
             // setState(() {});
             /*Constant.backToPrev(context);*/
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                Constant.sendToScreen(DetailScreen(widget.orderId), context);
+                if (detailData != null) {
+                  Constant.sendToScreen(
+                      DetailScreen(widget.orderId, detailData), context);
+                }
           }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

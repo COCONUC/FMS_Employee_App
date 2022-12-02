@@ -155,7 +155,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                           modelColor.rating,
                           modelColor.price,
                           modelColor.quantity);
-                      listService.add(ListService(serviceId: snapshot.data![index].serviceId, quantity: modelColor.quantity));
+                      listService.add(ListChosenService(serviceId: snapshot.data![index].serviceId, quantity: modelColor.quantity));
                       setState(() {});
                     }, 14,
                         weight: FontWeight.w600,
@@ -242,7 +242,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
     );
   }
 
-  List<ListService> listService = [];
+  List<ListChosenService> listService = [];
 
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {

@@ -24,7 +24,8 @@ import 'dart:io';
 class DetailScreen extends StatefulWidget {
   static const String routeName = '/detail_report_screen';
   final int orderId;
-  const DetailScreen(this.orderId, {Key? key}) : super(key: key);
+  final OrderDetailData _data;
+  const DetailScreen(this.orderId, this._data, {Key? key}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -101,16 +102,12 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
     getPrefData();
     _reportOrder.orderId = widget.orderId;
+    data = widget._data;
   }
+
+  OrderDetailData data = new OrderDetailData();
 
   var total = 0.00;
-
-  OrderDetailData serviceLists = new OrderDetailData();
-
-  Future<OrderDetailData> getOrderDetailService() async {
-    serviceLists = await OrderServices().getOrderDetailById(widget.orderId);
-    return serviceLists;
-  }
 
 
   @override
@@ -290,22 +287,28 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
+  OrderDetailData serviceLists = new OrderDetailData();
+
+  Future<List<ListOrderServiceDto>?> getOrderDetailService() async {
+    return data.listOrderServiceDto;
+  }
+
   // List dịch vụ được employee chọn
   Widget buildListView(double defSpace) {
-    return FutureBuilder<OrderDetailData>(
+    return FutureBuilder<List<ListOrderServiceDto>?>(
         future: getOrderDetailService(),
     builder: (context, snapshot){
     if (!snapshot.hasData) {
     return const Center();
     } else {
-      return snapshot.data!.listOrderServiceDto!.isNotEmpty?
+      return snapshot.data!.isNotEmpty?
       ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         primary: false,
-        itemCount: /*salonProductLists.length*/ snapshot.data!.listOrderServiceDto!.length,
+        itemCount: /*salonProductLists.length*/ snapshot.data!.length,
         itemBuilder: (context, index) {
           ModelSalon modelSalon = salonProductLists[index];
           return Container(
@@ -351,7 +354,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Widget packageDescription() {
-    return FutureBuilder<OrderDetailData>(
+    return FutureBuilder<List<ListOrderServiceDto>?>(
       future: getOrderDetailService(),
     builder: (context, snapshot){
     if (!snapshot.hasData) {
@@ -361,14 +364,14 @@ class _DetailScreenState extends State<DetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getCustomFont(
-            snapshot.data!.listOrderServiceDto![index].serviceName ?? 'api: service name',
+            snapshot.data![index].serviceName ?? 'api: service name',
             16,
             Colors.black,
             1,
             fontWeight: FontWeight.w900,
           ),
           getVerSpace(FetchPixels.getPixelHeight(4)),
-          getCustomFont( snapshot.data!.listOrderServiceDto![index].categoryName ?? 'api: category', 14, textColor, 1,
+          getCustomFont( snapshot.data![index].categoryName ?? 'api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
           Row(
@@ -394,7 +397,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont(snapshot.data!.listOrderServiceDto![index].price! + " VNĐ" ?? 'Giá tiền: api: category', 14, textColor, 1,
+          getCustomFont(snapshot.data![index].price! + " VNĐ" ?? 'Giá tiền: api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
         ],
       );
@@ -555,14 +558,16 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void getNewService() async {
-    var result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
+    List<ChosenService> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
     if(result != null){
       setState(() {
-        _reportOrder.listService = result;
-
-      });
-    }
-    print(_reportOrder.toJson());
+       for(var element in result){
+         _reportOrder.listService?.add(ListChosenService(serviceId: element.service.serviceId,
+             quantity: element.quantity));
+         data.listOrderServiceDto?.add(element.service);
+       }
+       });
+      }
   }
 
   Widget sendOrderButton(BuildContext context) {

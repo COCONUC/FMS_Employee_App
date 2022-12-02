@@ -102,18 +102,18 @@ class ListEmployeeDto {
 
 class ListOrderServiceDto {
   int? orderServiceId;
-  int? orderId;
+
   int? serviceId;
   String? serviceName;
   String? price;
   String? categoryName;
   String? estimateTimeFinish;
 
-  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
+  ListOrderServiceDto({this.orderServiceId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
     orderServiceId = json["orderServiceId"];
-    orderId = json["orderId"];
+
     serviceId = json["serviceId"];
     serviceName = json["serviceName"];
     price = json["price"];
@@ -128,7 +128,7 @@ class ListOrderServiceDto {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["orderServiceId"] = orderServiceId;
-    _data["orderId"] = orderId;
+
     _data["serviceId"] = serviceId;
     _data["serviceName"] = serviceName;
     _data["price"] = price;
@@ -136,4 +136,11 @@ class ListOrderServiceDto {
     _data["estimateTimeFinish"] = estimateTimeFinish;
     return _data;
   }
+}
+
+class ChosenService {
+  final int quantity;
+  final ListOrderServiceDto service;
+
+  ChosenService({required this.quantity, required this.service});
 }

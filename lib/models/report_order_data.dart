@@ -3,7 +3,7 @@ class ReportOrder {
   int? orderId;
   String? description;
   String? urlImage;
-  List<ListService>? listService;
+  List<ListChosenService>? listService;
 
   ReportOrder({this.orderId, this.description, this.urlImage, this.listService});
 
@@ -11,7 +11,7 @@ class ReportOrder {
     orderId = json["orderId"];
     description = json["description"];
     urlImage = json["urlImage"];
-    listService = json["listService"] == null ? null : (json["listService"] as List).map((e) => ListService.fromJson(e)).toList();
+    listService = json["listService"] == null ? null : (json["listService"] as List).map((e) => ListChosenService.fromJson(e)).toList();
   }
 
   static List<ReportOrder> fromList(List<Map<String, dynamic>> list) {
@@ -30,19 +30,19 @@ class ReportOrder {
   }
 }
 
-class ListService {
+class ListChosenService {
   int? serviceId;
   int? quantity;
 
-  ListService({this.serviceId, this.quantity});
+  ListChosenService({this.serviceId, this.quantity});
 
-  ListService.fromJson(Map<String, dynamic> json) {
+  ListChosenService.fromJson(Map<String, dynamic> json) {
     serviceId = json["serviceId"];
     quantity = json["quantity"];
   }
 
-  static List<ListService> fromList(List<Map<String, dynamic>> list) {
-    return list.map((map) => ListService.fromJson(map)).toList();
+  static List<ListChosenService> fromList(List<Map<String, dynamic>> list) {
+    return list.map((map) => ListChosenService.fromJson(map)).toList();
   }
 
   Map<String, dynamic> toJson() {
