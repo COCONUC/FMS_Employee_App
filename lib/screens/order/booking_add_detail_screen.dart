@@ -60,11 +60,12 @@ class _DetailScreenState extends State<DetailScreen> {
       throw Exception(e);
     }
   }
-
+  List<String> firebaseURLs =[];
   late CollectionReference imgRef;
   late firebase_storage.Reference ref;
 
   Future uploadFile() async{
+    await FirebaseAuth.instance.signInAnonymously();
     try {
       FirebaseStorage storage = FirebaseStorage.instance;
       for(var img in imageFiles!){
@@ -74,7 +75,7 @@ class _DetailScreenState extends State<DetailScreen> {
         Reference ref = storage.ref().child("image${DateTime.now()}");
         UploadTask uploadTask = ref.putFile(file);
         uploadTask.whenComplete(() async{
-          url = await ref.getDownloadURL();
+          firebaseURLs.add(await ref.getDownloadURL());
         }).catchError((onError) {
           print(onError);
         });
