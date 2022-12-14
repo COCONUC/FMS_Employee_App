@@ -25,7 +25,8 @@ class DetailScreen extends StatefulWidget {
   static const String routeName = '/detail_report_screen';
   final int orderId;
   final OrderDetailData _data;
-  const DetailScreen(this.orderId, this._data, {Key? key}) : super(key: key);
+  final String img;
+  const DetailScreen(this.orderId, this._data, this.img, {Key? key}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -216,24 +217,11 @@ class _DetailScreenState extends State<DetailScreen> {
         getCustomFont("Chi tiết đơn hàng", 24, Colors.black, 1,
             fontWeight: FontWeight.w900),
         getVerSpace(FetchPixels.getPixelHeight(17)),
-        Row(
+        Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                /*getSvgImage("check.svg",
-                    width: FetchPixels.getPixelHeight(25),
-                    height: FetchPixels.getPixelHeight(25)),*/
-                getHorSpace(FetchPixels.getPixelWidth(10)),
-                getCustomFont(
-                  "*api thợ chụp hình ảnh*",
-                  16,
-                  Colors.black,
-                  1,
-                  fontWeight: FontWeight.w400,
-                ),
-              ],
-            ),
             getButton(
                 context, Colors.white, "Lưu ảnh", blueColor, ()
             {
@@ -269,6 +257,34 @@ class _DetailScreenState extends State<DetailScreen> {
                 buttonHeight: FetchPixels.getPixelHeight(40),
                 insetsGeometrypadding: EdgeInsets.symmetric(
                     horizontal: FetchPixels.getPixelWidth(18)))
+                    ]
+            ),
+            getVerSpace(FetchPixels.getPixelHeight(12)),
+            Row(
+              children: [
+                /*getSvgImage("check.svg",
+                    width: FetchPixels.getPixelHeight(25),
+                    height: FetchPixels.getPixelHeight(25)),*/
+                getHorSpace(FetchPixels.getPixelWidth(10)),
+                /*getCustomFont(
+                  "*api thợ chụp hình ảnh*",
+                  16,
+                  Colors.black,
+                  1,
+                  fontWeight: FontWeight.w400,
+                ),*/
+                Container(
+                  /*tag: widget.img,*/
+                  child: Container(
+                    height: FetchPixels.getPixelHeight(100),
+                    width: FetchPixels.getPixelHeight(100),
+                    decoration: BoxDecoration(
+                        image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
         getVerSpace(FetchPixels.getPixelHeight(24)),

@@ -108,13 +108,13 @@ class _BookingDetailState extends State<BookingDetail> {
                   children: [
                     Align(
                       alignment: Alignment.topCenter,
-                      child: Hero(
-                        tag: widget.img,
+                      child: Container(
+                        /*tag: widget.img,*/
                         child: Container(
                           height: FetchPixels.getPixelHeight(100),
                           width: FetchPixels.getPixelHeight(100),
                           decoration: BoxDecoration(
-                              image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/FMS_logo.png?alt=media&token=ba7e5f55-db6f-4d2c-9d53-cd3da0d952b3')
+                              image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
                           ),
                         ),
                       ),
@@ -285,7 +285,7 @@ class _BookingDetailState extends State<BookingDetail> {
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                 if (detailData != null) {
                   Constant.sendToScreen(
-                      DetailScreen(widget.orderId, detailData), context);
+                      DetailScreen(widget.orderId, detailData, widget.img), context);
                 }
           }, 18,
                   weight: FontWeight.w600,
