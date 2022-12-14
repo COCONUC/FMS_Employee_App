@@ -221,6 +221,7 @@ class _DetailScreenState extends State<DetailScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
             getButton(
                 context, Colors.white, "Lưu ảnh", blueColor, ()
