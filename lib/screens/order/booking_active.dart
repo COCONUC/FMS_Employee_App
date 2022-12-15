@@ -117,7 +117,7 @@ class _BookingActiveState extends State<BookingActive> {
                               ],
                             ),
                             getVerSpace(FetchPixels.getPixelHeight(6)),
-                            getCustomFont("api: thời gian khách đặt" ?? "", 14, textColor, 1,
+                            getCustomFont(snapshot.data![index].orderId.toString() ?? "api: thời gian khách đặt" ?? "", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             getDivider(dividerColor, 0, 1),
@@ -126,8 +126,8 @@ class _BookingActiveState extends State<BookingActive> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Hero(
-                                  tag: snapshot.data![index].customerId ?? "",
+                                Container(
+                                  /*tag: snapshot.data![index].customerId ?? "",*/
                                   child: Container(
                                     height: FetchPixels.getPixelHeight(42),
                                     width: FetchPixels.getPixelHeight(42),

@@ -102,7 +102,6 @@ class ListEmployeeDto {
 
 class ListOrderServiceDto {
   int? orderServiceId;
-
   int? serviceId;
   String? serviceName;
   String? price;
@@ -113,7 +112,6 @@ class ListOrderServiceDto {
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
     orderServiceId = json["orderServiceId"];
-
     serviceId = json["serviceId"];
     serviceName = json["serviceName"];
     price = json["price"];
@@ -128,7 +126,6 @@ class ListOrderServiceDto {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["orderServiceId"] = orderServiceId;
-
     _data["serviceId"] = serviceId;
     _data["serviceName"] = serviceName;
     _data["price"] = price;

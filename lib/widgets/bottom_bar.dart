@@ -22,9 +22,9 @@ class _NavScreenState extends State<NavScreen> {
   int currentIndex = 0;
 
   List<Widget> tabPages = [
-    const TabBooking(2),
+    const TabBooking(3),
     const TabDayOff(),
-    const TabProfile(2),
+    const TabProfile(3),
   ];
 
   void updatePage(int page) {
