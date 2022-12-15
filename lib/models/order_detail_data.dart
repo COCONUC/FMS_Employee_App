@@ -1,9 +1,11 @@
 
+
 class OrderDetailData {
   int? orderServiceId;
   int? orderId;
   int? serviceId;
-  dynamic serviceName;
+  String? serviceName;
+  String? categoryName;
   dynamic estimateTimeFinish;
   String? address;
   String? description;
@@ -15,23 +17,50 @@ class OrderDetailData {
   List<ListOrderServiceDto>? listOrderServiceDto;
   List<ListEmployeeDto>? listEmployeeDto;
 
-  OrderDetailData({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.estimateTimeFinish, this.address, this.description, this.customerPhone, this.customerName, this.totalPrice, this.price, this.statusName, this.listOrderServiceDto, this.listEmployeeDto});
+  OrderDetailData({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.categoryName, this.estimateTimeFinish, this.address, this.description, this.customerPhone, this.customerName, this.totalPrice, this.price, this.statusName, this.listOrderServiceDto, this.listEmployeeDto});
 
   OrderDetailData.fromJson(Map<String, dynamic> json) {
-    orderServiceId = json["orderServiceId"];
-    orderId = json["orderId"];
-    serviceId = json["serviceId"];
-    serviceName = json["serviceName"];
+    if(json["orderServiceId"] is int) {
+      orderServiceId = json["orderServiceId"];
+    }
+    if(json["orderId"] is int) {
+      orderId = json["orderId"];
+    }
+    if(json["serviceId"] is int) {
+      serviceId = json["serviceId"];
+    }
+    if (json["serviceName"] is String) {
+      serviceName = json["serviceName"];
+    }
+    if (json["categoryName"] is String) {
+      categoryName = json["categoryName"];
+    }
     estimateTimeFinish = json["estimateTimeFinish"];
-    address = json["address"];
-    description = json["description"];
-    customerPhone = json["customerPhone"];
-    customerName = json["customerName"];
-    totalPrice = json["totalPrice"];
+    if(json["address"] is String) {
+      address = json["address"];
+    }
+    if(json["description"] is String) {
+      description = json["description"];
+    }
+    if(json["customerPhone"] is String) {
+      customerPhone = json["customerPhone"];
+    }
+    if(json["customerName"] is String) {
+      customerName = json["customerName"];
+    }
+    if(json["totalPrice"] is String) {
+      totalPrice = json["totalPrice"];
+    }
     price = json["price"];
-    statusName = json["statusName"];
-    listOrderServiceDto = json["listOrderServiceDto"] == null ? null : (json["listOrderServiceDto"] as List).map((e) => ListOrderServiceDto.fromJson(e)).toList();
-    listEmployeeDto = json["listEmployeeDto"] == null ? null : (json["listEmployeeDto"] as List).map((e) => ListEmployeeDto.fromJson(e)).toList();
+    if(json["statusName"] is String) {
+      statusName = json["statusName"];
+    }
+    if(json["listOrderServiceDto"] is List) {
+      listOrderServiceDto = json["listOrderServiceDto"] == null ? null : (json["listOrderServiceDto"] as List).map((e) => ListOrderServiceDto.fromJson(e)).toList();
+    }
+    if(json["listEmployeeDto"] is List) {
+      listEmployeeDto = json["listEmployeeDto"] == null ? null : (json["listEmployeeDto"] as List).map((e) => ListEmployeeDto.fromJson(e)).toList();
+    }
   }
 
   static List<OrderDetailData> fromList(List<Map<String, dynamic>> list) {
@@ -44,6 +73,7 @@ class OrderDetailData {
     _data["orderId"] = orderId;
     _data["serviceId"] = serviceId;
     _data["serviceName"] = serviceName;
+    _data["categoryName"] = categoryName;
     _data["estimateTimeFinish"] = estimateTimeFinish;
     _data["address"] = address;
     _data["description"] = description;
@@ -65,22 +95,30 @@ class OrderDetailData {
 class ListEmployeeDto {
   dynamic imageUrl;
   int? accountId;
-  int? specialtyId;
   String? employeeName;
   String? email;
   String? employeePhoneNumber;
   bool? status;
 
-  ListEmployeeDto({this.imageUrl, this.accountId, this.specialtyId, this.employeeName, this.email, this.employeePhoneNumber, this.status});
+  ListEmployeeDto({this.imageUrl, this.accountId, this.employeeName, this.email, this.employeePhoneNumber, this.status});
 
   ListEmployeeDto.fromJson(Map<String, dynamic> json) {
     imageUrl = json["imageUrl"];
-    accountId = json["accountId"];
-    specialtyId = json["specialtyId"];
-    employeeName = json["employeeName"];
-    email = json["email"];
-    employeePhoneNumber = json["employeePhoneNumber"];
-    status = json["status"];
+    if(json["accountId"] is int) {
+      accountId = json["accountId"];
+    }
+    if(json["employeeName"] is String) {
+      employeeName = json["employeeName"];
+    }
+    if(json["email"] is String) {
+      email = json["email"];
+    }
+    if(json["employeePhoneNumber"] is String) {
+      employeePhoneNumber = json["employeePhoneNumber"];
+    }
+    if(json["status"] is bool) {
+      status = json["status"];
+    }
   }
 
   static List<ListEmployeeDto> fromList(List<Map<String, dynamic>> list) {
@@ -91,7 +129,6 @@ class ListEmployeeDto {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["imageUrl"] = imageUrl;
     _data["accountId"] = accountId;
-    _data["specialtyId"] = specialtyId;
     _data["employeeName"] = employeeName;
     _data["email"] = email;
     _data["employeePhoneNumber"] = employeePhoneNumber;
@@ -102,21 +139,37 @@ class ListEmployeeDto {
 
 class ListOrderServiceDto {
   int? orderServiceId;
+  int? orderId;
   int? serviceId;
   String? serviceName;
   String? price;
   String? categoryName;
   String? estimateTimeFinish;
 
-  ListOrderServiceDto({this.orderServiceId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
+  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
-    orderServiceId = json["orderServiceId"];
-    serviceId = json["serviceId"];
-    serviceName = json["serviceName"];
-    price = json["price"];
-    categoryName = json["categoryName"];
-    estimateTimeFinish = json["estimateTimeFinish"];
+    if(json["orderServiceId"] is int) {
+      orderServiceId = json["orderServiceId"];
+    }
+    if(json["orderId"] is int) {
+      orderId = json["orderId"];
+    }
+    if(json["serviceId"] is int) {
+      serviceId = json["serviceId"];
+    }
+    if(json["serviceName"] is String) {
+      serviceName = json["serviceName"];
+    }
+    if(json["price"] is String) {
+      price = json["price"];
+    }
+    if(json["categoryName"] is String) {
+      categoryName = json["categoryName"];
+    }
+    if(json["estimateTimeFinish"] is String) {
+      estimateTimeFinish = json["estimateTimeFinish"];
+    }
   }
 
   static List<ListOrderServiceDto> fromList(List<Map<String, dynamic>> list) {
@@ -126,6 +179,7 @@ class ListOrderServiceDto {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["orderServiceId"] = orderServiceId;
+    _data["orderId"] = orderId;
     _data["serviceId"] = serviceId;
     _data["serviceName"] = serviceName;
     _data["price"] = price;
