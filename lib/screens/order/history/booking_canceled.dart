@@ -47,7 +47,7 @@ class _BookingCanceledState extends State<BookingCanceled> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 7);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 1002);
     return bookingLists;
   }
 

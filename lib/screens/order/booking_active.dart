@@ -1,11 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fms_employee/features/account_service.dart';
 import 'package:fms_employee/features/order_service.dart';
-import 'package:fms_employee/models/account_data.dart';
-import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
-import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
@@ -50,7 +45,7 @@ class _BookingActiveState extends State<BookingActive> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 2);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 4);
     return bookingLists;
   }
 
@@ -174,7 +169,7 @@ class _BookingActiveState extends State<BookingActive> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(BookingDetail('/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'?? "", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(

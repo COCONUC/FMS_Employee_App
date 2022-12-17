@@ -620,10 +620,10 @@ class _DetailScreenState extends State<DetailScreen> {
         shape: RoundedRectangleBorder(),
         onPressed: () {
           _reportOrder.description = descriptionController.text;
-          _reportOrder.urlImage = "assets/images/add.svg";
+          _reportOrder.urlImage = widget.img;
 
           OrderServices().sendReportOrder(4, _reportOrder);
-          Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
+          Constant.sendToScreen(ManagerOrderDetail(widget.img ?? "", widget.orderId), context);
         },
         child: Text("Gửi cho quản lý", style: TextStyle(
           color: Colors.black,

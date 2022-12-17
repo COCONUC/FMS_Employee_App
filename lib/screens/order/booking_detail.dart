@@ -225,7 +225,7 @@ class _BookingDetailState extends State<BookingDetail> {
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
-                      " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ").join('\n\n ') ?? "api: Danh sách dịch vụ",
+                      " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ").join('\n\n '),
                       16,
                       Colors.black,
                       100,
@@ -285,7 +285,7 @@ class _BookingDetailState extends State<BookingDetail> {
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                 if (detailData != null) {
                   Constant.sendToScreen(
-                      DetailScreen(widget.orderId, detailData, widget.img), context);
+                      DetailScreen(widget.orderId, detailData, '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'), context);
                 }
           }, 18,
                   weight: FontWeight.w600,

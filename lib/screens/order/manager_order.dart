@@ -101,16 +101,14 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-                        child: Hero(
-                          tag: widget.img,
+
                           child: Container(
                             height: FetchPixels.getPixelHeight(100),
                             width: FetchPixels.getPixelHeight(100),
                             decoration: BoxDecoration(
-                                image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/FMS_logo.png?alt=media&token=ba7e5f55-db6f-4d2c-9d53-cd3da0d952b3')
+                                image: getDecorationNetworkImage(context, widget.img)
                             ),
                           ),
-                        ),
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(40)),
 
