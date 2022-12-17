@@ -1,2 +1,2 @@
 
-String backEndUrl = 'https://furnituremanagementservice.azurewebsites.net';
+String backEndUrl = 'http://furniturecompany-001-site1.btempurl.com';
