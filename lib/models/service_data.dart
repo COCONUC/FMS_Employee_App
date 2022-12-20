@@ -13,15 +13,33 @@ class ServiceData {
   ServiceData({this.serviceId, this.serviceName, this.serviceDescription, this.price, this.type, this.createAt, this.updateAt, this.status, this.categoryName});
 
   ServiceData.fromJson(Map<String, dynamic> json) {
-    serviceId = json["serviceId"];
-    serviceName = json["serviceName"];
-    serviceDescription = json["serviceDescription"];
-    price = json["price"];
-    type = json["type"];
-    createAt = json["createAt"];
-    updateAt = json["updateAt"];
-    status = json["status"];
-    categoryName = json["categoryName"];
+    if(json["serviceId"] is int) {
+      serviceId = json["serviceId"];
+    }
+    if(json["serviceName"] is String) {
+      serviceName = json["serviceName"];
+    }
+    if(json["serviceDescription"] is String) {
+      serviceDescription = json["serviceDescription"];
+    }
+    if(json["price"] is String) {
+      price = json["price"];
+    }
+    if(json["type"] is String) {
+      type = json["type"];
+    }
+    if(json["createAt"] is String) {
+      createAt = json["createAt"];
+    }
+    if(json["updateAt"] is String) {
+      updateAt = json["updateAt"];
+    }
+    if(json["status"] is bool) {
+      status = json["status"];
+    }
+    if(json["categoryName"] is String) {
+      categoryName = json["categoryName"];
+    }
   }
 
   static List<ServiceData> fromList(List<Map<String, dynamic>> list) {
