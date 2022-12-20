@@ -35,7 +35,6 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
   List<ModelBooking> bookingLists = DataFile.bookingList;
   var index = 0;
 
-
   @override
   Widget build(BuildContext context) {
     ModelBooking modelBooking = bookingLists[index];
@@ -101,7 +100,6 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-
                           child: Container(
                             height: FetchPixels.getPixelHeight(100),
                             width: FetchPixels.getPixelHeight(100),
@@ -274,11 +272,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                 // setState(() {});
                 /*Constant.backToPrev(context);*/
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-
-
                 /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-
-
               }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

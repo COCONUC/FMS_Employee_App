@@ -1,20 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fms_employee/features/account_service.dart';
 import 'package:fms_employee/features/order_service.dart';
-import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
-import 'package:fms_employee/screens/notification_screen.dart';
-import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/order/manager_order.dart';
-import 'package:intl/intl.dart';
-
 
 class BookingInProcess extends StatefulWidget {
   static const String routeName = '/booking_ing_process';
@@ -105,10 +98,6 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
-                                getSvgImage("check_complete.svg",
-                                    color: mSecondaryColor,
-                                    width: FetchPixels.getPixelHeight(24),
-                                    height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
@@ -228,7 +217,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
         ));
   }
 
-  Expanded nullOrderView(BuildContext context) {
+  /*Expanded nullOrderView(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Column(
@@ -256,7 +245,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
           getVerSpace(FetchPixels.getPixelHeight(30)),
           getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
             setState(() {
-              /*schedule = true;*/
+              *//*schedule = true;*//*
             });
           }, 18,
               weight: FontWeight.w600,
@@ -271,7 +260,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
         ],
       ),
     );
-  }
+  }*/
 
   Widget nullListView() {
     return Column(

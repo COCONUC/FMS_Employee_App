@@ -98,9 +98,6 @@ class _BookingActiveState extends State<BookingActive> {
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
-                                /*getSvgImage("check_complete.svg",
-                                    width: FetchPixels.getPixelHeight(24),
-                                    height: FetchPixels.getPixelHeight(24)),*/
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",

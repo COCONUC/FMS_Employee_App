@@ -35,7 +35,6 @@ class _BookingDetailState extends State<BookingDetail> {
   List<ModelBooking> bookingLists = DataFile.bookingList;
   var index = 0;
 
-
   @override
   Widget build(BuildContext context) {
     ModelBooking modelBooking = bookingLists[index];
@@ -58,13 +57,6 @@ class _BookingDetailState extends State<BookingDetail> {
           Constant.backToPrev(context);
           return false;
         });
-  }
-
-  late final OrderDetailData detailData;
-
-  Future<OrderDetailData> futureDetailData() async{
-    detailData = await OrderServices().getOrderDetailById(widget.orderId);
-    return detailData;
   }
 
    Widget buildBookingDetail(BuildContext context, ModelBooking modelBooking) {
@@ -108,8 +100,6 @@ class _BookingDetailState extends State<BookingDetail> {
                   children: [
                     Align(
                       alignment: Alignment.topCenter,
-                      child: Container(
-                        /*tag: widget.img,*/
                         child: Container(
                           height: FetchPixels.getPixelHeight(100),
                           width: FetchPixels.getPixelHeight(100),
@@ -117,7 +107,6 @@ class _BookingDetailState extends State<BookingDetail> {
                               image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
                           ),
                         ),
-                      ),
                     ),
                     getVerSpace(FetchPixels.getPixelHeight(40)),
 
@@ -296,4 +285,12 @@ class _BookingDetailState extends State<BookingDetail> {
       ),
     );
   }
+
+  late OrderDetailData detailData;
+
+  Future<OrderDetailData> futureDetailData() async{
+    detailData = await OrderServices().getOrderDetailById(widget.orderId);
+    return detailData;
+  }
+
 }
