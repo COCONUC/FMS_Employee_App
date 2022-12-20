@@ -21,18 +21,18 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
-class DetailScreen extends StatefulWidget {
-  static const String routeName = '/detail_report_screen';
+class DetailEditingScreen extends StatefulWidget {
+  static const String routeName = '/detail_editing_screen';
   final int orderId;
   final OrderDetailData _data;
   final String img;
-  const DetailScreen(this.orderId, this._data, this.img, {Key? key}) : super(key: key);
+  const DetailEditingScreen(this.orderId, this._data, this.img, {Key? key}) : super(key: key);
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  State<DetailEditingScreen> createState() => _DetailEditingScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailEditingScreenState extends State<DetailEditingScreen> {
   static List<ModelSalon> salonProductLists = DataFile.salonProductList;
   // SharedPreferences? selection;
   var index = 0;
@@ -42,7 +42,6 @@ class _DetailScreenState extends State<DetailScreen> {
   final ReportOrder _reportOrder = ReportOrder();
 
   final ImagePicker imgPicker = ImagePicker();
-
 
   List<XFile>? imageFiles;
   bool isLoading = false;
