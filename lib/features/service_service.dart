@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:fms_employee/models/service_data.dart';
 import 'package:http/http.dart' as http;
-import '../constants/backend_querry.dart';
+import '../constants/backend_query.dart';
 
 class ServiceServices {
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fms_employee/constants/backend_querry.dart';
+import 'package:fms_employee/constants/backend_query.dart';
 import 'package:http/http.dart' as http;
 import 'package:fms_employee/models/account_data.dart';
 

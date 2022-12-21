@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
+import 'package:fms_employee/features/day_off_service.dart';
+import 'package:fms_employee/models/day_off_data.dart';
 import 'package:fms_employee/models/model_dayoff.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -10,7 +12,8 @@ import '../data/data_file.dart';
 
 class TabDayOff extends StatefulWidget {
   static const String routeName = '/tab_day_off';
-  const TabDayOff({Key? key}) : super(key: key);
+  final int employeeId;
+  const TabDayOff(this.employeeId, {Key? key}) : super(key: key);
 
   @override
   State<TabDayOff> createState() => _TabDayOffState();
@@ -92,8 +95,9 @@ class _TabDayOffState extends State<TabDayOff> {
               fontWeight: FontWeight.w400,
             )),
             getVerSpace(FetchPixels.getPixelHeight(10)),
-            buildBookingListItem(
-                boolModel, context, index, () {}, () {}),
+            /*buildBookingListItem(
+                boolModel, context, index, () {}, () {}),*/
+            dayOffPendingList(),
             getVerSpace(FetchPixels.getPixelHeight(20)),
           ],
         );
@@ -177,6 +181,142 @@ class _TabDayOffState extends State<TabDayOff> {
       ),
     );
   }
+
+  List<DayOffData> dayOffList = [];
+
+  Future<List<DayOffData>> getFutureService() async {
+    dayOffList = await DayOffServices().getDateOffListOfStaff(widget.employeeId);
+    return dayOffList;
+  }
+
+  Widget dayOffPendingList() {
+    return FutureBuilder<List<DayOffData>> (
+        future: getFutureService(),
+        builder: (context, snapshot){
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return snapshot.data!.isNotEmpty?
+            ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(top: FetchPixels.getPixelHeight(20)),
+              shrinkWrap: true,
+              primary: true,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    /*dateHeader(snapshot.data![index], index),*/
+                    getVerSpace(FetchPixels.getPixelHeight(10)),
+                    GestureDetector(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            bottom: FetchPixels.getPixelHeight(20),
+                            left: FetchPixels.getDefaultHorSpace(context),
+                            right: FetchPixels.getDefaultHorSpace(context)),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 10,
+                                  offset: Offset(0.0, 4.0)),
+                            ],
+                            borderRadius:
+                            BorderRadius.circular(FetchPixels.getPixelHeight(12))),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: FetchPixels.getPixelWidth(16),
+                            vertical: FetchPixels.getPixelHeight(16)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: getCustomFont(snapshot.data![index].dayOff ?? "",
+                                      16, Colors.black, 1,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                getHorSpace(FetchPixels.getPixelWidth(6)),
+                               /* getCustomFont(
+                                  snapshot.data![index].statusName ?? "api: trạng thái đơn",
+                                  13,
+                                  success,
+                                  1,
+                                  fontWeight: FontWeight.w600,
+                                )*/
+                              ],
+                            ),
+                            getVerSpace(FetchPixels.getPixelHeight(6)),
+                            getCustomFont(snapshot.data![index].reason ?? "", 14, textColor, 1,
+                                fontWeight: FontWeight.w400),
+                            getVerSpace(FetchPixels.getPixelHeight(20)),
+                            getDivider(dividerColor, 0, 1),
+                            getVerSpace(FetchPixels.getPixelHeight(20)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  /*tag: snapshot.data![index].customerId ?? "",*/
+                                  child: Container(
+                                    height: FetchPixels.getPixelHeight(42),
+                                    width: FetchPixels.getPixelHeight(42),
+                                    /*decoration: BoxDecoration(
+                                        image: getDecorationAssetImage(
+                                            context, "booking_owner1.png" ?? "")),*/
+                                  ),
+                                ),
+                                getHorSpace(FetchPixels.getPixelWidth(9)),
+                                Expanded(
+                                  flex: 1,
+                                  child: getCustomFont(
+                                    " ",
+                                    16,
+                                    Colors.black,
+                                    1,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                getSvgImage("call_icon.svg",height:FetchPixels.getPixelHeight(42),width: FetchPixels.getPixelHeight(42) ),
+                                getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
+                                    fontWeight: FontWeight.w400),
+                                // Container(
+                                //   height: FetchPixels.getPixelHeight(42),
+                                //   width: FetchPixels.getPixelHeight(42),
+                                //   decoration: BoxDecoration(
+                                //       image: getDecorationAssetImage(
+                                //           context, "round_chat.png")),
+                                // ),
+                                getHorSpace(FetchPixels.getPixelWidth(12)),
+
+
+                                // Container(
+                                //   height: FetchPixels.getPixelHeight(42),
+                                //   width: FetchPixels.getPixelHeight(42),
+                                //   decoration: BoxDecoration(
+                                //       image: getDecorationAssetImage(
+                                //           context, "call_bg.png")),
+                                // ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+
+                      },
+                    )
+                  ],
+                );
+              },
+            ): nullListView();
+          }
+        }
+    );
+  }
+
 
   GestureDetector buildBookingListItem(ModelDayOff modelDayOff,
       BuildContext context, int index, Function function, Function funDelete) {
@@ -286,6 +426,44 @@ class _TabDayOffState extends State<TabDayOff> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget nullListView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        getSvgImage("booking_null.svg",
+            height: FetchPixels.getPixelHeight(124),
+            width: FetchPixels.getPixelHeight(84.77)),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getCustomFont("Không Có Đơn Đăng Ký !", 20, Colors.black, 1,
+            fontWeight: FontWeight.w900, textAlign: TextAlign.center),
+        getVerSpace(FetchPixels.getPixelHeight(10)),
+        getCustomFont(
+          "Vui lòng chờ cập nhật mới từ hệ thống! ",
+          16,
+          Colors.black,
+          2,
+          fontWeight: FontWeight.w400,
+        ),
+        getVerSpace(FetchPixels.getPixelHeight(30)),
+        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
+          setState(() {
+            /*schedule = true;*/
+          });
+        }, 18,
+            weight: FontWeight.w600,
+            buttonHeight: FetchPixels.getPixelHeight(60),
+            insetsGeometry: EdgeInsets.symmetric(
+                horizontal: FetchPixels.getPixelWidth(98)),
+            borderRadius:
+            BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+            isBorder: true,
+            borderColor: blueColor,
+            borderWidth: 1.5)
+      ],
     );
   }
 

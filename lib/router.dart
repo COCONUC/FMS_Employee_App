@@ -27,11 +27,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const TabBooking(),
       );*/
-    case TabDayOff.routeName:
+    /*case TabDayOff.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const TabDayOff(),
-      );
+      );*/
     /*case DetailScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,

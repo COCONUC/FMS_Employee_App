@@ -23,7 +23,7 @@ class _NavScreenState extends State<NavScreen> {
 
   List<Widget> tabPages = [
     const TabBooking(3),
-    const TabDayOff(),
+    const TabDayOff(3),
     const TabProfile(3),
   ];
 
