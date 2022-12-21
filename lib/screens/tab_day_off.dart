@@ -82,29 +82,28 @@ class _TabDayOffState extends State<TabDayOff> {
   ListView buildScheduleList(EdgeInsets edgeInsets) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        ModelDayOff boolModel = scheduleList[index];
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            getPaddingWidget(edgeInsets,getCustomFont(
+            /*getPaddingWidget(edgeInsets,getCustomFont(
               boolModel.date ?? "",
               16,
               textColor,
               1,
               fontWeight: FontWeight.w400,
-            )),
-            getVerSpace(FetchPixels.getPixelHeight(10)),
+            )),*/
+            /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
             /*buildBookingListItem(
                 boolModel, context, index, () {}, () {}),*/
             dayOffPendingList(),
-            getVerSpace(FetchPixels.getPixelHeight(20)),
+
           ],
         );
       },
       shrinkWrap: true,
       primary: false,
-      itemCount: scheduleList.length,
+      itemCount: dayOffList.length + 1,
     );
   }
 
