@@ -131,33 +131,33 @@ class _TabDayOffState extends State<TabDayOff> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(20)),
         child: SfDateRangePicker(
+          enablePastDates: false,
+          minDate: DateTime.now().add(const Duration(days: 7)),
           monthViewSettings: const DateRangePickerMonthViewSettings(
-            dayFormat: "EEE",
+            dayFormat: "EEE", firstDayOfWeek: 1,
           ),
           onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-
+            print(args.value);
           },
           selectionShape: DateRangePickerSelectionShape.circle,
           showNavigationArrow: true,
           backgroundColor: Colors.white,
-          rangeSelectionColor: Colors.white,
+          selectionColor: mBlueColor,
           rangeTextStyle: TextStyle(
             color: Colors.black,
             fontSize: FetchPixels.getPixelHeight(14),
             fontWeight: FontWeight.w400,
           ),
-          startRangeSelectionColor: blueColor,
-          endRangeSelectionColor: blueColor,
           monthCellStyle: DateRangePickerMonthCellStyle(
               todayCellDecoration: BoxDecoration(
-                  border: Border.all(color: blueColor), shape: BoxShape.circle),
+                  border: Border.all(color: mSecondaryColor), shape: BoxShape.circle),
               textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: FetchPixels.getPixelHeight(14),
                 fontWeight: FontWeight.w400,
               ),
               todayTextStyle: TextStyle(
-                color: blueColor,
+                color: mBlueColor,
                 fontSize: FetchPixels.getPixelHeight(14),
                 fontWeight: FontWeight.w400,
               )),
@@ -166,7 +166,7 @@ class _TabDayOffState extends State<TabDayOff> {
             fontSize: FetchPixels.getPixelHeight(14),
             fontWeight: FontWeight.w400,
           ),
-          selectionMode: DateRangePickerSelectionMode.range,
+          selectionMode: DateRangePickerSelectionMode.single,
           headerStyle: DateRangePickerHeaderStyle(
               textAlign: TextAlign.start,
               textStyle: TextStyle(

@@ -67,7 +67,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                       getVerSpace(FetchPixels.getPixelHeight(20)),
                       serviceToChooseList(),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      totalContainer(),
+                      /*totalContainer(),*/
                       addServicesButton(context),
                       getVerSpace(FetchPixels.getPixelHeight(30))
                     ],
@@ -166,6 +166,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                                   price: snapshot.data![index].price)
                                   ));
                                   setState(() {});
+                                  print(listChosenService.first.toString());
                                 }, 14,
                                 weight: FontWeight.w600,
                                 insetsGeometrypadding: EdgeInsets.symmetric(

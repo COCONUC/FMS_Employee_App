@@ -39,8 +39,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
 
   final TextEditingController descriptionController = TextEditingController();
 
-  final ReportOrder _reportOrder = ReportOrder();
-
   final ImagePicker imgPicker = ImagePicker();
 
   List<XFile>? imageFiles;
@@ -573,6 +571,8 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         insetsGeometry: EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)));
   }
+
+  final ReportOrder _reportOrder = ReportOrder();
 
   void getNewService() async {
     List<ChosenService> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
