@@ -192,6 +192,5 @@ class ListOrderServiceDto {
 class ChosenService {
   final int quantity;
   final ListOrderServiceDto service;
-
   ChosenService({required this.quantity, required this.service});
 }
