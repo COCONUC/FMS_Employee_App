@@ -82,6 +82,7 @@ class _TabDayOffState extends State<TabDayOff> {
   ListView buildScheduleList(EdgeInsets edgeInsets) {
     return ListView.builder(
       itemBuilder: (context, index) {
+        ModelDayOff boolModel = scheduleList[index];
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,8 +95,8 @@ class _TabDayOffState extends State<TabDayOff> {
               fontWeight: FontWeight.w400,
             )),*/
             /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
-            /*buildBookingListItem(
-                boolModel, context, index, () {}, () {}),*/
+            buildBookingListItem(
+                boolModel, context, index, () {}, () {}),
             dayOffPendingList(),
 
           ],
@@ -233,7 +234,7 @@ class _TabDayOffState extends State<TabDayOff> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: getCustomFont(snapshot.data![index].dayOff ?? "",
+                                  child: getCustomFont(snapshot.data![index].dayOff!.substring(0,10) ?? "",
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
@@ -247,11 +248,12 @@ class _TabDayOffState extends State<TabDayOff> {
                                 )*/
                               ],
                             ),
-                            getVerSpace(FetchPixels.getPixelHeight(6)),
+                            getVerSpace(FetchPixels.getPixelHeight(10)),
+                            getDivider(dividerColor, 0, 1),
+                            getVerSpace(FetchPixels.getPixelHeight(10)),
                             getCustomFont(snapshot.data![index].reason ?? "", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
-                            getDivider(dividerColor, 0, 1),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -278,7 +280,6 @@ class _TabDayOffState extends State<TabDayOff> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                getSvgImage("call_icon.svg",height:FetchPixels.getPixelHeight(42),width: FetchPixels.getPixelHeight(42) ),
                                 getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
                                     fontWeight: FontWeight.w400),
                                 // Container(
@@ -448,9 +449,9 @@ class _TabDayOffState extends State<TabDayOff> {
           fontWeight: FontWeight.w400,
         ),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
+        /*getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
           setState(() {
-            /*schedule = true;*/
+            *//*schedule = true;*//*
           });
         }, 18,
             weight: FontWeight.w600,
@@ -461,7 +462,7 @@ class _TabDayOffState extends State<TabDayOff> {
             BorderRadius.circular(FetchPixels.getPixelHeight(14)),
             isBorder: true,
             borderColor: blueColor,
-            borderWidth: 1.5)
+            borderWidth: 1.5)*/
       ],
     );
   }
