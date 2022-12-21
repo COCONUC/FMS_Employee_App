@@ -234,7 +234,7 @@ class _TabDayOffState extends State<TabDayOff> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: getCustomFont(snapshot.data![index].dayOff!.substring(0,10) ?? "",
+                                  child: getCustomFont("Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0,10)}" ?? "",
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
@@ -251,7 +251,7 @@ class _TabDayOffState extends State<TabDayOff> {
                             getVerSpace(FetchPixels.getPixelHeight(10)),
                             getDivider(dividerColor, 0, 1),
                             getVerSpace(FetchPixels.getPixelHeight(10)),
-                            getCustomFont(snapshot.data![index].reason ?? "", 14, textColor, 1,
+                            getCustomFont("Lý do: ${snapshot.data![index].reason}" ?? "", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
@@ -280,17 +280,34 @@ class _TabDayOffState extends State<TabDayOff> {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
-                                    fontWeight: FontWeight.w400),
+                                /*getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
+                                    fontWeight: FontWeight.w400),*/
+                                Wrap(
+                                  children: [
+                                    getButton(
+                                        context,
+                                        Color(0xFFEEFCF0),
+                                        snapshot.data![index].status.toString() ?? "",
+                                        success,
+                                            () {},
+                                        16,
+                                        weight: FontWeight.w600,
+                                        borderRadius:
+                                        BorderRadius.circular(FetchPixels.getPixelHeight(37)),
+                                        insetsGeometrypadding: EdgeInsets.symmetric(
+                                            vertical: FetchPixels.getPixelHeight(6),
+                                            horizontal: FetchPixels.getPixelWidth(12)))
+                                  ],
+                                ),
                                 // Container(
                                 //   height: FetchPixels.getPixelHeight(42),
                                 //   width: FetchPixels.getPixelHeight(42),
                                 //   decoration: BoxDecoration(
                                 //       image: getDecorationAssetImage(
                                 //           context, "round_chat.png")),
-                                // ),
-                                getHorSpace(FetchPixels.getPixelWidth(12)),
+                                //
 
+                                getHorSpace(FetchPixels.getPixelWidth(12)),
 
                                 // Container(
                                 //   height: FetchPixels.getPixelHeight(42),
