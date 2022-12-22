@@ -5,6 +5,7 @@ import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/day_off_data.dart';
 import 'package:fms_employee/models/model_dayoff.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../constants/resizer/fetch_pixels.dart';
 import '../constants/widget_utils.dart';
@@ -35,7 +36,7 @@ class _TabDayOffState extends State<TabDayOff> {
         children: [
           getVerSpace(FetchPixels.getPixelHeight(50)),
           buildSearchBar(edgeInsets, context),
-         /* schedule == true ? Container() : nullScheduleView(context),*/
+          /* schedule == true ? Container() : nullScheduleView(context),*/
           schedule == true
               ? buildScheduleWidget(edgeInsets, context)
               : Container()
@@ -55,10 +56,10 @@ class _TabDayOffState extends State<TabDayOff> {
             fontsize: 24,
             istext: true,
             rightimage: "notification.svg", rightFunction: () {
-              /*Constant.sendToNext(context, Routes.notificationRoutes);*/
-              Constant.sendToScreen(NotificationScreen(), context);
-              /*Navigator.of(context).pushReplacementNamed(NotificationScreen.routeName);*/
-            }));
+          /*Constant.sendToNext(context, Routes.notificationRoutes);*/
+          Constant.sendToScreen(NotificationScreen(), context);
+          /*Navigator.of(context).pushReplacementNamed(NotificationScreen.routeName);*/
+        }));
   }
 
   Expanded buildScheduleWidget(EdgeInsets edgeInsets, BuildContext context) {
@@ -82,7 +83,7 @@ class _TabDayOffState extends State<TabDayOff> {
   ListView buildScheduleList(EdgeInsets edgeInsets) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        ModelDayOff boolModel = scheduleList[index];
+        /*ModelDayOff boolModel = scheduleList[index];*/
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,10 +96,9 @@ class _TabDayOffState extends State<TabDayOff> {
               fontWeight: FontWeight.w400,
             )),*/
             /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
-            buildBookingListItem(
-                boolModel, context, index, () {}, () {}),
+            /* buildBookingListItem(
+                boolModel, context, index, () {}, () {}),*/
             dayOffPendingList(),
-
           ],
         );
       },
@@ -108,15 +108,14 @@ class _TabDayOffState extends State<TabDayOff> {
     );
   }
 
-
   Widget addReminderButton(BuildContext context) {
-    return getButton(context, const Color(0xFFF2F4F8), "Đăng ký",
-        blueColor, () {}, 18,
+    return getButton(
+        context, const Color(0xFFF2F4F8), "Đăng ký", blueColor, () {}, 18,
         weight: FontWeight.w600,
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)),
         buttonHeight: FetchPixels.getPixelHeight(60),
         insetsGeometry:
-        EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(95)));
+            EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(95)));
   }
 
   Container calendar(EdgeInsets edgeInsets) {
@@ -138,10 +137,11 @@ class _TabDayOffState extends State<TabDayOff> {
           enablePastDates: false,
           minDate: DateTime.now().add(const Duration(days: 7)),
           monthViewSettings: const DateRangePickerMonthViewSettings(
-            dayFormat: "EEE", firstDayOfWeek: 1,
+            dayFormat: "EEE",
+            firstDayOfWeek: 1,
           ),
           onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-            print(args.value);
+            print(DateFormat('dd-MM-yyyy').format(args.value));
           },
           selectionShape: DateRangePickerSelectionShape.circle,
           showNavigationArrow: true,
@@ -154,7 +154,8 @@ class _TabDayOffState extends State<TabDayOff> {
           ),
           monthCellStyle: DateRangePickerMonthCellStyle(
               todayCellDecoration: BoxDecoration(
-                  border: Border.all(color: mSecondaryColor), shape: BoxShape.circle),
+                  border: Border.all(color: mSecondaryColor),
+                  shape: BoxShape.circle),
               textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: FetchPixels.getPixelHeight(14),
@@ -185,157 +186,196 @@ class _TabDayOffState extends State<TabDayOff> {
   List<DayOffData> dayOffList = [];
 
   Future<List<DayOffData>> getFutureService() async {
-    dayOffList = await DayOffServices().getDateOffListOfStaff(widget.employeeId);
+    dayOffList =
+        await DayOffServices().getDateOffListOfStaff(widget.employeeId);
     return dayOffList;
   }
 
   Widget dayOffPendingList() {
-    return FutureBuilder<List<DayOffData>> (
+    return FutureBuilder<List<DayOffData>>(
         future: getFutureService(),
-        builder: (context, snapshot){
+        builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return snapshot.data!.isNotEmpty?
-            ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: FetchPixels.getPixelHeight(20)),
-              shrinkWrap: true,
-              primary: true,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    /*dateHeader(snapshot.data![index], index),*/
-                    getVerSpace(FetchPixels.getPixelHeight(10)),
-                    GestureDetector(
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            bottom: FetchPixels.getPixelHeight(20),
-                            left: FetchPixels.getDefaultHorSpace(context),
-                            right: FetchPixels.getDefaultHorSpace(context)),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 10,
-                                  offset: Offset(0.0, 4.0)),
-                            ],
-                            borderRadius:
-                            BorderRadius.circular(FetchPixels.getPixelHeight(12))),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: FetchPixels.getPixelWidth(16),
-                            vertical: FetchPixels.getPixelHeight(16)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: getCustomFont("Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0,10)}" ?? "",
-                                      16, Colors.black, 1,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                                getHorSpace(FetchPixels.getPixelWidth(6)),
-                               /* getCustomFont(
+            return snapshot.data!.isNotEmpty
+                ? ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    padding:
+                        EdgeInsets.only(top: FetchPixels.getPixelHeight(20)),
+                    shrinkWrap: true,
+                    primary: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          /*dateHeader(snapshot.data![index], index),*/
+                          getVerSpace(FetchPixels.getPixelHeight(10)),
+                          GestureDetector(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  bottom: FetchPixels.getPixelHeight(20),
+                                  left: FetchPixels.getDefaultHorSpace(context),
+                                  right:
+                                      FetchPixels.getDefaultHorSpace(context)),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 10,
+                                        offset: Offset(0.0, 4.0)),
+                                  ],
+                                  borderRadius: BorderRadius.circular(
+                                      FetchPixels.getPixelHeight(12))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: FetchPixels.getPixelWidth(16),
+                                  vertical: FetchPixels.getPixelHeight(16)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: getCustomFont(
+                                            "Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0, 10)}" ??
+                                                "",
+                                            16,
+                                            Colors.black,
+                                            1,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                      getHorSpace(FetchPixels.getPixelWidth(6)),
+                                      /* getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
                                   success,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )*/
-                              ],
-                            ),
-                            getVerSpace(FetchPixels.getPixelHeight(10)),
-                            getDivider(dividerColor, 0, 1),
-                            getVerSpace(FetchPixels.getPixelHeight(10)),
-                            getCustomFont("Lý do: ${snapshot.data![index].reason}" ?? "", 14, textColor, 1,
-                                fontWeight: FontWeight.w400),
-                            getVerSpace(FetchPixels.getPixelHeight(20)),
-                            getVerSpace(FetchPixels.getPixelHeight(20)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  /*tag: snapshot.data![index].customerId ?? "",*/
-                                  child: Container(
-                                    height: FetchPixels.getPixelHeight(42),
-                                    width: FetchPixels.getPixelHeight(42),
-                                    /*decoration: BoxDecoration(
+                                    ],
+                                  ),
+                                  getVerSpace(FetchPixels.getPixelHeight(10)),
+                                  getDivider(dividerColor, 0, 1),
+                                  getVerSpace(FetchPixels.getPixelHeight(10)),
+                                  getCustomFont(
+                                      "Lý do: ${snapshot.data![index].reason}" ??
+                                          "",
+                                      14,
+                                      textColor,
+                                      1,
+                                      fontWeight: FontWeight.w400),
+                                  getVerSpace(FetchPixels.getPixelHeight(20)),
+                                  getVerSpace(FetchPixels.getPixelHeight(20)),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        /*tag: snapshot.data![index].customerId ?? "",*/
+                                        child: Container(
+                                          height:
+                                              FetchPixels.getPixelHeight(42),
+                                          width: FetchPixels.getPixelHeight(42),
+                                          /*decoration: BoxDecoration(
                                         image: getDecorationAssetImage(
                                             context, "booking_owner1.png" ?? "")),*/
-                                  ),
-                                ),
-                                getHorSpace(FetchPixels.getPixelWidth(9)),
-                                Expanded(
-                                  flex: 1,
-                                  child: getCustomFont(
-                                    " ",
-                                    16,
-                                    Colors.black,
-                                    1,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                /*getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
+                                        ),
+                                      ),
+                                      getHorSpace(FetchPixels.getPixelWidth(9)),
+                                      Expanded(
+                                        flex: 1,
+                                        child: getCustomFont(
+                                          " ",
+                                          16,
+                                          Colors.black,
+                                          1,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      /*getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
                                     fontWeight: FontWeight.w400),*/
-                                Wrap(
-                                  children: [
-                                    getButton(
-                                        context,
-                                        Color(0xFFEEFCF0),
-                                        snapshot.data![index].status.toString() ?? "",
-                                        success,
-                                            () {},
-                                        16,
-                                        weight: FontWeight.w600,
-                                        borderRadius:
-                                        BorderRadius.circular(FetchPixels.getPixelHeight(37)),
-                                        insetsGeometrypadding: EdgeInsets.symmetric(
-                                            vertical: FetchPixels.getPixelHeight(6),
-                                            horizontal: FetchPixels.getPixelWidth(12)))
-                                  ],
-                                ),
-                                // Container(
-                                //   height: FetchPixels.getPixelHeight(42),
-                                //   width: FetchPixels.getPixelHeight(42),
-                                //   decoration: BoxDecoration(
-                                //       image: getDecorationAssetImage(
-                                //           context, "round_chat.png")),
-                                //
+                                      if (snapshot.data![index].status == true)
+                                        Wrap(
+                                          children: [
+                                            getButton(
+                                                context,
+                                                Color(0xFFEEFCF0),
+                                                "Đã duyệt",
+                                                success,
+                                                () {},
+                                                16,
+                                                weight: FontWeight.w600,
+                                                borderRadius: BorderRadius
+                                                    .circular(FetchPixels
+                                                        .getPixelHeight(37)),
+                                                insetsGeometrypadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: FetchPixels
+                                                            .getPixelHeight(6),
+                                                        horizontal: FetchPixels
+                                                            .getPixelWidth(12)))
+                                          ],
+                                        )
+                                      else
+                                        Wrap(
+                                          children: [
+                                            getButton(
+                                                context,
+                                                error,
+                                                "Từ chối",
+                                                Colors.white,
+                                                () {},
+                                                16,
+                                                weight: FontWeight.w600,
+                                                borderRadius: BorderRadius
+                                                    .circular(FetchPixels
+                                                        .getPixelHeight(37)),
+                                                insetsGeometrypadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: FetchPixels
+                                                            .getPixelHeight(6),
+                                                        horizontal: FetchPixels
+                                                            .getPixelWidth(12)))
+                                          ],
+                                        ),
+                                      // Container(
+                                      //   height: FetchPixels.getPixelHeight(42),
+                                      //   width: FetchPixels.getPixelHeight(42),
+                                      //   decoration: BoxDecoration(
+                                      //       image: getDecorationAssetImage(
+                                      //           context, "round_chat.png")),
+                                      //
 
-                                getHorSpace(FetchPixels.getPixelWidth(12)),
+                                      getHorSpace(
+                                          FetchPixels.getPixelWidth(12)),
 
-                                // Container(
-                                //   height: FetchPixels.getPixelHeight(42),
-                                //   width: FetchPixels.getPixelHeight(42),
-                                //   decoration: BoxDecoration(
-                                //       image: getDecorationAssetImage(
-                                //           context, "call_bg.png")),
-                                // ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-
-                      },
-                    )
-                  ],
-                );
-              },
-            ): nullListView();
+                                      // Container(
+                                      //   height: FetchPixels.getPixelHeight(42),
+                                      //   width: FetchPixels.getPixelHeight(42),
+                                      //   decoration: BoxDecoration(
+                                      //       image: getDecorationAssetImage(
+                                      //           context, "call_bg.png")),
+                                      // ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            onTap: () {},
+                          )
+                        ],
+                      );
+                    },
+                  )
+                : nullListView();
           }
-        }
-    );
+        });
   }
 
-
-  GestureDetector buildBookingListItem(ModelDayOff modelDayOff,
+  /*GestureDetector buildBookingListItem(ModelDayOff modelDayOff,
       BuildContext context, int index, Function function, Function funDelete) {
     return GestureDetector(
       onTap: () {
@@ -358,7 +398,8 @@ class _TabDayOffState extends State<TabDayOff> {
                   blurRadius: 10,
                   offset: Offset(0.0, 4.0)),
             ],
-            borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(12))),
+            borderRadius:
+                BorderRadius.circular(FetchPixels.getPixelHeight(12))),
         child: Column(
           children: [
             Expanded(
@@ -373,9 +414,12 @@ class _TabDayOffState extends State<TabDayOff> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(flex: 1,child: getHorSpace(0),),
-                        getCustomFont(
-                            "api: Ngày nghỉ bắt đầu - kết thúc", 16, Colors.black, 1,
+                        Expanded(
+                          flex: 1,
+                          child: getHorSpace(0),
+                        ),
+                        getCustomFont("api: Ngày nghỉ bắt đầu - kết thúc", 16,
+                            Colors.black, 1,
                             fontWeight: FontWeight.w900),
                         getVerSpace(FetchPixels.getPixelHeight(12)),
                         getCustomFont(
@@ -386,7 +430,10 @@ class _TabDayOffState extends State<TabDayOff> {
                           fontWeight: FontWeight.w400,
                         ),
                         getVerSpace(FetchPixels.getPixelHeight(12)),
-                        Expanded(flex: 1,child: getHorSpace(0),),
+                        Expanded(
+                          flex: 1,
+                          child: getHorSpace(0),
+                        ),
                       ],
                     ),
                   ),
@@ -417,7 +464,8 @@ class _TabDayOffState extends State<TabDayOff> {
                     getAssetImage("dot.png", FetchPixels.getPixelHeight(8),
                         FetchPixels.getPixelHeight(8)),
                     getHorSpace(FetchPixels.getPixelWidth(8)),
-                    getCustomFont("api: Tiến độ giải quyết đơn", 14, textColor, 1,
+                    getCustomFont(
+                        "api: Tiến độ giải quyết đơn", 14, textColor, 1,
                         fontWeight: FontWeight.w400),
                   ],
                 ),
@@ -428,11 +476,11 @@ class _TabDayOffState extends State<TabDayOff> {
                         Color(modelDayOff.bgColor!.toInt()),
                         modelDayOff.tag ?? "",
                         modelDayOff.textColor!,
-                            () {},
+                        () {},
                         16,
                         weight: FontWeight.w600,
-                        borderRadius:
-                        BorderRadius.circular(FetchPixels.getPixelHeight(37)),
+                        borderRadius: BorderRadius.circular(
+                            FetchPixels.getPixelHeight(37)),
                         insetsGeometrypadding: EdgeInsets.symmetric(
                             vertical: FetchPixels.getPixelHeight(6),
                             horizontal: FetchPixels.getPixelWidth(12)))
@@ -444,7 +492,7 @@ class _TabDayOffState extends State<TabDayOff> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget nullListView() {
     return Column(
@@ -468,7 +516,7 @@ class _TabDayOffState extends State<TabDayOff> {
         getVerSpace(FetchPixels.getPixelHeight(30)),
         /*getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
           setState(() {
-            *//*schedule = true;*//*
+            */ /*schedule = true;*/ /*
           });
         }, 18,
             weight: FontWeight.w600,
@@ -483,5 +531,4 @@ class _TabDayOffState extends State<TabDayOff> {
       ],
     );
   }
-
 }
