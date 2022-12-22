@@ -1,4 +1,5 @@
 import 'package:fms_employee/models/day_off_data.dart';
+import 'package:fms_employee/models/day_off_register_data.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fms_employee/constants/backend_query.dart';
@@ -35,6 +36,30 @@ Future<List<DayOffData>> getDateOffListOfStaff(employeeId) async {
   } catch (e) {
     throw Exception(e);
   }
+}
+
+//Gửi yêu cầu đăng ký ngày nghỉ
+Future<void> sendDayOffForm(DayOffRegisterData dayOff) async{
+  try{
+    final response = await http.put(
+        Uri.parse(
+            '$backEndUrl/employee/employeeCreateFormForAbsent'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(dayOff.toJson())
+
+    );
+    if(response.statusCode == 200){
+      print("Gửi thành công");
+    } else{
+      print("gửi không thành công");
+      print(response.body);
+    }
+  } catch (e){
+    throw Exception(e);
+  }
+
 }
 
 }

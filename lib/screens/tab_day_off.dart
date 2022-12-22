@@ -5,6 +5,7 @@ import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/day_off_data.dart';
 import 'package:fms_employee/models/model_dayoff.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
+import 'package:fms_employee/widgets/day_off_register_form.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../constants/resizer/fetch_pixels.dart';
@@ -23,6 +24,7 @@ class TabDayOff extends StatefulWidget {
 class _TabDayOffState extends State<TabDayOff> {
   bool schedule = true;
   List<ModelDayOff> scheduleList = DataFile.scheduleList;
+  String date = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,22 @@ class _TabDayOffState extends State<TabDayOff> {
 
   Widget addReminderButton(BuildContext context) {
     return getButton(
-        context, const Color(0xFFF2F4F8), "Đăng ký", blueColor, () {}, 18,
+        context, mBlueColor, "Đăng ký", Colors.white, () {
+      showModalBottomSheet(
+          backgroundColor: Colors.white,
+          isDismissible: false,
+          isScrollControlled: true,
+          context: context,
+          constraints: BoxConstraints(maxHeight: FetchPixels.getPixelHeight(700)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(FetchPixels.getPixelHeight(40)),
+            ),
+          ),
+          builder: (context) {
+            return DayOffRegisterScreen(widget.employeeId, date);
+          });
+    }, 18,
         weight: FontWeight.w600,
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)),
         buttonHeight: FetchPixels.getPixelHeight(60),
@@ -142,6 +159,7 @@ class _TabDayOffState extends State<TabDayOff> {
           ),
           onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
             print(DateFormat('dd-MM-yyyy').format(args.value));
+            date = DateFormat('dd-MM-yyyy').format(args.value);
           },
           selectionShape: DateRangePickerSelectionShape.circle,
           showNavigationArrow: true,
