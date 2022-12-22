@@ -114,6 +114,7 @@ class _TabDayOffState extends State<TabDayOff> {
   Widget registerButton(BuildContext context) {
     return getButton(
         context, mBlueColor, "Đăng ký", Colors.white, () {
+      if (date != " "){
       showModalBottomSheet(
           backgroundColor: Colors.white,
           isDismissible: false,
@@ -126,13 +127,16 @@ class _TabDayOffState extends State<TabDayOff> {
             ),
           ),
           builder: (context) {
-            if (date != " "){
             return DayOffRegisterScreen(widget.employeeId, date);
-            }
-            else {
-              return WarningDialog();
-            }
-          });
+          });}
+      else{
+        showDialog(
+            barrierDismissible: false,
+            builder: (context) {
+              return const WarningDialog();
+            },
+            context: context);
+      }
     }, 18,
         weight: FontWeight.w600,
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)),
