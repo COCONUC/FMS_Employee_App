@@ -4,14 +4,14 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 
-class ConfirmDialog extends StatefulWidget {
-  const ConfirmDialog({Key? key}) : super(key: key);
+class WarningDialog extends StatefulWidget {
+  const WarningDialog({Key? key}) : super(key: key);
 
   @override
-  State<ConfirmDialog> createState() => _ConfirmDialogState();
+  State<WarningDialog> createState() => _WarningDialogState();
 }
 
-class _ConfirmDialogState extends State<ConfirmDialog> {
+class _WarningDialogState extends State<WarningDialog> {
   Future<bool> _onWillPop() async {
     return false;
   }
@@ -33,15 +33,15 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getSvgImage("confirm.svg",
+               /* getSvgImage("confirm.svg",
                     width: FetchPixels.getPixelHeight(71.37),
-                    height: FetchPixels.getPixelHeight(99.92)),
+                    height: FetchPixels.getPixelHeight(99.92)),*/
                 getVerSpace(FetchPixels.getPixelHeight(40)),
-                getCustomFont("Booking Confirmed", 22, Colors.black, 1,
-                  fontWeight: FontWeight.w900, ),
+                /*getCustomFont("Booking Confirmed", 22, Colors.black, 1,
+                  fontWeight: FontWeight.w900, ),*/
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 getMultilineCustomFont(
-                    "Your booking has been successfully confirmed!",
+                    "Vui lòng chọn ngày muốn đăng ký nghỉ!",
                     16,
                     Colors.black,
 
@@ -49,10 +49,10 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                     txtHeight:1.3,
                     textAlign: TextAlign.center),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
-                getButton(context, blueColor, "Ok", Colors.white, () {
+                getButton(context, blueColor, "Quay lại", Colors.white, () {
                   Constant.backToPrev(context);
 
-                 /* Navigator.push(context,
+                  /* Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const HomeScreen(1)));*/
                 }, 18,
                     weight: FontWeight.w600,

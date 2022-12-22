@@ -6,6 +6,7 @@ import 'package:fms_employee/models/day_off_data.dart';
 import 'package:fms_employee/models/model_dayoff.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/widgets/day_off_register_form.dart';
+import 'package:fms_employee/widgets/dialog/warning_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../constants/resizer/fetch_pixels.dart';
@@ -74,7 +75,7 @@ class _TabDayOffState extends State<TabDayOff> {
           getVerSpace(FetchPixels.getPixelHeight(30)),
           calendar(edgeInsets),
           getVerSpace(FetchPixels.getPixelHeight(30)),
-          addReminderButton(context),
+          registerButton(context),
           getVerSpace(FetchPixels.getPixelHeight(20)),
           buildScheduleList(edgeInsets)
         ],
@@ -110,7 +111,7 @@ class _TabDayOffState extends State<TabDayOff> {
     );
   }
 
-  Widget addReminderButton(BuildContext context) {
+  Widget registerButton(BuildContext context) {
     return getButton(
         context, mBlueColor, "Đăng ký", Colors.white, () {
       showModalBottomSheet(
@@ -125,7 +126,12 @@ class _TabDayOffState extends State<TabDayOff> {
             ),
           ),
           builder: (context) {
+            if (date != " "){
             return DayOffRegisterScreen(widget.employeeId, date);
+            }
+            else {
+              return WarningDialog();
+            }
           });
     }, 18,
         weight: FontWeight.w600,
