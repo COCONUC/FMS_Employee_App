@@ -51,9 +51,6 @@ class _WarningDialogState extends State<WarningDialog> {
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 getButton(context, blueColor, "Quay lại", Colors.white, () {
                   Constant.backToPrev(context);
-
-                  /* Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen(1)));*/
                 }, 18,
                     weight: FontWeight.w600,
                     buttonHeight: FetchPixels.getPixelHeight(60),
