@@ -619,8 +619,15 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         shape: RoundedRectangleBorder(),
         onPressed: () {
           _reportOrder.description = descriptionController.text;
-          _reportOrder.urlImage = widget.img;
-          OrderServices().sendReportOrder(4, _reportOrder);
+          _reportOrder.orderId = widget.orderId;
+          _reportOrder.listEmployeeCreateOrderImageListDto?.add(
+              ListEmployeeCreateOrderImageListDto(
+                  orderId: widget.orderId,
+                imageUrl: widget.img,
+                  status: true
+              )
+          );
+          OrderServices().sendReportOrder(widget.orderId, _reportOrder);
           Constant.sendToScreen(ManagerOrderDetail(widget.img ?? "", widget.orderId), context);
         },
         child: Text("Gửi cho quản lý", style: TextStyle(

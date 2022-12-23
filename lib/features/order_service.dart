@@ -100,6 +100,7 @@ class OrderServices {
         body: jsonEncode(service.toJson())
 
       );
+      print(service.toJson());
       if(response.statusCode == 200){
         print("Gửi thành công");
       } else{
