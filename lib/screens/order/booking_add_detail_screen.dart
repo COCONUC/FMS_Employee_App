@@ -424,37 +424,11 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  Container totalContainer() {
-    return Container(
-      child: total == 0.00
-          ? Container()
-          : Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              getCustomFont("Tổng cộng", 24, Colors.black, 1,
-                  fontWeight: FontWeight.w900),
-              getCustomFont(
-                /*"$total VNĐ"*/ "api: Tổng giá tiền",
-                24,
-                Colors.black,
-                1,
-                fontWeight: FontWeight.w900,
-              )
-            ],
-          ),
-          getVerSpace(FetchPixels.getPixelHeight(30)),
-        ],
-      ),
-    );
-  }
-
   Column deleteButton(ModelSalon modelSalon, BuildContext context, int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Column(
+         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -462,7 +436,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               onTap: () {
 
               },
-              child: getSvgImage("trash.svg",
+              child: getSvgImage("trash.svg",color: Colors.deepOrange,
                   width: FetchPixels.getPixelHeight(20),
                   height: FetchPixels.getPixelHeight(20)),
             )
@@ -594,6 +568,32 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         // FetchPixels.getPixelWidth(374), FetchPixels.getPixelHeight(225),
         // boxFit: BoxFit.fill),);
   }*/
+
+  Container totalContainer() {
+    return Container(
+      child: total == 0.00
+          ? Container()
+          : Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              getCustomFont("Tổng cộng", 24, Colors.black, 1,
+                  fontWeight: FontWeight.w900),
+              getCustomFont(
+                /*"$total VNĐ"*/ "api: Tổng giá tiền",
+                24,
+                Colors.black,
+                1,
+                fontWeight: FontWeight.w900,
+              )
+            ],
+          ),
+          getVerSpace(FetchPixels.getPixelHeight(30)),
+        ],
+      ),
+    );
+  }
 
   Widget nullServiceView() {
     return Column(
