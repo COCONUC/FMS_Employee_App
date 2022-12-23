@@ -20,6 +20,7 @@ class ServiceDialog extends StatefulWidget {
 
 class _ServiceDialogState extends State<ServiceDialog> {
   var total = 0.00;
+  int chosenQuantity = 0;
   static List<ModelColor> hairColorLists = DataFile.hairColorList;
 
   List<ServiceData> serviceLists = [];
@@ -145,6 +146,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                   if (modelColor.quantity == 0)
                     getButton(context, Colors.transparent, "Thêm", blueColor,
                         () {
+                      chosenQuantity = chosenQuantity + 1;
                       modelColor.quantity = (modelColor.quantity! + 1);
                       total = total + (modelColor.price! * 1);
                       DataFile.cartList[index.toString()] = ModelCart(
@@ -154,7 +156,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                           modelColor.rating,
                           modelColor.price,
                           modelColor.quantity);
-                      listService.add(ListChosenService(serviceId: snapshot.data![index].serviceId, quantity: modelColor.quantity));
+                      listChosenService.add(ListChosenService(serviceId: snapshot.data![index].serviceId, quantity: chosenQuantity));
                       setState(() {});
                     }, 14,
                         weight: FontWeight.w600,
@@ -174,6 +176,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                               width: FetchPixels.getPixelHeight(30),
                               height: FetchPixels.getPixelHeight(30)),
                           onTap: () {
+                            chosenQuantity = chosenQuantity + 1;
                             modelColor.quantity = (modelColor.quantity! + 1);
                             total = total + (modelColor.price! * 1);
                             DataFile.cartList[index.toString()]!.quantity =
@@ -192,6 +195,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                               width: FetchPixels.getPixelHeight(30),
                               height: FetchPixels.getPixelHeight(30)),
                           onTap: () {
+                            chosenQuantity = chosenQuantity - 1;
                             modelColor.quantity = (modelColor.quantity! - 1);
                             total = total - (modelColor.price! * 1);
                             if (modelColor.quantity! > 0) {
@@ -241,11 +245,11 @@ class _ServiceDialogState extends State<ServiceDialog> {
     );
   }
 
-  List<ListChosenService> listService = [];
+  List<ListChosenService> listChosenService = [];
 
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {
-      Navigator.pop(context, listService);
+      Navigator.pop(context, listChosenService);
       /*Constant.backToPrev(context);*/
       /*Constant.sendToNext(context, Routes.cartRoute);*/
     }, 18,
