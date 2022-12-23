@@ -109,7 +109,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                               ],
                             ),
                             getVerSpace(FetchPixels.getPixelHeight(6)),
-                            getCustomFont("api: thời gian khách đặt" ?? "", 14, textColor, 1,
+                            getCustomFont("Mã đơn: ${snapshot.data![index].orderId.toString()}" ?? "api: thời gian khách đặt" ?? "", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             getDivider(dividerColor, 0, 1),

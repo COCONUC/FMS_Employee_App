@@ -86,7 +86,7 @@ class _TabDayOffState extends State<TabDayOff> {
   ListView buildScheduleList(EdgeInsets edgeInsets) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        /*ModelDayOff boolModel = scheduleList[index];*/
+        ModelDayOff boolModel = scheduleList[index];
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,8 +99,8 @@ class _TabDayOffState extends State<TabDayOff> {
               fontWeight: FontWeight.w400,
             )),*/
             /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
-            /* buildBookingListItem(
-                boolModel, context, index, () {}, () {}),*/
+             buildBookingListItem(
+                boolModel, context, index, () {}, () {}),
             dayOffPendingList(),
           ],
         );
@@ -403,7 +403,7 @@ class _TabDayOffState extends State<TabDayOff> {
         });
   }
 
-  /*GestureDetector buildBookingListItem(ModelDayOff modelDayOff,
+  GestureDetector buildBookingListItem(ModelDayOff modelDayOff,
       BuildContext context, int index, Function function, Function funDelete) {
     return GestureDetector(
       onTap: () {
@@ -520,7 +520,7 @@ class _TabDayOffState extends State<TabDayOff> {
         ),
       ),
     );
-  }*/
+  }
 
   Widget nullListView() {
     return Column(

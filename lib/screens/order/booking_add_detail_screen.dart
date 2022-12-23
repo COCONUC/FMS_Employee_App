@@ -271,16 +271,16 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                   1,
                   fontWeight: FontWeight.w400,
                 ),*/
-                Container(
+
                   /*tag: widget.img,*/
-                  child: Container(
+                   Container(
                     height: FetchPixels.getPixelHeight(100),
                     width: FetchPixels.getPixelHeight(100),
                     decoration: BoxDecoration(
                         image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
                     ),
                   ),
-                ),
+
               ],
             )
           ],
@@ -357,7 +357,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                     child: packageDescription(),
                   ),
                 ),
-                addButton(modelSalon, context, index)
+                deleteButton(modelSalon, context, index)
               ],
             ),
           );
@@ -397,7 +397,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               getCustomFont(
                 "Đơn vị:",
                 14,
-                Colors.black,
+                textColor,
                 1,
                 fontWeight: FontWeight.w400,
               ),
@@ -405,14 +405,17 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               getCustomFont(
                 "api: đơn vị tính",
                 14,
-                Colors.black,
+                textColor,
                 1,
                 fontWeight: FontWeight.w400,
               )
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont(snapshot.data![index].price! + " VNĐ" ?? 'Giá tiền: api: category', 14, textColor, 1,
+          getCustomFont("Số lượng: " ?? 'Số lượng: api: số lượng', 14, Colors.black, 1,
+              fontWeight: FontWeight.w400),
+          getVerSpace(FetchPixels.getPixelHeight(6)),
+          getCustomFont("${snapshot.data![index].price!} VNĐ" ?? 'Giá tiền: api: category', 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
         ],
       );
@@ -447,84 +450,26 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  Column addButton(ModelSalon modelSalon, BuildContext context, int index) {
+  Column deleteButton(ModelSalon modelSalon, BuildContext context, int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        if (modelSalon.quantity == 0)
-          getButton(context, Colors.transparent, "Số lượng", blueColor, () {
-            modelSalon.quantity = (modelSalon.quantity! + 1);
-            total = total + (modelSalon.price! * 1);
-            DataFile.cartList[index.toString()] = ModelCart(
-                modelSalon.image,
-                modelSalon.name,
-                modelSalon.productName,
-                modelSalon.rating,
-                modelSalon.price,
-                modelSalon.quantity);
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: () {
 
-            setState(() {});
-          }, 14,
-              weight: FontWeight.w600,
-              insetsGeometrypadding: EdgeInsets.symmetric(
-                  horizontal: FetchPixels.getPixelWidth(20),
-                  vertical: FetchPixels.getPixelHeight(12)),
-              borderColor: blueColor,
-              borderWidth: 1.5,
-              isBorder: true,
-              borderRadius:
-              BorderRadius.circular(FetchPixels.getPixelHeight(10)))
-        else
-          Row(
-            children: [
-              GestureDetector(
-                child: getSvgImage("add1.svg",
-                    width: FetchPixels.getPixelHeight(30),
-                    height: FetchPixels.getPixelHeight(30)),
-                onTap: () {
-                  modelSalon.quantity = (modelSalon.quantity! + 1);
-                  total = total + (modelSalon.price! * 1);
-
-                  DataFile.cartList[index.toString()]!.quantity =
-                      modelSalon.quantity;
-
-                  setState(() {});
-                },
-              ),
-              getHorSpace(FetchPixels.getPixelWidth(10)),
-              getCustomFont(
-                modelSalon.quantity.toString(),
-                14,
-                Colors.black,
-                1,
-                fontWeight: FontWeight.w400,
-              ),
-              getHorSpace(FetchPixels.getPixelWidth(10)),
-              GestureDetector(
-                child: getSvgImage("minus.svg",
-                    width: FetchPixels.getPixelHeight(30),
-                    height: FetchPixels.getPixelHeight(30)),
-                onTap: () {
-                  modelSalon.quantity = (modelSalon.quantity! - 1);
-                  total = total - (modelSalon.price! * 1);
-
-                  // print(
-                  //     "cartList12===${cartLists.length}===${cartLists[index.toString()]!.quantity}");
-
-                  if (modelSalon.quantity! > 0) {
-                    DataFile.cartList[index.toString()]!.quantity =
-                        modelSalon.quantity;
-                  } else {
-                    DataFile.cartList.remove(index.toString());
-                  }
-
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
-        getVerSpace(FetchPixels.getPixelHeight(40)),
-        getCustomFont(" Thành tiền: ${modelSalon.price} \VNĐ", 16, blueColor, 1,
+              },
+              child: getSvgImage("trash.svg",
+                  width: FetchPixels.getPixelHeight(20),
+                  height: FetchPixels.getPixelHeight(20)),
+            )
+          ],
+        ),
+        getVerSpace(FetchPixels.getPixelHeight(70)),
+        getCustomFont("Thành tiền: ${modelSalon.price} VNĐ", 16, blueColor, 1,
             fontWeight: FontWeight.w900)
       ],
     );
