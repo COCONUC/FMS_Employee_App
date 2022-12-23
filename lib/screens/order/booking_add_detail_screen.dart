@@ -357,7 +357,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                     child: packageDescription(),
                   ),
                 ),
-                deleteButton(modelSalon, context, index)
               ],
             ),
           );
@@ -375,9 +374,12 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     if (!snapshot.hasData) {
     return const Center();
     } else {
-      return  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           getCustomFont(
             snapshot.data![index].serviceName ?? 'api: service name',
             16,
@@ -417,38 +419,35 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           getVerSpace(FetchPixels.getPixelHeight(6)),
           getCustomFont("${snapshot.data![index].price!} VNĐ" ?? 'Giá tiền: api: category', 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
+          ]),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: getSvgImage("trash.svg",color: Colors.deepOrange,
+                        width: FetchPixels.getPixelHeight(20),
+                        height: FetchPixels.getPixelHeight(20)),
+                  )
+                ],
+              ),
+              getVerSpace(FetchPixels.getPixelHeight(70)),
+              getCustomFont("Thành tiền:  VNĐ", 16, blueColor, 1,
+                  fontWeight: FontWeight.w900)
+            ],
+          ),
         ],
       );
     }
     }
     );
   }
-
-  Column deleteButton(ModelSalon modelSalon, BuildContext context, int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: () {
-
-              },
-              child: getSvgImage("trash.svg",color: Colors.deepOrange,
-                  width: FetchPixels.getPixelHeight(20),
-                  height: FetchPixels.getPixelHeight(20)),
-            )
-          ],
-        ),
-        getVerSpace(FetchPixels.getPixelHeight(70)),
-        getCustomFont("Thành tiền: ${modelSalon.price} VNĐ", 16, blueColor, 1,
-            fontWeight: FontWeight.w900)
-      ],
-    );
-  }
-
 
   Container packageImage(BuildContext context, ModelSalon modelSalon) {
     return Container(
