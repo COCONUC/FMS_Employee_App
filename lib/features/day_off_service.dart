@@ -39,7 +39,7 @@ Future<List<DayOffData>> getDateOffListOfStaff(employeeId) async {
 }
 
 //Gửi yêu cầu đăng ký ngày nghỉ
-Future<void> sendDayOffForm(DayOffRegisterData dayOff) async{
+Future<void> sendDayOffForm(DayOffRegisterData data) async{
   try{
     final response = await http.put(
         Uri.parse(
@@ -47,8 +47,7 @@ Future<void> sendDayOffForm(DayOffRegisterData dayOff) async{
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(dayOff.toJson())
-
+        body: jsonEncode(data.toJson())
     );
     if(response.statusCode == 200){
       print("Gửi thành công");
