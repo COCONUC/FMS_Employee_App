@@ -620,7 +620,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         onPressed: () {
           _reportOrder.description = descriptionController.text;
           _reportOrder.urlImage = widget.img;
-
           OrderServices().sendReportOrder(4, _reportOrder);
           Constant.sendToScreen(ManagerOrderDetail(widget.img ?? "", widget.orderId), context);
         },

@@ -32,13 +32,13 @@ class _WarningDialogState extends State<WarningDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                getVerSpace(FetchPixels.getPixelHeight(20)),
+                /*getVerSpace(FetchPixels.getPixelHeight(20)),*/
                /* getSvgImage("confirm.svg",
                     width: FetchPixels.getPixelHeight(71.37),
                     height: FetchPixels.getPixelHeight(99.92)),*/
-                getVerSpace(FetchPixels.getPixelHeight(40)),
-                /*getCustomFont("Booking Confirmed", 22, Colors.black, 1,
-                  fontWeight: FontWeight.w900, ),*/
+                getVerSpace(FetchPixels.getPixelHeight(20)),
+                getCustomFont("Chưa chọn ngày", 22, Colors.black, 1,
+                  fontWeight: FontWeight.w900, ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 getMultilineCustomFont(
                     "Vui lòng chọn ngày muốn đăng ký nghỉ!",
