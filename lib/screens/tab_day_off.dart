@@ -168,8 +168,8 @@ class _TabDayOffState extends State<TabDayOff> {
             firstDayOfWeek: 1,
           ),
           onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-            print(DateFormat('dd-MM-yyyy').format(args.value));
-            date = DateFormat('dd-MM-yyyy').format(args.value);
+            date = DateFormat('yyyy-MM-dd').format(args.value);
+            print(date);
           },
           selectionShape: DateRangePickerSelectionShape.circle,
           showNavigationArrow: true,

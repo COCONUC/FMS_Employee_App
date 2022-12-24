@@ -41,7 +41,7 @@ Future<List<DayOffData>> getDateOffListOfStaff(employeeId) async {
 //Gửi yêu cầu đăng ký ngày nghỉ
 Future<void> sendDayOffForm(DayOffRegisterData data) async{
   try{
-    final response = await http.put(
+    final response = await http.post(
         Uri.parse(
             '$backEndUrl/employee/employeeCreateFormForAbsent'),
         headers: <String, String>{
