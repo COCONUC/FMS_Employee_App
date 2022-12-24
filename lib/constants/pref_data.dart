@@ -8,6 +8,7 @@ class PrefData {
   static String defIndexVal = "${prefName}index";
   static String getDefaultCode = "${prefName}code";
   static String getDefaultCountry = "${prefName}country";
+  static String getServices = "${prefName}selectedServices";
   static String defCountryName = "image_albania.jpg";
 
 
@@ -24,7 +25,17 @@ class PrefData {
     SharedPreferences preferences = await getPrefInstance();
     preferences.setString(getDefaultCountry, avail);
   }
+  static setServices(String avail) async {
+    SharedPreferences preferences = await getPrefInstance();
+    preferences.setString(getServices, avail);
+  }
 
+  static Future<String> getServicesList() async {
+    SharedPreferences preferences = await getPrefInstance();
+    String isIntroAvailable =
+        preferences.getString(getServices) ?? getServices;
+    return isIntroAvailable;
+  }
   static Future<String> getDefCode() async {
     SharedPreferences preferences = await getPrefInstance();
     String isIntroAvailable = preferences.getString(getDefaultCode) ?? "+1";

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
+import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/data/data_file.dart';
@@ -147,16 +150,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                     getButton(context, Colors.transparent, "Thêm", blueColor,
                         () {
                       chosenQuantity = chosenQuantity + 1;
-                      modelColor.quantity = (modelColor.quantity! + 1);
-                      total = total + (modelColor.price! * 1);
-                      DataFile.cartList[index.toString()] = ModelCart(
-                          modelColor.image,
-                          modelColor.name,
-                          modelColor.productName,
-                          modelColor.rating,
-                          modelColor.price,
-                          modelColor.quantity);
-                      listChosenService.add(ListChosenService(serviceId: snapshot.data![index].serviceId, quantity: chosenQuantity));
+                      listChosenService.add(ListService(serviceId: snapshot.data![index].serviceId, quantity: chosenQuantity));
                       setState(() {});
                     }, 14,
                         weight: FontWeight.w600,
@@ -177,10 +171,7 @@ class _ServiceDialogState extends State<ServiceDialog> {
                               height: FetchPixels.getPixelHeight(30)),
                           onTap: () {
                             chosenQuantity = chosenQuantity + 1;
-                            modelColor.quantity = (modelColor.quantity! + 1);
-                            total = total + (modelColor.price! * 1);
-                            DataFile.cartList[index.toString()]!.quantity =
-                                modelColor.quantity;
+                            listChosenService.firstWhere((element) => element.serviceId == snapshot.data![index].serviceId).quantity = chosenQuantity;
                             setState(() {});
                           },
                         ),
@@ -196,13 +187,10 @@ class _ServiceDialogState extends State<ServiceDialog> {
                               height: FetchPixels.getPixelHeight(30)),
                           onTap: () {
                             chosenQuantity = chosenQuantity - 1;
-                            modelColor.quantity = (modelColor.quantity! - 1);
-                            total = total - (modelColor.price! * 1);
                             if (modelColor.quantity! > 0) {
-                              DataFile.cartList[index.toString()]!.quantity =
-                                  modelColor.quantity;
+                              listChosenService.firstWhere((element) => element.serviceId == snapshot.data![index].serviceId).quantity = chosenQuantity;
                             } else {
-                              DataFile.cartList.remove(index.toString());
+                              listChosenService.removeWhere((element) => element.serviceId == snapshot.data![index].serviceId);
                             }
                             setState(() {});
                           },
@@ -245,10 +233,11 @@ class _ServiceDialogState extends State<ServiceDialog> {
     );
   }
 
-  List<ListChosenService> listChosenService = [];
+  List<ListService> listChosenService = [];
 
   Widget addServicesButton(BuildContext context) {
     return getButton(context, blueColor, "Xác nhận", Colors.white, () {
+      //PrefData.setServices(jsonEncode(listChosenService));
       Navigator.pop(context, listChosenService);
       /*Constant.backToPrev(context);*/
       /*Constant.sendToNext(context, Routes.cartRoute);*/

@@ -33,7 +33,7 @@
 class ReportOrder {
   int? orderId;
   String? description;
-  List<ListChosenService>? listService;
+  List<ListService>? listService;
   List<ListEmployeeCreateOrderImageListDto>? listEmployeeCreateOrderImageListDto;
 
   ReportOrder({this.orderId, this.description, this.listService, this.listEmployeeCreateOrderImageListDto});
@@ -46,7 +46,7 @@ class ReportOrder {
       description = json["description"];
     }
     if(json["listService"] is List) {
-      listService = json["listService"] == null ? null : (json["listService"] as List).map((e) => ListChosenService.fromJson(e)).toList();
+      listService = json["listService"] == null ? null : (json["listService"] as List).map((e) => ListService.fromJson(e)).toList();
     }
     if(json["listEmployeeCreateOrderImageListDto"] is List) {
       listEmployeeCreateOrderImageListDto = json["listEmployeeCreateOrderImageListDto"] == null ? null : (json["listEmployeeCreateOrderImageListDto"] as List).map((e) => ListEmployeeCreateOrderImageListDto.fromJson(e)).toList();
@@ -130,25 +130,3 @@ class ListService {
   }
 }
 
-class ListChosenService {
-  int? serviceId;
-  int? quantity;
-
-  ListChosenService({this.serviceId, this.quantity});
-
-  ListChosenService.fromJson(Map<String, dynamic> json) {
-    serviceId = json["serviceId"];
-    quantity = json["quantity"];
-  }
-
-  static List<ListChosenService> fromList(List<Map<String, dynamic>> list) {
-    return list.map((map) => ListChosenService.fromJson(map)).toList();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["serviceId"] = serviceId;
-    _data["quantity"] = quantity;
-    return _data;
-  }
-}

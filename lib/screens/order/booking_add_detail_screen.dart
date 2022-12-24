@@ -1,11 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/data/data_file.dart';
-import 'package:fms_employee/models/model_cart.dart';
 import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
@@ -33,7 +33,6 @@ class DetailEditingScreen extends StatefulWidget {
 }
 
 class _DetailEditingScreenState extends State<DetailEditingScreen> {
-  static List<ModelSalon> salonProductLists = DataFile.salonProductList;
   // SharedPreferences? selection;
   var index = 0;
 
@@ -104,7 +103,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     data = widget._data;
   }
 
-  OrderDetailData data = new OrderDetailData();
+  OrderDetailData data =  OrderDetailData();
 
   var total = 0.00;
 
@@ -142,7 +141,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             gettoolbarMenu(context, "back.svg", () {
               Constant.backToPrev(context);
             },
-                title: "Mã đơn: " + widget.orderId.toString() ?? "api: Mã đơn",
+                title: "Mã đơn: ${widget.orderId}",
                 weight: FontWeight.w900,
                 textColor: Colors.black,
                 fontsize: 24,
@@ -302,30 +301,21 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  OrderDetailData serviceLists = new OrderDetailData();
+  OrderDetailData serviceLists = OrderDetailData();
 
-  Future<List<ListOrderServiceDto>?> getOrderDetailService() async {
-    return data.listOrderServiceDto;
-  }
+
 
   // List dịch vụ được employee chọn
   Widget buildListView(double defSpace) {
-    return FutureBuilder<List<ListOrderServiceDto>?>(
-        future: getOrderDetailService(),
-    builder: (context, snapshot){
-    if (!snapshot.hasData) {
-    return const Center();
-    } else {
-      return snapshot.data!.isNotEmpty?
+      return data.listOrderServiceDto!.isNotEmpty?
       ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         primary: false,
-        itemCount: /*salonProductLists.length*/ snapshot.data!.length,
+        itemCount: /*salonProductLists.length*/ data.listOrderServiceDto!.length,
         itemBuilder: (context, index) {
-          ModelSalon modelSalon = salonProductLists[index];
           return Container(
             margin: EdgeInsets.only(
                 bottom: FetchPixels.getPixelHeight(20),
@@ -363,17 +353,9 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         },
       ) : nullServiceView();
     }
-        }
-    );
-  }
+
 
   Widget packageDescription() {
-    return FutureBuilder<List<ListOrderServiceDto>?>(
-      future: getOrderDetailService(),
-    builder: (context, snapshot){
-    if (!snapshot.hasData) {
-    return const Center();
-    } else {
       return  Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -381,14 +363,14 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
             children: [
           getCustomFont(
-            snapshot.data![index].serviceName ?? 'api: service name',
+            data.listOrderServiceDto![index].serviceName ?? 'api: service name',
             16,
             Colors.black,
             1,
             fontWeight: FontWeight.w900,
           ),
           getVerSpace(FetchPixels.getPixelHeight(4)),
-          getCustomFont( snapshot.data![index].categoryName ?? 'api: category', 14, textColor, 1,
+          getCustomFont( data.listOrderServiceDto![index].categoryName ?? 'api: category', 14, textColor, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
           Row(
@@ -414,10 +396,10 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont("Số lượng: " ?? 'Số lượng: api: số lượng', 14, Colors.black, 1,
+          getCustomFont("Số lượng: " , 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont("${snapshot.data![index].price!} VNĐ" ?? 'Giá tiền: api: category', 14, Colors.black, 1,
+          getCustomFont("${data.listOrderServiceDto![index].price!} VNĐ", 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
           ]),
           Column(
@@ -445,9 +427,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         ],
       );
     }
-    }
-    );
-  }
 
   Container packageImage(BuildContext context, ModelSalon modelSalon) {
     return Container(
@@ -461,8 +440,8 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   }
 
   Widget addServiceButton(BuildContext context) {
-    return getButton(context, Colors.white, "Thêm dịch vụ", Colors.blue, () {
-      showModalBottomSheet(
+    return getButton(context, Colors.white, "Thêm dịch vụ", Colors.blue, ()  {
+       showModalBottomSheet(
           backgroundColor: Colors.white,
           isDismissible: false,
           isScrollControlled: true,
@@ -476,6 +455,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           builder: (context) {
             return const ServiceDialog();
           });
+
     }, 18,
         weight: FontWeight.w600,
         buttonHeight: FetchPixels.getPixelHeight(40),
@@ -495,12 +475,16 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   void getNewService() async {
     List<ChosenService> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
     if(result != null){
-      setState(() {
        for(var element in result){
-         _reportOrder.listService?.add(ListChosenService(serviceId: element.service.serviceId,
+         // kiem tra xem service da ton tai trong list chua? 
+         // neu ton tai thi chi thay doi quantity, khong thi add vao _reportOrder va data
+         _reportOrder.listService?.add(ListService(serviceId: element.service.serviceId,
              quantity: element.quantity));
          data.listOrderServiceDto?.add(element.service);
+         print(jsonEncode(_reportOrder));
        }
+       setState(() {
+
        });
       }
   }
@@ -546,7 +530,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               )
           );
           OrderServices().sendReportOrder(widget.orderId, _reportOrder);
-          Constant.sendToScreen(ManagerOrderDetail(widget.img ?? "", widget.orderId), context);
+          Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context);
         },
         child: Text("Gửi cho quản lý", style: TextStyle(
           color: Colors.black,
