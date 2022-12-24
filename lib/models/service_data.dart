@@ -9,8 +9,9 @@ class ServiceData {
   String? updateAt;
   bool? status;
   String? categoryName;
+  int? quantity;
 
-  ServiceData({this.serviceId, this.serviceName, this.serviceDescription, this.price, this.type, this.createAt, this.updateAt, this.status, this.categoryName});
+  ServiceData({this.serviceId, this.serviceName, this.serviceDescription, this.price, this.type, this.createAt, this.updateAt, this.status, this.categoryName, this.quantity});
 
   ServiceData.fromJson(Map<String, dynamic> json) {
     if(json["serviceId"] is int) {

@@ -214,7 +214,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ").join('\n\n ') ?? "api: Danh sách dịch vụ",
+                        " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ"+ " Số lượng: " + e.quantity.toString()).join('\n\n ') ?? "api: Danh sách dịch vụ",
                         16,
                         Colors.black,
                         100,

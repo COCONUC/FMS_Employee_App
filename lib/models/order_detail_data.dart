@@ -1,11 +1,12 @@
 
 
+
 class OrderDetailData {
   int? orderServiceId;
   int? orderId;
   int? serviceId;
-  String? serviceName;
-  String? categoryName;
+  dynamic serviceName;
+  dynamic categoryName;
   dynamic estimateTimeFinish;
   String? address;
   String? description;
@@ -29,12 +30,8 @@ class OrderDetailData {
     if(json["serviceId"] is int) {
       serviceId = json["serviceId"];
     }
-    if (json["serviceName"] is String) {
-      serviceName = json["serviceName"];
-    }
-    if (json["categoryName"] is String) {
-      categoryName = json["categoryName"];
-    }
+    serviceName = json["serviceName"];
+    categoryName = json["categoryName"];
     estimateTimeFinish = json["estimateTimeFinish"];
     if(json["address"] is String) {
       address = json["address"];
@@ -144,9 +141,10 @@ class ListOrderServiceDto {
   String? serviceName;
   String? price;
   String? categoryName;
+  int? quantity;
   String? estimateTimeFinish;
 
-  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.estimateTimeFinish});
+  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.quantity, this.estimateTimeFinish});
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
     if(json["orderServiceId"] is int) {
@@ -167,6 +165,9 @@ class ListOrderServiceDto {
     if(json["categoryName"] is String) {
       categoryName = json["categoryName"];
     }
+    if(json["quantity"] is int) {
+      quantity = json["quantity"];
+    }
     if(json["estimateTimeFinish"] is String) {
       estimateTimeFinish = json["estimateTimeFinish"];
     }
@@ -184,13 +185,14 @@ class ListOrderServiceDto {
     _data["serviceName"] = serviceName;
     _data["price"] = price;
     _data["categoryName"] = categoryName;
+    _data["quantity"] = quantity;
     _data["estimateTimeFinish"] = estimateTimeFinish;
     return _data;
   }
 }
 
 class ChosenService {
-  final int quantity;
-  final ListOrderServiceDto service;
+  int quantity;
+  ListOrderServiceDto service;
   ChosenService({required this.quantity, required this.service});
 }

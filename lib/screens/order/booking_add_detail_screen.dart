@@ -439,37 +439,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  Widget addServiceButton(BuildContext context) {
-    return getButton(context, Colors.white, "Thêm dịch vụ", Colors.blue, ()  {
-       showModalBottomSheet(
-          backgroundColor: Colors.white,
-          isDismissible: false,
-          isScrollControlled: true,
-          context: context,
-          constraints: BoxConstraints(maxHeight: FetchPixels.getPixelHeight(700)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(FetchPixels.getPixelHeight(40)),
-            ),
-          ),
-          builder: (context) {
-            return const ServiceDialog();
-          });
-
-    }, 18,
-        weight: FontWeight.w600,
-        buttonHeight: FetchPixels.getPixelHeight(40),
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-        boxShadow: [
-          const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              offset: Offset(0.0, 4.0)),
-        ],
-        insetsGeometry: EdgeInsets.symmetric(
-            horizontal: FetchPixels.getDefaultHorSpace(context)));
-  }
-
   final ReportOrder _reportOrder = ReportOrder();
 
   void getNewService() async {

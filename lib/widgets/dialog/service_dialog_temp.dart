@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
@@ -27,9 +29,17 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   List<ServiceData> serviceLists = [];
   List<ChosenService> listChosenService = [];
 
-  Future<List<ServiceData>> getFutureService() async {
+    getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
-    return serviceLists;
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    getFutureService();
+    super.initState();
   }
 
   @override
@@ -82,22 +92,18 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   }
 
   Widget serviceToChooseList() {
-    return FutureBuilder<List<ServiceData>>(
-        future: getFutureService(),
-        builder: (context, snapshot){
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return snapshot.data!.isNotEmpty?
+            return serviceLists.isNotEmpty?
             ListView.builder(
               shrinkWrap: true,
               primary: true,
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.zero,
               scrollDirection: Axis.vertical,
-              itemCount: snapshot.data!.length,
+              itemCount: serviceLists.length,
               itemBuilder: (context, index) {
-                ModelColor modelColor = hairColorLists[index];
+                ServiceData serviceData =serviceLists[index];
+                serviceData.quantity = 0;
+
                 return Container(
                   margin: EdgeInsets.only(bottom: FetchPixels.getPixelHeight(20)),
                   width: FetchPixels.getPixelWidth(374),
@@ -124,11 +130,11 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              getCustomFont(snapshot.data![index].serviceName ?? 'api: Tên dịch vụ', 16, Colors.black, 1,
+                              getCustomFont(serviceLists[index].serviceName ?? 'api: Tên dịch vụ', 16, Colors.black, 1,
                                 fontWeight: FontWeight.w900, ),
                               getVerSpace(FetchPixels.getPixelHeight(4)),
                               getCustomFont(
-                                  snapshot.data![index].categoryName ?? "api: Category", 14, textColor, 1,
+                                  serviceLists[index].categoryName ?? "api: Category", 14, textColor, 1,
                                   fontWeight: FontWeight.w400),
                               getVerSpace(FetchPixels.getPixelHeight(4)),
                               getCustomFont(
@@ -136,98 +142,93 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                                   fontWeight: FontWeight.w400),
                               getVerSpace(FetchPixels.getPixelHeight(4)),
                               getCustomFont(
-                                  "Giá tiền: ${snapshot.data![index].price}", 14, textColor, 1,
+                                  "Giá tiền: ${serviceLists[index].price}", 14, textColor, 1,
                                   fontWeight: FontWeight.w400),
                               getVerSpace(FetchPixels.getPixelHeight(6)),
                             ],
                           ),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          if (modelColor.quantity == 0)
-                            getButton(context, Colors.transparent, "Thêm", blueColor,
-                                    () {
-                                  modelColor.quantity = (modelColor.quantity! + 1);
-                                  total = total + (modelColor.price! * 1);
-                                  DataFile.cartList[index.toString()] = ModelCart(
-                                      modelColor.image,
-                                      modelColor.name,
-                                      modelColor.productName,
-                                      modelColor.rating,
-                                      modelColor.price,
-                                      modelColor.quantity);
-                                  listChosenService.add(ChosenService(
-                                      quantity: modelColor.quantity!, service:
-                                  ListOrderServiceDto(serviceId: snapshot.data![index].serviceId,
-                                  serviceName: snapshot.data![index].serviceName,
-                                  categoryName: snapshot.data![index].categoryName,
-                                  price: snapshot.data![index].price)
-                                  ));
-                                  setState(() {});
-                                  print(listChosenService.first.toString());
-                                }, 14,
-                                weight: FontWeight.w600,
-                                insetsGeometrypadding: EdgeInsets.symmetric(
-                                    horizontal: FetchPixels.getPixelWidth(20),
-                                    vertical: FetchPixels.getPixelHeight(12)),
-                                borderColor: blueColor,
-                                borderWidth: 1.5,
-                                isBorder: true,
-                                borderRadius: BorderRadius.circular(
-                                    FetchPixels.getPixelHeight(10)))
-                          else
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  child: getSvgImage("add1.svg",
-                                      width: FetchPixels.getPixelHeight(30),
-                                      height: FetchPixels.getPixelHeight(30)),
-                                  onTap: () {
-                                    modelColor.quantity = (modelColor.quantity! + 1);
-                                    total = total + (modelColor.price! * 1);
-                                    DataFile.cartList[index.toString()]!.quantity =
-                                        modelColor.quantity;
-                                    setState(() {});
-                                  },
-                                ),
-                                getHorSpace(FetchPixels.getPixelWidth(10)),
-                                getCustomFont(modelColor.quantity.toString(), 14,
-                                  Colors.black, 1,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                getHorSpace(FetchPixels.getPixelWidth(10)),
-                                GestureDetector(
-                                  child: getSvgImage("minus.svg",
-                                      width: FetchPixels.getPixelHeight(30),
-                                      height: FetchPixels.getPixelHeight(30)),
-                                  onTap: () {
-                                    modelColor.quantity = (modelColor.quantity! - 1);
-                                    total = total - (modelColor.price! * 1);
-                                    if (modelColor.quantity! > 0) {
-                                      DataFile.cartList[index.toString()]!.quantity =
-                                          modelColor.quantity;
-                                    } else {
-                                      DataFile.cartList.remove(index.toString());
-                                    }
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            ),
-                          getVerSpace(FetchPixels.getPixelHeight(40)),
-                          getCustomFont("${modelColor.price} \VNĐ", 16, blueColor, 1,
-                              fontWeight: FontWeight.w900)
-                        ],
-                      )
+                     getServiceColumn(context, serviceData),
                     ],
                   ),
                 );
               },
             ): nullListView();
           }
-        }
+
+  Column getServiceColumn(context, ServiceData serviceData){
+    return  Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        if (serviceData.quantity == 0)
+          getButton(context, Colors.transparent, "Thêm", blueColor,
+                  () {
+                    setState(() {
+                      serviceData.quantity = 1;
+                      /*total = total + (modelColor.price! * 1);*/
+                      listChosenService.add(ChosenService(
+                          quantity: serviceData.quantity!, service:
+                      ListOrderServiceDto(serviceId: serviceData.serviceId,
+                          serviceName: serviceData.serviceName,
+                          categoryName: serviceData.categoryName,
+                          price: serviceData.price)
+                      ));
+                      print(listChosenService.first.service.serviceName);
+                    });
+
+
+              }, 14,
+              weight: FontWeight.w600,
+              insetsGeometrypadding: EdgeInsets.symmetric(
+                  horizontal: FetchPixels.getPixelWidth(20),
+                  vertical: FetchPixels.getPixelHeight(12)),
+              borderColor: blueColor,
+              borderWidth: 1.5,
+              isBorder: true,
+              borderRadius: BorderRadius.circular(
+                  FetchPixels.getPixelHeight(10)))
+        else
+          Row(
+            children: [
+              GestureDetector(
+                child: getSvgImage("add1.svg",
+                    width: FetchPixels.getPixelHeight(30),
+                    height: FetchPixels.getPixelHeight(30)),
+                onTap: () {
+                  serviceData.quantity = (serviceData.quantity! + 1);
+                  /*total = total + (modelColor.price! * 1);*/
+                  listChosenService.firstWhere((element) => element.service.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
+                  setState(() {});
+                },
+              ),
+              getHorSpace(FetchPixels.getPixelWidth(10)),
+              getCustomFont( serviceData.quantity.toString(), 14,
+                Colors.black, 1,
+                fontWeight: FontWeight.w400,
+              ),
+              getHorSpace(FetchPixels.getPixelWidth(10)),
+              GestureDetector(
+                child: getSvgImage("minus.svg",
+                    width: FetchPixels.getPixelHeight(30),
+                    height: FetchPixels.getPixelHeight(30)),
+                onTap: () {
+                  serviceData.quantity = (serviceData.quantity! - 1);
+                  /*total = total - (modelColor.price! * 1);*/
+                  if (serviceData.quantity! > 0) {
+                    listChosenService.firstWhere((element) => element.service.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
+                  } else {
+                    listChosenService.removeWhere((element) => element.service.serviceId == serviceData.serviceId);
+                  }
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        getVerSpace(FetchPixels.getPixelHeight(40)),
+        /*getCustomFont("${modelColor.price} \VNĐ", 16, blueColor, 1,
+                              fontWeight: FontWeight.w900)*/
+      ],
     );
   }
 
