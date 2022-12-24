@@ -476,12 +476,18 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     List<ChosenService> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
     if(result != null){
        for(var element in result){
-         // kiem tra xem service da ton tai trong list chua? 
+         // kiem tra xem service da ton tai trong list chua?
          // neu ton tai thi chi thay doi quantity, khong thi add vao _reportOrder va data
-         _reportOrder.listService?.add(ListService(serviceId: element.service.serviceId,
-             quantity: element.quantity));
-         data.listOrderServiceDto?.add(element.service);
-         print(jsonEncode(_reportOrder));
+         if(element.service.serviceId != data.serviceId) {
+           _reportOrder.listService?.add(ListService(serviceId: element.service.serviceId,
+               quantity: element.quantity));
+           data.listOrderServiceDto?.add(element.service);
+           print(jsonEncode(_reportOrder));
+           print(ListService().toJson());
+         }
+         else{
+           print(jsonEncode("Trùng dịch vụ"));
+         }
        }
        setState(() {
 
