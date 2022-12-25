@@ -101,9 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           CustomButton(
                             text: 'Đăng nhập',
                             onTap: () {
-                              if (_signInFormKey.currentState!.validate()) {
+                             /* if (_signInFormKey.currentState!.validate()) {
                                 signInUser();
-                              }
+                              }*/
+                              Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
+                              Constant.sendToScreen(NavScreen(3), context);
                             },
                           ),
                           SizedBox(

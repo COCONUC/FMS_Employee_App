@@ -230,7 +230,7 @@ class _TabDayOffState extends State<TabDayOff> {
                 ? ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     padding:
-                        EdgeInsets.only(top: FetchPixels.getPixelHeight(20)),
+                        EdgeInsets.only(top: FetchPixels.getPixelHeight(10)),
                     shrinkWrap: true,
                     primary: true,
                     itemCount: snapshot.data!.length,
@@ -238,7 +238,7 @@ class _TabDayOffState extends State<TabDayOff> {
                       return Column(
                         children: [
                           /*dateHeader(snapshot.data![index], index),*/
-                          getVerSpace(FetchPixels.getPixelHeight(10)),
+                          getVerSpace(FetchPixels.getPixelHeight(5)),
                           GestureDetector(
                             child: Container(
                               margin: EdgeInsets.only(

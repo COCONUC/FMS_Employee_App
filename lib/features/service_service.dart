@@ -17,6 +17,7 @@ class ServiceServices {
       );
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+        //print(response.body);
         return parsed
             .map<ServiceData>((json) => ServiceData.fromJson(json))
             .toList();

@@ -29,17 +29,19 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   List<ServiceData> serviceLists = [];
   List<ChosenService> listChosenService = [];
 
-    getFutureService() async {
+   _getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
+    if(serviceLists.isNotEmpty){
+      for(ServiceData e in serviceLists){
+        e.quantity = 0;
+      }
     setState(() {
-
-    });
+    });}
   }
-
   @override
   void initState() {
-    getFutureService();
     super.initState();
+    _getFutureService();
   }
 
   @override
@@ -76,6 +78,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
                       serviceToChooseList(),
+
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       /*totalContainer(),*/
                       addServicesButton(context),
@@ -92,69 +95,66 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   }
 
   Widget serviceToChooseList() {
-            return serviceLists.isNotEmpty?
-            ListView.builder(
-              shrinkWrap: true,
-              primary: true,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.vertical,
-              itemCount: serviceLists.length,
-              itemBuilder: (context, index) {
-                ServiceData serviceData =serviceLists[index];
-                serviceData.quantity = 0;
-
-                return Container(
-                  margin: EdgeInsets.only(bottom: FetchPixels.getPixelHeight(20)),
-                  width: FetchPixels.getPixelWidth(374),
-                  padding: EdgeInsets.only(
-                      left: FetchPixels.getPixelWidth(16),
-                      right: FetchPixels.getPixelWidth(16),
-                      top: FetchPixels.getPixelHeight(16),
-                      bottom: FetchPixels.getPixelHeight(16)),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10,
-                            offset: Offset(0.0, 4.0)),
-                      ],
-                      borderRadius:
-                      BorderRadius.circular(FetchPixels.getPixelHeight(12))),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: FetchPixels.getPixelWidth(16)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    return serviceLists.isEmpty? nullListView():  ListView.builder(
+                      shrinkWrap: true,
+                      primary: false,
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                      itemCount: serviceLists!.length,
+                      itemBuilder: (context, index) {
+                        ServiceData serviceData =serviceLists![index];
+                        return Container(
+                          margin: EdgeInsets.only(bottom: FetchPixels.getPixelHeight(20)),
+                          width: FetchPixels.getPixelWidth(374),
+                          padding: EdgeInsets.only(
+                              left: FetchPixels.getPixelWidth(16),
+                              right: FetchPixels.getPixelWidth(16),
+                              top: FetchPixels.getPixelHeight(16),
+                              bottom: FetchPixels.getPixelHeight(16)),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 10,
+                                    offset: Offset(0.0, 4.0)),
+                              ],
+                              borderRadius:
+                              BorderRadius.circular(FetchPixels.getPixelHeight(12))),
+                          child: Row(
                             children: [
-                              getCustomFont(serviceLists[index].serviceName ?? 'api: Tên dịch vụ', 16, Colors.black, 1,
-                                fontWeight: FontWeight.w900, ),
-                              getVerSpace(FetchPixels.getPixelHeight(4)),
-                              getCustomFont(
-                                  serviceLists[index].categoryName ?? "api: Category", 14, textColor, 1,
-                                  fontWeight: FontWeight.w400),
-                              getVerSpace(FetchPixels.getPixelHeight(4)),
-                              getCustomFont(
-                                  "Đơn vị: api: đơn vị tính", 14, textColor, 1,
-                                  fontWeight: FontWeight.w400),
-                              getVerSpace(FetchPixels.getPixelHeight(4)),
-                              getCustomFont(
-                                  "Giá tiền: ${serviceLists[index].price}", 14, textColor, 1,
-                                  fontWeight: FontWeight.w400),
-                              getVerSpace(FetchPixels.getPixelHeight(6)),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.only(left: FetchPixels.getPixelWidth(16)),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      getCustomFont(serviceData.serviceName ?? 'api: Tên dịch vụ', 16, Colors.black, 1,
+                                        fontWeight: FontWeight.w900, ),
+                                      getVerSpace(FetchPixels.getPixelHeight(4)),
+                                      getCustomFont(
+                                          serviceData.categoryName ?? "api: Category", 14, textColor, 1,
+                                          fontWeight: FontWeight.w400),
+                                      getVerSpace(FetchPixels.getPixelHeight(4)),
+                                      getCustomFont(
+                                          "Đơn vị: api: đơn vị tính", 14, textColor, 1,
+                                          fontWeight: FontWeight.w400),
+                                      getVerSpace(FetchPixels.getPixelHeight(4)),
+                                      getCustomFont(
+                                          "Giá tiền: ${serviceData.price}", 14, textColor, 1,
+                                          fontWeight: FontWeight.w400),
+                                      getVerSpace(FetchPixels.getPixelHeight(6)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                             getServiceColumn(context, serviceData),
                             ],
                           ),
-                        ),
-                      ),
-                     getServiceColumn(context, serviceData),
-                    ],
-                  ),
-                );
-              },
-            ): nullListView();
+                        );
+                      },
+                    );
           }
 
   Column getServiceColumn(context, ServiceData serviceData){
@@ -165,7 +165,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
           getButton(context, Colors.transparent, "Thêm", blueColor,
                   () {
                     setState(() {
-                      serviceData.quantity = 1;
+                      serviceData.quantity = serviceData.quantity! +1;
                       /*total = total + (modelColor.price! * 1);*/
                       listChosenService.add(ChosenService(
                           quantity: serviceData.quantity!, service:
@@ -174,7 +174,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                           categoryName: serviceData.categoryName,
                           price: serviceData.price)
                       ));
-                      print(listChosenService.first.service.serviceName);
+                      print(serviceData.quantity);
                     });
 
 
