@@ -34,7 +34,7 @@ class DetailEditingScreen extends StatefulWidget {
 
 class _DetailEditingScreenState extends State<DetailEditingScreen> {
   // SharedPreferences? selection;
-  var index = 0;
+  //var index = 0;
 
   final TextEditingController descriptionController = TextEditingController();
 
@@ -89,7 +89,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   }
 
   getPrefData() async {
-    index = await PrefData.getDefIndex();
+    //index = await PrefData.getDefIndex();
     setState(() {
 
     });
@@ -99,7 +99,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   void initState() {
     super.initState();
     getPrefData();
-    _reportOrder.orderId = widget.orderId;
+    reportOrder.orderId = widget.orderId;
     data = widget._data;
   }
 
@@ -120,7 +120,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           floatingActionButton: floatingSendOrderButton(context),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SafeArea(
-            child: buildPage(edgeInsets, context, index, defSpace),
+            child: buildPage(edgeInsets, context, 0, defSpace),
           ),
         ),
         onWillPop: () async {
@@ -173,7 +173,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             backgroundColor: Colors.white,
           ),
             onPressed:  getNewService,
-            child: Text("Thêm dịch vụ", style: TextStyle(
+            child: const Text("Thêm dịch vụ", style: TextStyle(
                 color: Colors.blue,
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -314,7 +314,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         primary: false,
-        itemCount: /*salonProductLists.length*/ data.listOrderServiceDto!.length,
+        itemCount: data.listOrderServiceDto!.length,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.only(
@@ -344,7 +344,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                   child: Container(
                     padding: EdgeInsets.only(
                         left: FetchPixels.getPixelWidth(16)),
-                    child: packageDescription(),
+                    child: packageDescription(index),
                   ),
                 ),
               ],
@@ -355,7 +355,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     }
 
 
-  Widget packageDescription() {
+  Widget packageDescription(index) {
       return  Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -387,7 +387,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               ),
               getHorSpace(FetchPixels.getPixelWidth(6)),
               getCustomFont(
-                "api: đơn vị tính",
+                ": đơn vị tính",
                 14,
                 textColor,
                 1,
@@ -396,7 +396,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             ],
           ),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont("Số lượng: " , 14, Colors.black, 1,
+          getCustomFont("Số lượng: ${data.listOrderServiceDto![index].quantity}" , 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
           getCustomFont("${data.listOrderServiceDto![index].price!} VNĐ", 14, Colors.black, 1,
@@ -439,23 +439,25 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  final ReportOrder _reportOrder = ReportOrder();
+  final ReportOrder reportOrder = ReportOrder(listEmployeeCreateOrderImageListDto: [], listService: []);
 
   void getNewService() async {
-    List<ChosenService> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
+    List<ListOrderServiceDto> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
     if(result != null){
        for(var element in result){
+         print(element.quantity);
          // kiem tra xem service da ton tai trong list chua?
          // neu ton tai thi chi thay doi quantity, khong thi add vao _reportOrder va data
-         if(element.service.serviceId != data.serviceId) {
-           _reportOrder.listService?.add(ListService(serviceId: element.service.serviceId,
+         if(!data.listOrderServiceDto!.any((e) => e.serviceId == element.serviceId)) {
+           reportOrder.listService?.add(ListService(serviceId: element.serviceId,
                quantity: element.quantity));
-           data.listOrderServiceDto?.add(element.service);
-           print(jsonEncode(_reportOrder));
-           print(ListService().toJson());
+           print('data: ${jsonEncode(reportOrder)}');
+           data.listOrderServiceDto?.add(
+              element
+           );
          }
          else{
-           print(jsonEncode("Trùng dịch vụ"));
+
          }
        }
        setState(() {
@@ -488,26 +490,27 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   }
 
   Widget floatingSendOrderButton(BuildContext context){
-    return Container(
+    return SizedBox(
       height: FetchPixels.getPixelHeight(50),
       width: FetchPixels.getPixelWidth(370),
       child: FloatingActionButton(
         backgroundColor: mSecondaryColor,
-        shape: RoundedRectangleBorder(),
+        shape: const RoundedRectangleBorder(),
         onPressed: () {
-          _reportOrder.description = descriptionController.text;
-          _reportOrder.orderId = widget.orderId;
-          _reportOrder.listEmployeeCreateOrderImageListDto?.add(
+          reportOrder.description = descriptionController.text;
+          reportOrder.orderId = widget.orderId;
+          reportOrder.listEmployeeCreateOrderImageListDto?.add(
               ListEmployeeCreateOrderImageListDto(
                   orderId: widget.orderId,
-                imageUrl: widget.img,
+                imageUrl: widget.img??'url',
                   status: true
               )
           );
-          OrderServices().sendReportOrder(widget.orderId, _reportOrder);
+          print(jsonEncode(reportOrder));
+          OrderServices().sendReportOrder(widget.orderId, reportOrder);
           Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context);
         },
-        child: Text("Gửi cho quản lý", style: TextStyle(
+        child: const Text("Gửi cho quản lý", style: TextStyle(
           color: Colors.black,
           fontSize: 16,
           /* fontWeight: FontWeight.w600,*/

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -6,12 +5,8 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/features/service_service.dart';
-import 'package:fms_employee/models/model_color.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
-import 'package:fms_employee/models/report_order_data.dart';
-import '../../models/model_cart.dart';
 import '../../models/service_data.dart';
 
 class ServiceDialogTemp extends StatefulWidget {
@@ -24,10 +19,9 @@ class ServiceDialogTemp extends StatefulWidget {
 
 class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   var total = 0.00;
-  static List<ModelColor> hairColorLists = DataFile.hairColorList;
 
   List<ServiceData> serviceLists = [];
-  List<ChosenService> listChosenService = [];
+  List<ListOrderServiceDto> listChosenService = [];
 
    _getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
@@ -103,9 +97,9 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
-                      itemCount: serviceLists!.length,
+                      itemCount: serviceLists.length,
                       itemBuilder: (context, index) {
-                        ServiceData serviceData =serviceLists![index];
+                        ServiceData serviceData =serviceLists[index];
                         return Container(
                           margin: EdgeInsets.only(bottom: FetchPixels.getPixelHeight(20)),
                           width: FetchPixels.getPixelWidth(374),
@@ -169,14 +163,14 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                     setState(() {
                       serviceData.quantity = serviceData.quantity! +1;
                       /*total = total + (modelColor.price! * 1);*/
-                      listChosenService.add(ChosenService(
-                          quantity: serviceData.quantity!, service:
-                      ListOrderServiceDto(serviceId: serviceData.serviceId,
+                      listChosenService.add(
+                      ListOrderServiceDto(
+                          serviceId: serviceData.serviceId,
                           serviceName: serviceData.serviceName,
                           categoryName: serviceData.categoryName,
+                          quantity: serviceData.quantity,
                           price: serviceData.price)
-                      ));
-                      print(serviceData.quantity);
+                      );
                     });
 
 
@@ -200,7 +194,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                 onTap: () {
                   serviceData.quantity = (serviceData.quantity! + 1);
                   /*total = total + (modelColor.price! * 1);*/
-                  listChosenService.firstWhere((element) => element.service.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
+                  listChosenService.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
                   setState(() {});
                 },
               ),
@@ -218,9 +212,9 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                   serviceData.quantity = (serviceData.quantity! - 1);
                   /*total = total - (modelColor.price! * 1);*/
                   if (serviceData.quantity! > 0) {
-                    listChosenService.firstWhere((element) => element.service.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
+                    listChosenService.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
                   } else {
-                    listChosenService.removeWhere((element) => element.service.serviceId == serviceData.serviceId);
+                    listChosenService.removeWhere((element) => element.serviceId == serviceData.serviceId);
                   }
                   setState(() {});
                 },
@@ -256,10 +250,11 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   }
 
   Widget addServicesButton(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: FetchPixels.getPixelHeight(50),
       width: FetchPixels.getPixelWidth(370),
       child: getButton(context, blueColor, "Xác nhận", Colors.white, () {
+        //printData();
         Navigator.pop(context, listChosenService);
         /*Constant.backToPrev(context);*/
         /*Constant.sendToNext(context, Routes.cartRoute);*/
@@ -269,6 +264,8 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
           borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14))),
     );
   }
+  
+
 
   Widget nullListView() {
     return Column(
