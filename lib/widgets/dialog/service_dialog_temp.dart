@@ -49,6 +49,8 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
     FetchPixels(context);
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: addServicesButton(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Align(
         alignment: Alignment.bottomCenter,
         child: ListView(
@@ -81,7 +83,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
 
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       /*totalContainer(),*/
-                      addServicesButton(context),
+                      /*addServicesButton(context),*/
                       getVerSpace(FetchPixels.getPixelHeight(30))
                     ],
                   ),
@@ -254,14 +256,18 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   }
 
   Widget addServicesButton(BuildContext context) {
-    return getButton(context, blueColor, "Xác nhận", Colors.white, () {
-      Navigator.pop(context, listChosenService);
-      /*Constant.backToPrev(context);*/
-      /*Constant.sendToNext(context, Routes.cartRoute);*/
-    }, 18,
-        weight: FontWeight.w600,
-        buttonHeight: FetchPixels.getPixelHeight(60),
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14)));
+    return Container(
+      height: FetchPixels.getPixelHeight(50),
+      width: FetchPixels.getPixelWidth(370),
+      child: getButton(context, blueColor, "Xác nhận", Colors.white, () {
+        Navigator.pop(context, listChosenService);
+        /*Constant.backToPrev(context);*/
+        /*Constant.sendToNext(context, Routes.cartRoute);*/
+      }, 18,
+          weight: FontWeight.w600,
+          buttonHeight: FetchPixels.getPixelHeight(60),
+          borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(14))),
+    );
   }
 
   Widget nullListView() {
