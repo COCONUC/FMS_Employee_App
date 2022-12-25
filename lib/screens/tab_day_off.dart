@@ -216,7 +216,7 @@ class _TabDayOffState extends State<TabDayOff> {
   Future<List<DayOffData>> getFutureService() async {
     dayOffList =
         await DayOffServices().getDateOffListOfStaff(widget.employeeId);
-    return dayOffList;
+    return dayOffList.reversed.toList().sublist(0, 2);
   }
 
   Widget dayOffPendingList() {

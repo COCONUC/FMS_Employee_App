@@ -10,7 +10,7 @@ import 'package:fms_employee/screens/tab_profile.dart';
 
 class NavScreen extends StatefulWidget {
   static const String routeName = '/actual-home';
-  final  int employeeId;
+  final int employeeId;
   const NavScreen(this.employeeId, {Key? key}) : super(key: key);
 
   @override
