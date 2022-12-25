@@ -269,12 +269,12 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        getSvgImage("booking_null.svg",
+       /* getSvgImage("booking_null.svg",
             height: FetchPixels.getPixelHeight(124),
-            width: FetchPixels.getPixelHeight(84.77)),
+            width: FetchPixels.getPixelHeight(84.77)),*/
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getCustomFont("Không tải được dịch vụ!", 20, Colors.black, 1,
-            fontWeight: FontWeight.w900, textAlign: TextAlign.center)
+        /*getCustomFont("Không tải được dịch vụ!", 20, Colors.black, 1,
+            fontWeight: FontWeight.w900, textAlign: TextAlign.center)*/
       ],
     );
   }
