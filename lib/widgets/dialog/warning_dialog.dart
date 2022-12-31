@@ -5,7 +5,9 @@ import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 
 class WarningDialog extends StatefulWidget {
-  const WarningDialog({Key? key}) : super(key: key);
+  final String title;
+  final String message;
+  const WarningDialog(this.title, this.message, {Key? key}) : super(key: key);
 
   @override
   State<WarningDialog> createState() => _WarningDialogState();
@@ -37,11 +39,11 @@ class _WarningDialogState extends State<WarningDialog> {
                     width: FetchPixels.getPixelHeight(71.37),
                     height: FetchPixels.getPixelHeight(99.92)),*/
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getCustomFont("Chưa chọn ngày", 22, Colors.black, 1,
+                getCustomFont(widget.title, 22, Colors.black, 1,
                   fontWeight: FontWeight.w900, ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 getMultilineCustomFont(
-                    "Vui lòng chọn ngày muốn đăng ký nghỉ!",
+                    widget.message,
                     16,
                     Colors.black,
 

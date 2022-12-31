@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fms_employee/constants/assets.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
@@ -7,6 +8,8 @@ import 'package:fms_employee/features/account_service.dart';
 import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/day_off_register_data.dart';
+import 'package:fms_employee/screens/tab_day_off.dart';
+import 'package:fms_employee/widgets/dialog/confirm_dialog.dart';
 import 'package:intl/intl.dart';
 
 
@@ -158,7 +161,12 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
         _dayOffRegisterData.reason = reasonController.text;
         _dayOffRegisterData.status = false;
         DayOffServices().sendDayOffForm(_dayOffRegisterData);
-        Constant.backToPrev(context);
+        showDialog(
+            barrierDismissible: false,
+            builder: (context) {
+              return const ConfirmDialog("check_complete.sgv", "Gửi đơn thành công", "Vui lòng đợi xét duyệt");
+            },
+            context: context);
       }, 18,
           weight: FontWeight.w600,
           buttonHeight: FetchPixels.getPixelHeight(60),

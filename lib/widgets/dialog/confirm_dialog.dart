@@ -3,9 +3,13 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/tab_booking.dart';
 
 class ConfirmDialog extends StatefulWidget {
-  const ConfirmDialog({Key? key}) : super(key: key);
+  final String icon;
+  final String title;
+  final String message;
+  const ConfirmDialog(this. icon, this.title, this.message, {Key? key}) : super(key: key);
 
   @override
   State<ConfirmDialog> createState() => _ConfirmDialogState();
@@ -33,15 +37,15 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getSvgImage("confirm.svg",
+                getSvgImage(widget.icon,
                     width: FetchPixels.getPixelHeight(71.37),
                     height: FetchPixels.getPixelHeight(99.92)),
                 getVerSpace(FetchPixels.getPixelHeight(40)),
-                getCustomFont("Booking Confirmed", 22, Colors.black, 1,
+                getCustomFont(widget.title, 22, Colors.black, 1,
                   fontWeight: FontWeight.w900, ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 getMultilineCustomFont(
-                    "Your booking has been successfully confirmed!",
+                    widget.message,
                     16,
                     Colors.black,
 
@@ -50,10 +54,12 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                     textAlign: TextAlign.center),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 getButton(context, blueColor, "Ok", Colors.white, () {
-                  Constant.backToPrev(context);
+                  /*Constant.backToPrev(context);*/
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  setState(() {
 
-                 /* Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen(1)));*/
+                  });
                 }, 18,
                     weight: FontWeight.w600,
                     buttonHeight: FetchPixels.getPixelHeight(60),

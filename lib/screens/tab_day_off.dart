@@ -24,7 +24,6 @@ class TabDayOff extends StatefulWidget {
 
 class _TabDayOffState extends State<TabDayOff> {
   bool schedule = true;
-  List<ModelDayOff> scheduleList = DataFile.scheduleList;
   String date = " ";
 
   @override
@@ -133,7 +132,7 @@ class _TabDayOffState extends State<TabDayOff> {
         showDialog(
             barrierDismissible: false,
             builder: (context) {
-              return const WarningDialog();
+              return const WarningDialog("Chưa chọn ngày", "Vui lòng chọn ngày muốn đăng ký nghỉ!");
             },
             context: context);
       }
@@ -162,14 +161,13 @@ class _TabDayOffState extends State<TabDayOff> {
         borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(20)),
         child: SfDateRangePicker(
           enablePastDates: false,
-          minDate: DateTime.now().add(const Duration(days: 7)),
+          minDate: DateTime.now().add(const Duration(days: 2)),
           monthViewSettings: const DateRangePickerMonthViewSettings(
             dayFormat: "EEE",
             firstDayOfWeek: 1,
           ),
           onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
             date = DateFormat('yyyy-MM-dd').format(args.value);
-            print(date);
           },
           selectionShape: DateRangePickerSelectionShape.circle,
           showNavigationArrow: true,
@@ -200,6 +198,7 @@ class _TabDayOffState extends State<TabDayOff> {
             fontWeight: FontWeight.w400,
           ),
           selectionMode: DateRangePickerSelectionMode.single,
+          initialDisplayDate: DateTime.now(),
           headerStyle: DateRangePickerHeaderStyle(
               textAlign: TextAlign.start,
               textStyle: TextStyle(
