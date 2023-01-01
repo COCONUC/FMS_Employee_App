@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
-import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/models/model_salon.dart';
@@ -13,6 +11,7 @@ import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog_temp.dart';
+import 'package:fms_employee/widgets/image_screen.dart';
 import '../../features/order_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -40,8 +39,11 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
 
   final ImagePicker imgPicker = ImagePicker();
 
+  late List<String> listImages = [];
+
   List<XFile>? imageFiles;
   bool isLoading = false;
+
   openImages() async {
     try {
       var pickedFiles =
@@ -57,6 +59,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
       throw Exception(e);
     }
   }
+
   List<String> firebaseURLs =[];
   late CollectionReference imgRef;
   late firebase_storage.Reference ref;
@@ -106,7 +109,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   OrderDetailData data =  OrderDetailData();
 
   var total = 0.00;
-
 
   @override
   Widget build(BuildContext context) {
@@ -272,12 +274,67 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 ),*/
 
                   /*tag: widget.img,*/
+                /*const Text("Ảnh hiện trạng",
+                    style: TextStyle(
+                        color: mTextColorSecondary,
+                        fontSize: 16,
+                        fontFamily: 'Regular')),
+                InkWell(
+                  child: const Icon(
+                    Icons.image,
+                    color: Colors.orange,
+                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => ImageScreen(id: widget.orderId, imgURL: listImages)));
+                  },
+                ),*/
+
                    Container(
-                    height: FetchPixels.getPixelHeight(100),
-                    width: FetchPixels.getPixelHeight(100),
-                    decoration: BoxDecoration(
+                   /* height: FetchPixels.getPixelHeight(100),
+                    width: FetchPixels.getPixelHeight(100),*/
+                     padding: const EdgeInsets.all(20),
+                   /* decoration: BoxDecoration(
                         image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
-                    ),
+                    ),*/
+                     child: Row(
+                         children: [
+                         const Text("Ảnh đã lưu:"),
+                     const Divider(),
+                     listImages != [] ? Wrap(
+                       children: listImages.map((imageOne) {
+                         return Card(
+                           child: Container(
+                             constraints: const BoxConstraints.tightFor(
+                               height: 100,
+                               width: 100,
+                             ),
+                             decoration: BoxDecoration(
+                               image: DecorationImage(
+                                 image: NetworkImage(imageOne),
+                                 fit: BoxFit.cover,
+                               ),
+                             ),
+                             child: Stack(children: [
+                               Positioned(
+                                   right: 0.0,
+                                   top: 0.0,
+                                   child: InkWell(
+                                     child: const Icon(Icons.close),
+                                     onTap: () {
+                                       listImages.remove(imageOne);
+                                       setState(() {
+                                         imageFiles;
+                                       });
+                                     },
+                                   ))
+                             ]),
+                           ),
+                         );
+                       }).toList(),
+                     ) : Container(),
+    ]
+    ),
                   ),
 
               ],
