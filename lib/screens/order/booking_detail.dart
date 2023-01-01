@@ -9,6 +9,7 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/widgets/image_screen.dart';
 
 class BookingDetail extends StatefulWidget {
   final String img;
@@ -34,6 +35,7 @@ class _BookingDetailState extends State<BookingDetail> {
 
   List<ModelBooking> bookingLists = DataFile.bookingList;
   var index = 0;
+  late List<String> listImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +177,30 @@ class _BookingDetailState extends State<BookingDetail> {
                       Colors.black,
                       1,
                       fontWeight: FontWeight.w400,
+                    ),
+                    getVerSpace(FetchPixels.getPixelHeight(5)),
+                    getDivider(dividerColor, 0, 1),
+                    getVerSpace(FetchPixels.getPixelHeight(20)),
+
+                    getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
+                        fontWeight: FontWeight.w400),
+                    getVerSpace(FetchPixels.getPixelHeight(10)),
+                    /*getCustomFont(
+                      snapshot.data!.description ?? "api: Mô tả của Manager",
+                      16,
+                      Colors.black,
+                      1,
+                      fontWeight: FontWeight.w400,
+                    ),*/
+                    InkWell(
+                      child: const Icon(
+                        Icons.image,
+                        color: Colors.orange,
+                      ),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => ImageScreen(id: widget.orderId, imgURL: listImages)));
+                      },
                     ),
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     getDivider(dividerColor, 0, 1),
