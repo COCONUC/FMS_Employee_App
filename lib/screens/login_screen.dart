@@ -45,12 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void signInUser() {
-    if(phoneController.text == '0938995710' ){
-      resultText == 'OK';
-      print('Đăng nhập thành công');
-      Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
-      Constant.sendToScreen(NavScreen(3), context);
-    }
+
   }
 
   @override

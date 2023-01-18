@@ -1,96 +1,57 @@
-/*
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fms_employee/constants/backend_query.dart';
+import 'package:fms_employee/models/auth_data.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../constants/error_handling.dart';
-import '../constants/utils.dart';
 
-//import '../screens/widgets/otp_vertify_screen.dart';
 
-class LoginService {
+class LoginServices {
 
-  void signInUser({
-    required context,
-    required String username,
-    required String password,
-  }) async {
-    try {
-      http.Response res = await http.post(
-        Uri.parse('https://computer-services-api.herokuapp.com/auth/login'),
-        body: jsonEncode({
-          'username': username,
-          'password': password,
-        }),
+  Future<http.Response> loginCustomer(String username, String password) async {
+    final response = await http.post(
+        Uri.parse('${backEndUrl}/api/account/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-      );
-      httpErrorHandle(
-          response: res,
-          context: context,
-          onSuccess: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            Provider.of<DataClass>(context, listen: false).setUser(res.body);
-            await prefs.setString(
-                'refreshToken', jsonDecode(res.body)['refreshToken']);
-            Navigator.pushNamedAndRemoveUntil(
-                context,
-                Provider.of<DataClass>(context, listen: false).user.role ==
-                    'customer'
-                    ? NavScreen.routeName
-                    : StaffHomePage.routeName, //thay staff cho nay
-                    (route) => false);
-          });
-    } catch (e) {
-      showSnackBar(context, e.toString());
+        body: jsonEncode({
+          "username": username,
+          "password": password
+        })
+    );
+    if (response.statusCode == 200) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString('userAuth', response.body.toString());
+      const FlutterSecureStorage().write(key: 'accessToken', value: AuthModel
+          .fromJson(jsonDecode(response.body.toString()))
+          .accessToken);
+      const FlutterSecureStorage().write(key: 'refreshToken', value: AuthModel
+          .fromJson(jsonDecode(response.body.toString()))
+          .refreshToken);
+      return response;
+    } else {
+      return response;
     }
   }
 
-  void getUserData(context
-      ) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? refreshToken = prefs.getString('refreshToken');
-      if (refreshToken == null) {
-        prefs.setString('refreshToken', '');
-      }
-      var tokenRes = await http.post(
-          Uri.parse('https://computer-services-api.herokuapp.com/auth/refresh'),
-          headers: <String, String>{
-            'Context-Type': 'application/json; charset=UTF-8',
-            'Cookie': 'refreshToken=$refreshToken',
-          });
+  Future<bool> logoutCustomer(int accountId) async {
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    final response = await http.put(
+      Uri.parse('${backEndUrl}/api/account/logout/accountId/$accountId'),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
 
-      var response = jsonDecode(tokenRes.body);
-      if (response == true) {
-        prefs.setString('refreshToken', response['refreshToken']);
-      }
-    } catch (e) {
-      rethrow;
+      const FlutterSecureStorage().deleteAll();
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+      return true;
+    } else {
+      throw Exception('Lấy dữ liệu thất bại');
     }
   }
 
-  void logOut(BuildContext context) async {
-    try {
-      SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-      await sharedPreferences.setString('accessToken', '');
-      await http.post(
-        Uri.parse('https://computer-services-api.herokuapp.com/auth/logout'),
-      );
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AuthScreen.routeName,
-            (route) => false,
-      );
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
-  }
 }
-*/
