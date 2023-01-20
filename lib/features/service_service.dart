@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_employee/models/service_data.dart';
 import 'package:http/http.dart' as http;
 import '../constants/backend_query.dart';
@@ -7,10 +8,12 @@ class ServiceServices {
 
   // lấy ra danh sách dịch vụ
   Future<List<ServiceData>> getServiceListForStaff() async {
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/api/service/getAllService'),
         headers: <String, String>{
+          'Authorization': 'Bearer $token',
           'content-encoding': 'gzip',
           'Content-Type': 'application/json; charset=UTF-8',
         },

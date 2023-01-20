@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_employee/constants/backend_query.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
@@ -9,10 +10,12 @@ import 'package:http/http.dart' as http;
 class OrderServices {
   // lấy ra danh sách order của staff
   Future<List<OrderData>> getOrderListForStaff(employeeId) async {
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/employee/ViewAssign/employeeId/$employeeId'),
         headers: <String, String>{
+          'Authorization': 'Bearer $token',
           'content-encoding': 'gzip',
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -41,10 +44,12 @@ class OrderServices {
 
   // lấy ra danh sách order với trạng thái phù hợp cho staff
   Future<List<OrderWithStatusData>> getInProcessOrderListForStaff(employeeId, statusId) async {
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/employee/viewOrderStatus/employeeId/$employeeId/orderWorkingStatus/$statusId'),
         headers: <String, String>{
+          'Authorization': 'Bearer $token',
           'content-encoding': 'gzip',
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -73,10 +78,12 @@ class OrderServices {
 
   // Lấy thông tin của một đơn hàng khi ấn vào dựa theo OrderID
   Future<OrderDetailData> getOrderDetailById(orderId) async {
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     final response = await http.get(
       Uri.parse(
           '$backEndUrl/employee/getorderdetailbyemployee/order/$orderId'),
       headers: <String, String>{
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
@@ -90,11 +97,13 @@ class OrderServices {
 
 //Gửi đơn khảo sát lên cho quản lý
   Future<void> sendReportOrder(orderId, ReportOrder service) async{
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try{
       final response = await http.put(
         Uri.parse(
             '$backEndUrl/report_order_assigned/$orderId'),
         headers: <String, String>{
+          'Authorization': 'Bearer $token',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(service.toJson())
