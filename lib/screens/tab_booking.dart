@@ -16,8 +16,8 @@ import '../models/account_data.dart';
 
 class TabBooking extends StatefulWidget {
   static const String routeName = '/tab_booking';
-  final int employeeId;
-  const TabBooking(this.employeeId, {Key? key}) : super(key: key);
+
+  const TabBooking( {Key? key}) : super(key: key);
 
   @override
   State<TabBooking> createState() => _TabBookingState();
@@ -40,10 +40,10 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
     super.initState();
   }
 
-  AccountData accountData = new AccountData();
+  AccountData accountData = AccountData();
 
   Future<AccountData> getAccountService() async {
-    accountData = await AccountServices().getAccountDataByEmployeeId(widget.employeeId);
+    accountData = await AccountServices().getAccountDataByEmployeeId();
     return accountData;
   }
 
@@ -69,8 +69,8 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
           ActiveBookingScreen(),
           CompleteBookingScreen(),
           CancelBookingScreen()*/
-                BookingActive(widget.employeeId),
-                BookingInProcess(widget.employeeId),
+                BookingActive(),
+                BookingInProcess(),
               ],
               onPageChanged: (value) {
                 tabController.animateTo(value);
@@ -142,7 +142,7 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
   List<OrderData> bookingLists = [];
 
   Future<List<OrderData>> getFutureService() async {
-    bookingLists = await OrderServices().getOrderListForStaff(widget.employeeId);
+    bookingLists = await OrderServices().getOrderListForStaff();
     return bookingLists;
   }
 

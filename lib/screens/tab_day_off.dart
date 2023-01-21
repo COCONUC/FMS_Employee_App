@@ -3,7 +3,6 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/day_off_data.dart';
-import 'package:fms_employee/models/model_dayoff.dart';
 import 'package:fms_employee/screens/notification_screen.dart';
 import 'package:fms_employee/widgets/day_off_register_form.dart';
 import 'package:fms_employee/widgets/dialog/warning_dialog.dart';
@@ -11,12 +10,10 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../constants/resizer/fetch_pixels.dart';
 import '../constants/widget_utils.dart';
-import '../data/data_file.dart';
 
 class TabDayOff extends StatefulWidget {
   static const String routeName = '/tab_day_off';
-  final int employeeId;
-  const TabDayOff(this.employeeId, {Key? key}) : super(key: key);
+  const TabDayOff( {Key? key}) : super(key: key);
 
   @override
   State<TabDayOff> createState() => _TabDayOffState();
@@ -59,7 +56,7 @@ class _TabDayOffState extends State<TabDayOff> {
             istext: true,
             rightimage: "notification.svg", rightFunction: () {
           /*Constant.sendToNext(context, Routes.notificationRoutes);*/
-          Constant.sendToScreen(NotificationScreen(), context);
+          Constant.sendToScreen(const NotificationScreen(), context);
           /*Navigator.of(context).pushReplacementNamed(NotificationScreen.routeName);*/
         }));
   }
@@ -126,7 +123,7 @@ class _TabDayOffState extends State<TabDayOff> {
             ),
           ),
           builder: (context) {
-            return DayOffRegisterScreen(widget.employeeId, date);
+            return DayOffRegisterScreen(date);
           });}
       else{
         showDialog(
@@ -214,7 +211,7 @@ class _TabDayOffState extends State<TabDayOff> {
 
   Future<List<DayOffData>> getFutureService() async {
     dayOffList =
-        await DayOffServices().getDateOffListOfStaff(widget.employeeId);
+        await DayOffServices().getDateOffListOfStaff();
     return dayOffList.reversed.toList().sublist(0, 2);
   }
 
@@ -266,8 +263,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                       Expanded(
                                         flex: 1,
                                         child: getCustomFont(
-                                            "Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0, 10)}" ??
-                                                "",
+                                            "Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0, 10)}",
                                             16,
                                             Colors.black,
                                             1,
@@ -287,8 +283,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                   getDivider(dividerColor, 0, 1),
                                   getVerSpace(FetchPixels.getPixelHeight(10)),
                                   getCustomFont(
-                                      "Lý do: ${snapshot.data![index].reason}" ??
-                                          "",
+                                      "Lý do: ${snapshot.data![index].reason}",
                                       14,
                                       textColor,
                                       1,
@@ -300,17 +295,14 @@ class _TabDayOffState extends State<TabDayOff> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        /*tag: snapshot.data![index].customerId ?? "",*/
-                                        child: Container(
-                                          height:
-                                              FetchPixels.getPixelHeight(42),
-                                          width: FetchPixels.getPixelHeight(42),
-                                          /*decoration: BoxDecoration(
-                                        image: getDecorationAssetImage(
-                                            context, "booking_owner1.png" ?? "")),*/
-                                        ),
-                                      ),
+                                       SizedBox(
+                                         height:
+                                             FetchPixels.getPixelHeight(42),
+                                         width: FetchPixels.getPixelHeight(42),
+                                         /*decoration: BoxDecoration(
+                                       image: getDecorationAssetImage(
+                                           context, "booking_owner1.png" ?? "")),*/
+                                       ),
                                       getHorSpace(FetchPixels.getPixelWidth(9)),
                                       Expanded(
                                         flex: 1,
@@ -329,7 +321,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                           children: [
                                             getButton(
                                                 context,
-                                                Color(0xFFEEFCF0),
+                                                const Color(0xFFEEFCF0),
                                                 "Đã duyệt",
                                                 success,
                                                 () {},

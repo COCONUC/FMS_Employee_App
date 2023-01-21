@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:fms_employee/screens/login_screen.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/router.dart';
+import 'package:fms_employee/screens/splash_screen.dart';
+import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -21,10 +22,10 @@ class MyApp extends StatefulWidget {
 
 class AppState extends State<MyApp> {
 
-  /*@override
+  @override
   void initState(){
     super.initState();
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,9 @@ class AppState extends State<MyApp> {
           primary: mSecondaryColor,
         ),
       ),
-
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
+      //initialRoute: '/new-login-screen',
     );
   }
 

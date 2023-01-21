@@ -4,15 +4,15 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/login_screen.dart';
+import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/screens/order/booking_history.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
 
 
 class TabProfile extends StatefulWidget {
   static const String routeName = '/tab_profile';
-  final int employeeId;
-  const TabProfile(this.employeeId, {Key? key}) : super(key: key);
+
+  const TabProfile( {Key? key}) : super(key: key);
 
   @override
   State<TabProfile> createState() => _TabProfileState();
@@ -43,7 +43,7 @@ class _TabProfileState extends State<TabProfile> {
     return getButton(context, blueColor, "Đăng xuất", Colors.white, () {
       PrefData.setLogIn(false);
       /*Constant.sendToNext(context, Routes.homeRoute);*/
-      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(NewLoginScreen.routeName);
     }, 18,
         weight: FontWeight.w600,
         buttonHeight: FetchPixels.getPixelHeight(60),
@@ -66,7 +66,7 @@ class _TabProfileState extends State<TabProfile> {
               () {
             /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
                 /*Navigator.of(context).pushNamed(MyProfileScreen.routeName);*/
-                Constant.sendToScreen(MyProfileScreen(widget.employeeId), context);
+                Constant.sendToScreen(const MyProfileScreen(), context);
           }, 16,
               weight: FontWeight.w400,
               buttonHeight: FetchPixels.getPixelHeight(60),
@@ -87,7 +87,7 @@ class _TabProfileState extends State<TabProfile> {
                   () {
                 /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
                 /*Navigator.of(context).pushNamed(MyProfileScreen.routeName);*/
-                    Constant.sendToScreen(BookingHistory(widget.employeeId), context);
+                    Constant.sendToScreen(const BookingHistory(), context);
               }, 16,
               weight: FontWeight.w400,
               buttonHeight: FetchPixels.getPixelHeight(60),

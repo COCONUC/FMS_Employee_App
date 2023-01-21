@@ -11,8 +11,8 @@ import 'package:fms_employee/screens/order/manager_order.dart';
 
 class BookingInProcess extends StatefulWidget {
   static const String routeName = '/booking_ing_process';
-  final int employeeId;
-  const BookingInProcess(this.employeeId, {Key? key}) : super(key: key);
+
+  const BookingInProcess( {Key? key}) : super(key: key);
 
   @override
   State<BookingInProcess> createState() => _BookingInProcessState();
@@ -45,7 +45,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 2);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff( 2);
     return bookingLists;
   }
 
@@ -109,7 +109,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                               ],
                             ),
                             getVerSpace(FetchPixels.getPixelHeight(6)),
-                            getCustomFont("Mã đơn: ${snapshot.data![index].orderId.toString()}" ?? "api: thời gian khách đặt" ?? "", 14, textColor, 1,
+                            getCustomFont("Mã đơn: ${snapshot.data![index].orderId.toString()}", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             getDivider(dividerColor, 0, 1),
@@ -125,7 +125,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                     width: FetchPixels.getPixelHeight(42),
                                     decoration: BoxDecoration(
                                         image: getDecorationAssetImage(
-                                            context, "booking_owner1.png" ?? "")),
+                                            context, "booking_owner1.png")),
                                   ),
                                 ),
                                 getHorSpace(FetchPixels.getPixelWidth(9)),
@@ -166,7 +166,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -197,7 +197,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                 : Container(),
             if (index == 0)
               getCustomFont(
-                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt" ?? "",
+                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt",
                 16,
                 Colors.black,
                 1,
@@ -207,7 +207,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
               Container()
             else
               getCustomFont(
-                "api: thời gian khách đặt" ?? "",
+                "api: thời gian khách đặt",
                 14,
                 textColor,
                 1,

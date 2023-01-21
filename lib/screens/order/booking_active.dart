@@ -11,8 +11,8 @@ import 'package:fms_employee/constants/widget_utils.dart';
 
 class BookingActive extends StatefulWidget {
   static const String routeName = '/booking_active';
-  final int employeeId;
-  const BookingActive(this.employeeId, {Key? key}) : super(key: key);
+
+  const BookingActive({Key? key}) : super(key: key);
 
   @override
   State<BookingActive> createState() => _BookingActiveState();
@@ -45,7 +45,7 @@ class _BookingActiveState extends State<BookingActive> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 4);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff( 4);
     return bookingLists;
   }
 

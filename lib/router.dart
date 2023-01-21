@@ -12,11 +12,11 @@ import 'package:fms_employee/screens/tab_booking.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
-   /* case NewLoginScreen.routeName:
+    case NewLoginScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const NewLoginScreen(),
-      );*/
+      );
     case LoginScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
-import 'package:fms_employee/models/model_dayoff.dart';
 import 'color_constant.dart';
 import 'constant.dart';
 
@@ -255,6 +254,140 @@ Widget getButton(BuildContext context, Color bgColor, String text,
     ),
   );
 }
+//new
+Widget getDefaultTextFiledWithLabel2(
+    BuildContext context,
+    String s,
+    bool isValidated,
+    TextEditingController textEditingController,
+    Color fontColor,
+    {bool withprefix = false,
+      bool withSufix = false,
+      bool minLines = false,
+      EdgeInsetsGeometry margin = EdgeInsets.zero,
+      bool isPass = false,
+      bool isEnable = true,
+      double? height,
+      double? imageHeight,
+      double? imageWidth,
+      String? image,
+      String? suffiximage,
+      required Function function,
+      Function? imagefunction,
+      AlignmentGeometry alignmentGeometry = Alignment.centerLeft}) {
+  FocusNode myFocusNode = FocusNode();
+  return StatefulBuilder(
+    builder: (context, setState) {
+      final mqData = MediaQuery.of(context);
+      final mqDataNew =
+      mqData.copyWith(textScaleFactor: FetchPixels.getTextScale());
+
+      return AbsorbPointer(
+        absorbing: isEnable,
+        child: Container(
+          height: height,
+          margin: margin,
+          alignment: alignmentGeometry,
+          decoration:
+          BoxDecoration(
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0.0, 4.0)),
+              ],
+              borderRadius:
+              BorderRadius.circular(FetchPixels.getPixelHeight(12)))
+          ,
+          child: Focus(
+              onFocusChange: (hasFocus) {
+                if (hasFocus) {
+                  setState(() {
+                    myFocusNode.canRequestFocus = true;
+                  });
+                } else {
+                  setState(() {
+                    myFocusNode.canRequestFocus = false;
+                  });
+                }
+              },
+              child: MediaQuery(
+                data: mqDataNew,
+                child: Row(
+                  children: [
+                    (!withprefix)
+                        ? getHorSpace(FetchPixels.getPixelWidth(16))
+                        : Padding(
+                      padding: EdgeInsets.only(
+                          right: FetchPixels.getPixelWidth(12),
+                          left: FetchPixels.getPixelWidth(18)),
+                      child: getSvgImage(image!,
+                          height: FetchPixels.getPixelHeight(24),
+                          width: FetchPixels.getPixelHeight(24)),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        maxLines: (minLines) ? null : 1,
+                        controller: textEditingController,
+                        obscuringCharacter: "*",
+                        autofocus: false,
+                        focusNode: myFocusNode,
+                        obscureText: isPass,
+                        showCursor: myFocusNode.hasFocus,
+                        cursorColor: Colors.black,
+                        onTap: () {
+                          function();
+                        },
+                        style: TextStyle(
+                          color: Colors.black,
+                          decoration: TextDecoration.none,
+                          fontWeight: FontWeight.w400,
+                          fontSize: FetchPixels.getPixelHeight(16),
+                        ),
+                        onChanged: (_) => setState(() => ''),
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: InputBorder.none,
+                            hintText: s,
+                            errorText: isValidated
+                                ? Constant.validateCharacters(
+                                textEditingController.text, s)
+                                : null,
+                            hintStyle: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: FetchPixels.getPixelHeight(16),
+                            )),
+                      ),
+                    ),
+                    (!withSufix)
+                        ? getHorSpace(FetchPixels.getPixelWidth(16))
+                        : Padding(
+                      padding: EdgeInsets.only(
+                          right: FetchPixels.getPixelWidth(18),
+                          left: FetchPixels.getPixelWidth(12)),
+                      child: InkWell(
+                        onTap: () {
+                          if (imagefunction != null) {
+                            imagefunction();
+                          }
+                        },
+                        child: getSvgImage(suffiximage!,
+                            height: FetchPixels.getPixelHeight(24),
+                            width: FetchPixels.getPixelHeight(24)),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      );
+    },
+  );
+}
+
+
 
 Widget getButtonWithIcon(BuildContext context, Color bgColor, String text,
     Color textColor, Function function, double fontsize,

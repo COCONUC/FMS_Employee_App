@@ -5,11 +5,13 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/features/login_service.dart';
-import 'package:fms_employee/widgets/bottom_bar.dart';
-import 'package:fms_employee/widgets/dialog/failure_dialog.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
+import '../widgets/bottom_bar.dart';
+import '../widgets/dialog/failure_dialog.dart';
+
 class NewLoginScreen extends StatefulWidget {
+  static const String routeName = '/new-login-screen';
   const NewLoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
   bool isPass = true;
   bool isValidated = false;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -53,19 +56,22 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
           return false;
         });
   }
-
   ListView buildWidgetList(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       primary: true,
       children: [
-        getVerSpace(FetchPixels.getPixelHeight(700)),
-        getCustomFont(
-          "Đăng nhập",
-          24,
-          Colors.black,
-          1,
-          fontWeight: FontWeight.w900,
+        getVerSpace(FetchPixels.getPixelHeight(70)),
+        Row(
+          children: [
+            getCustomFont(
+              "Đăng nhập",
+              24,
+              Colors.black,
+              1,
+              fontWeight: FontWeight.w900,
+            ),
+          ],
         ),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getCustomFont(
@@ -76,7 +82,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
           fontWeight: FontWeight.w400,
         ),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getDefaultTextFiledWithLabelForLogin(
+        getDefaultTextFiledWithLabel2(
           context,
           "Số điện thoại",
           isValidated,
@@ -90,7 +96,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
           image: "call.svg",
         ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
-        getDefaultTextFiledWithLabelForLogin(
+        getDefaultTextFiledWithLabel2(
             context, "Mật khẩu", isValidated, passwordController, Colors.grey,
             function: () {},
             height: FetchPixels.getPixelHeight(60),
@@ -104,21 +110,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
             isPass = !isPass;
           });
         }),
-        getVerSpace(FetchPixels.getPixelHeight(19)),
-        Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(
-              onTap: () {
-                /*Constant.sendToNext(context, Routes.forgotRoute);*/
-              },
-              child: getCustomFont(
-                "Quên mật khẩu?",
-                16,
-                blueColor,
-                1,
-                fontWeight: FontWeight.w900,
-              ),
-            )),
         getVerSpace(FetchPixels.getPixelHeight(49)),
         getButton(context, blueColor, "Đăng nhập", Colors.white, () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -132,7 +123,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
               isLoading = false;
             });
             if(value.statusCode==200){
-              /*Constant.sendToNext(context, Routes.homeScreenRoute);*/
               Constant.sendToScreen(const NavScreen(), context);
             }else{
               showDialog(
@@ -149,31 +139,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
             buttonHeight: FetchPixels.getPixelHeight(60),
             borderRadius:
             BorderRadius.circular(FetchPixels.getPixelHeight(15))),
-        getVerSpace(FetchPixels.getPixelHeight(30)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            getCustomFont(
-              "Chưa có tài khoản?",
-              14,
-              Colors.black,
-              1,
-              fontWeight: FontWeight.w400,
-            ),
-            GestureDetector(
-              onTap: () {
-                /*Constant.sendToNext(context, Routes.signupRoute);*/
-              },
-              child: getCustomFont(
-                " Đăng ký",
-                16,
-                blueColor,
-                1,
-                fontWeight: FontWeight.w900,
-              ),
-            )
-          ],
-        ),
+
         getVerSpace(FetchPixels.getPixelHeight(50)),
         //getDivider(dividerColor, FetchPixels.getPixelHeight(1), 1),
       ],

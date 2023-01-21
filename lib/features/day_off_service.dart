@@ -5,14 +5,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fms_employee/constants/backend_query.dart';
 
+import '../constants/pref_data.dart';
+
 class DayOffServices{
 
 // lấy ra danh sách ngày nghỉ của staff
-Future<List<DayOffData>> getDateOffListOfStaff(employeeId) async {
+Future<List<DayOffData>> getDateOffListOfStaff() async {
   String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+  int employeeId = await PrefData.getUserId();
   try {
     http.Response response = await http.get(
-      Uri.parse('${backEndUrl}/employee/getAllDayOffbyEmployeeId/employeeId/$employeeId'),
+      Uri.parse('$backEndUrl/employee/getAllDayOffbyEmployeeId/employeeId/$employeeId'),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
         'content-encoding': 'gzip',

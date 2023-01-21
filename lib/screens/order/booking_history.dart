@@ -8,8 +8,8 @@ import 'package:fms_employee/screens/order/history/booking_canceled.dart';
 import 'package:fms_employee/screens/order/history/booking_completed.dart';
 
 class BookingHistory extends StatefulWidget {
-  final int employeeId;
-  const BookingHistory(this.employeeId, {Key? key}) : super(key: key);
+
+  const BookingHistory( {Key? key}) : super(key: key);
 
   @override
   State<BookingHistory> createState() => _BookingHistoryState();
@@ -79,13 +79,13 @@ class _BookingHistoryState extends State<BookingHistory> with SingleTickerProvid
         physics: const BouncingScrollPhysics(),
         controller: _controller,
         scrollDirection: Axis.horizontal,
-        children: /*const*/ [
+        children: const [
           /*AllBookingScreen(),
           ActiveBookingScreen(),
           CompleteBookingScreen(),
           CancelBookingScreen()*/
-          BookingCompleted(widget.employeeId),
-          BookingCanceled(widget.employeeId),
+          BookingCompleted(),
+          BookingCanceled(),
         ],
         onPageChanged: (value) {
           tabController.animateTo(value);

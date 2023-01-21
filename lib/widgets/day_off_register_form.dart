@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:fms_employee/constants/assets.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
+import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/features/account_service.dart';
 import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/day_off_register_data.dart';
-import 'package:fms_employee/screens/tab_day_off.dart';
 import 'package:fms_employee/widgets/dialog/confirm_dialog.dart';
-import 'package:intl/intl.dart';
 
 
 class DayOffRegisterScreen extends StatefulWidget {
-  final int employeeId;
   final String date;
-  const DayOffRegisterScreen(this.employeeId, this.date, {Key? key}) : super(key: key);
+  const DayOffRegisterScreen( this.date, {Key? key}) : super(key: key);
 
   @override
   State<DayOffRegisterScreen> createState() => _DayOffRegisterScreenState();
@@ -33,11 +30,18 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
 
   final DayOffRegisterData _dayOffRegisterData = DayOffRegisterData();
 
-  AccountData accountData = new AccountData();
+  AccountData accountData = AccountData();
 
   Future<AccountData> getAccountService() async {
-    accountData = await AccountServices().getAccountDataByEmployeeId(widget.employeeId);
+    accountData = await AccountServices().getAccountDataByEmployeeId();
     return accountData;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    PrefData.getUserId().then((value) =>     accountData.employeeId = value
+    );
+    super.initState();
   }
 
   @override
@@ -94,7 +98,7 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
                   minLines: true),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
-                  context, "Ngày đăng ký nghỉ: ${widget.date}" ?? "Ngày đăng ký",
+                  context, "Ngày đăng ký nghỉ: ${widget.date}",
                   nameController,
                   Colors.grey,
                   function: () {},
@@ -156,7 +160,6 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
           right: FetchPixels.getPixelWidth(20),
           bottom: FetchPixels.getPixelHeight(30)),
       child: getButton(context, blueColor, "Gửi Đơn", Colors.white, () {
-        _dayOffRegisterData.employeeId = widget.employeeId;
         _dayOffRegisterData.dayOff = widget.date;
         _dayOffRegisterData.reason = reasonController.text;
         _dayOffRegisterData.status = false;

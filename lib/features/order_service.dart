@@ -7,9 +7,12 @@ import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants/pref_data.dart';
+
 class OrderServices {
   // lấy ra danh sách order của staff
-  Future<List<OrderData>> getOrderListForStaff(employeeId) async {
+  Future<List<OrderData>> getOrderListForStaff() async {
+    int employeeId = await PrefData.getUserId();
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try {
       http.Response response = await http.get(
@@ -43,8 +46,9 @@ class OrderServices {
   }
 
   // lấy ra danh sách order với trạng thái phù hợp cho staff
-  Future<List<OrderWithStatusData>> getInProcessOrderListForStaff(employeeId, statusId) async {
+  Future<List<OrderWithStatusData>> getInProcessOrderListForStaff(statusId) async {
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    int employeeId = await PrefData.getUserId();
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/employee/viewOrderStatus/employeeId/$employeeId/orderWorkingStatus/$statusId'),

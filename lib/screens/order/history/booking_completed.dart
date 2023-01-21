@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
-import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
@@ -13,8 +12,8 @@ import 'package:fms_employee/screens/order/history/booking_detail_history.dart';
 
 class BookingCompleted extends StatefulWidget {
   static const String routeName = '/booking_completed';
-  final int employeeId;
-  const BookingCompleted(this.employeeId, {Key? key}) : super(key: key);
+
+  const BookingCompleted( {Key? key}) : super(key: key);
 
   @override
   State<BookingCompleted> createState() => _BookingCompletedState();
@@ -47,7 +46,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(widget.employeeId, 6);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff( 6);
     return bookingLists;
   }
 
@@ -115,7 +114,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                               ],
                             ),
                             getVerSpace(FetchPixels.getPixelHeight(6)),
-                            getCustomFont("Mã đơn: ${snapshot.data![index].orderId.toString()}" ?? "api: thời gian khách đặt" ?? "", 14, textColor, 1,
+                            getCustomFont("Mã đơn: ${snapshot.data![index].orderId.toString()}", 14, textColor, 1,
                                 fontWeight: FontWeight.w400),
                             getVerSpace(FetchPixels.getPixelHeight(20)),
                             getDivider(dividerColor, 0, 1),
@@ -131,7 +130,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                                     width: FetchPixels.getPixelHeight(42),
                                     decoration: BoxDecoration(
                                         image: getDecorationAssetImage(
-                                            context, "booking_owner1.png" ?? "")),
+                                            context, "booking_owner1.png")),
                                   ),
                                 ),
                                 getHorSpace(FetchPixels.getPixelWidth(9)),
@@ -172,7 +171,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetailHistory("booking_owner1.png"?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(BookingDetailHistory("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -203,7 +202,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                 : Container(),
             if (index == 0)
               getCustomFont(
-                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt" ?? "",
+                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt",
                 16,
                 Colors.black,
                 1,
@@ -213,7 +212,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
               Container()
             else
               getCustomFont(
-                "api: thời gian khách đặt" ?? "",
+                "api: thời gian khách đặt",
                 14,
                 textColor,
                 1,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fms_employee/constants/device_util.dart';
 
-import '../device_util.dart';
 
 class FetchPixels {
   static double mockupWidth = 414;
@@ -8,7 +8,7 @@ class FetchPixels {
   static double width = 0;
   static double height = 0;
 
-    FetchPixels(BuildContext context) {
+  FetchPixels(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
   }
@@ -45,7 +45,7 @@ class FetchPixels {
 
   static double getScale() {
     double scale =
-        (width > height) ? mockupWidth / width : mockupHeight / height;
+    (width > height) ? mockupWidth / width : mockupHeight / height;
 
     if (DeviceUtil.isTablet) {
       scale = height / mockupHeight;

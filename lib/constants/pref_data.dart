@@ -10,7 +10,7 @@ class PrefData {
   static String getDefaultCountry = "${prefName}country";
   static String getServices = "${prefName}selectedServices";
   static String defCountryName = "image_albania.jpg";
-
+  static String getAccountId = "${prefName}accountId";
 
   static Future<SharedPreferences> getPrefInstance() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -29,7 +29,10 @@ class PrefData {
     SharedPreferences preferences = await getPrefInstance();
     preferences.setString(getServices, avail);
   }
-
+  static setUserId(int avail) async {
+    SharedPreferences preferences = await getPrefInstance();
+    preferences.setInt(getAccountId, avail);
+  }
   static Future<String> getServicesList() async {
     SharedPreferences preferences = await getPrefInstance();
     String isIntroAvailable =
@@ -41,7 +44,11 @@ class PrefData {
     String isIntroAvailable = preferences.getString(getDefaultCode) ?? "+1";
     return isIntroAvailable;
   }
-
+  static Future<int> getUserId() async {
+    SharedPreferences preferences = await getPrefInstance();
+    int isIntroAvailable = preferences.getInt(getAccountId) ?? 0;
+    return isIntroAvailable;
+  }
   static Future<String> getDefCountry() async {
     SharedPreferences preferences = await getPrefInstance();
     String isIntroAvailable =
@@ -63,9 +70,6 @@ class PrefData {
     int isIntroAvailable = preferences.getInt(defIndexVal) ?? 0;
     return isIntroAvailable;
   }
-
-
-
   static Future<bool> isLogIn() async {
     SharedPreferences preferences = await getPrefInstance();
     bool isIntroAvailable = preferences.getBool(isLoggedIn) ?? false;
