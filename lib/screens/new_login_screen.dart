@@ -1,14 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
-import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/features/login_service.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
-
+import 'package:fms_employee/widgets/dialog/failure_dialog.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
 class NewLoginScreen extends StatefulWidget {
-  static const String routeName = '/new-login-screen';
   const NewLoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -17,25 +18,33 @@ class NewLoginScreen extends StatefulWidget {
 
 class _NewLoginScreenState extends State<NewLoginScreen> {
 
-  final _signInFormKey = GlobalKey<FormState>();
+  void finishView() {
+    Constant.closeApp();
+  }
 
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isPass = true;
-
+  bool isValidated = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: backGroundColor,
-          body: SafeArea(
-            child: Container(
-              padding:
-              EdgeInsets.symmetric(horizontal: FetchPixels.getDefaultHorSpace(context)),
-              alignment: Alignment.topCenter,
-              child: buildWidgetList(context),
+        child: LoadingOverlay(
+          isLoading: isLoading,
+          opacity: 0.5,
+          color: Colors.black12.withOpacity(0.2),
+          progressIndicator: const CircularProgressIndicator(),
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: backGroundColor,
+            body: SafeArea(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: FetchPixels.getDefaultHorSpace(context)),
+                alignment: Alignment.topCenter,
+                child: buildWidgetList(context),
+              ),
             ),
           ),
         ),
@@ -50,27 +59,39 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
       shrinkWrap: true,
       primary: true,
       children: [
-        getVerSpace(FetchPixels.getPixelHeight(70)),
-        getCustomFont("Login", 24, Colors.black, 1,
-          fontWeight: FontWeight.w900, ),
+        getVerSpace(FetchPixels.getPixelHeight(700)),
+        getCustomFont(
+          "Đăng nhập",
+          24,
+          Colors.black,
+          1,
+          fontWeight: FontWeight.w900,
+        ),
         getVerSpace(FetchPixels.getPixelHeight(10)),
-        getCustomFont("Glad to meet you again! ", 16, Colors.black, 1,
-          fontWeight: FontWeight.w400, ),
+        getCustomFont(
+          "Chào mừng bạn! ",
+          16,
+          Colors.black,
+          1,
+          fontWeight: FontWeight.w400,
+        ),
         getVerSpace(FetchPixels.getPixelHeight(30)),
-        getDefaultTextFiledWithLabel(
+        getDefaultTextFiledWithLabelForLogin(
           context,
           "Số điện thoại",
-          phoneController,
+          isValidated,
+          emailController,
           Colors.grey,
+          minLines: true,
           function: () {},
           height: FetchPixels.getPixelHeight(60),
           isEnable: false,
           withprefix: true,
-          image: "message.svg",
+          image: "call.svg",
         ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
-        getDefaultTextFiledWithLabel(
-            context, "Mật khẩu", passwordController, Colors.grey,
+        getDefaultTextFiledWithLabelForLogin(
+            context, "Mật khẩu", isValidated, passwordController, Colors.grey,
             function: () {},
             height: FetchPixels.getPixelHeight(60),
             isEnable: false,
@@ -90,16 +111,39 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
               onTap: () {
                 /*Constant.sendToNext(context, Routes.forgotRoute);*/
               },
-              child: getCustomFont("Forgot Password?", 16, blueColor, 1,
-                fontWeight: FontWeight.w900, ),
+              child: getCustomFont(
+                "Quên mật khẩu?",
+                16,
+                blueColor,
+                1,
+                fontWeight: FontWeight.w900,
+              ),
             )),
         getVerSpace(FetchPixels.getPixelHeight(49)),
-        getButton(context, blueColor, "Login", Colors.white, () {
-          PrefData.setLogIn(true);
-          /*Constant.sendToNext(context, Routes.homeScreenRoute);*/
-          if (_signInFormKey.currentState!.validate()) {
-            signInUser();
+        getButton(context, blueColor, "Đăng nhập", Colors.white, () {
+          FocusScope.of(context).requestFocus(FocusNode());
+          setState(() {
+            isLoading = true;
+          });
+          LoginServices()
+              .loginCustomer(emailController.text, passwordController.text)
+              .then((value) {
+            setState(() {
+              isLoading = false;
+            });
+            if(value.statusCode==200){
+              /*Constant.sendToNext(context, Routes.homeScreenRoute);*/
+              Constant.sendToScreen(const NavScreen(), context);
+            }else{
+              showDialog(
+                barrierDismissible: true,
+                context: context,
+                builder: (context) {
+                  return FailureDialog(title: 'Đăng nhập thất bại', description: value.body.toString());
+                },);
+            }
           }
+          );
         }, 18,
             weight: FontWeight.w600,
             buttonHeight: FetchPixels.getPixelHeight(60),
@@ -109,71 +153,30 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            getCustomFont("Don’t have an account?", 14, Colors.black, 1,
-              fontWeight: FontWeight.w400, ),
+            getCustomFont(
+              "Chưa có tài khoản?",
+              14,
+              Colors.black,
+              1,
+              fontWeight: FontWeight.w400,
+            ),
             GestureDetector(
               onTap: () {
                 /*Constant.sendToNext(context, Routes.signupRoute);*/
               },
-              child: getCustomFont(" Sign Up", 16, blueColor, 1,
-                fontWeight: FontWeight.w900, ),
+              child: getCustomFont(
+                " Đăng ký",
+                16,
+                blueColor,
+                1,
+                fontWeight: FontWeight.w900,
+              ),
             )
           ],
         ),
         getVerSpace(FetchPixels.getPixelHeight(50)),
-        getDivider(dividerColor, FetchPixels.getPixelHeight(1), 1),
-        getVerSpace(FetchPixels.getPixelHeight(50)),
-        getButton(
-          context,
-          Colors.white,
-          "Login with Google",
-          Colors.black,
-              () {},
-          18,
-          weight: FontWeight.w600,
-          isIcon: true,
-          image: "google.svg",
-          buttonHeight: FetchPixels.getPixelHeight(60),
-          borderRadius:
-          BorderRadius.circular(FetchPixels.getPixelHeight(15)),
-          boxShadow: [
-            const BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0.0, 4.0)),
-          ],
-        ),
-        getVerSpace(FetchPixels.getPixelHeight(20)),
-        getButton(context, Colors.white, "Login with Facebook",
-            Colors.black, () {}, 18,
-            weight: FontWeight.w600,
-            isIcon: true,
-            image: "facebook.svg",
-            buttonHeight: FetchPixels.getPixelHeight(60),
-            borderRadius:
-            BorderRadius.circular(FetchPixels.getPixelHeight(15)),
-            boxShadow: [
-              const BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10,
-                  offset: Offset(0.0, 4.0)),
-            ]),
+        //getDivider(dividerColor, FetchPixels.getPixelHeight(1), 1),
       ],
     );
   }
-
-  String resultText = "";
-
-  void signInUser() {
-    if(phoneController.text == '0938995710' ){
-      resultText == 'OK';
-      print('OK');
-      Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
-    }
-  }
-
-  void finishView() {
-    Constant.closeApp();
-  }
-
 }

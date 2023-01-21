@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 signInUser();
                               }*/
                               Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
-                              Constant.sendToScreen(NavScreen(3), context);
+                              Constant.sendToScreen(NavScreen(), context);
                             },
                           ),
                           SizedBox(

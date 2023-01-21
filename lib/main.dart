@@ -1,15 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:fms_employee/providers/data_class.dart';
-import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/screens/login_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/router.dart';
-
 import 'firebase_options.dart';
-
-
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,10 +21,10 @@ class MyApp extends StatefulWidget {
 
 class AppState extends State<MyApp> {
 
-  @override
+  /*@override
   void initState(){
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
