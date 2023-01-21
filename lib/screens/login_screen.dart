@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
+import 'package:fms_employee/features/login_service.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:fms_employee/widgets/custom_button.dart';
 import 'package:fms_employee/widgets/custom_text_field.dart';
+import 'package:fms_employee/widgets/dialog/failure_dialog.dart';
 
 /*enum Auth {
   signin,
@@ -25,8 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String resultText = "";
 
   final TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
+
+  bool isPass = true;
+  bool isValidated = false;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -99,8 +106,32 @@ class _LoginScreenState extends State<LoginScreen> {
                              /* if (_signInFormKey.currentState!.validate()) {
                                 signInUser();
                               }*/
-                              Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
-                              Constant.sendToScreen(NavScreen(), context);
+                              /*Navigator.of(context).pushReplacementNamed(NavScreen.routeName);
+                              Constant.sendToScreen(NavScreen(), context);*/
+
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              setState(() {
+                                isLoading = true;
+                              });
+                              LoginServices()
+                                  .loginCustomer(emailController.text, passwordController.text)
+                                  .then((value) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                if(value.statusCode==200){
+                                  /*Constant.sendToNext(context, Routes.homeScreenRoute);*/
+                                  Constant.sendToScreen(const NavScreen(), context);
+                                }else{
+                                  showDialog(
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return FailureDialog(title: 'Đăng nhập thất bại', description: value.body.toString());
+                                    },);
+                                }
+                              }
+                              );
                             },
                           ),
                           SizedBox(
