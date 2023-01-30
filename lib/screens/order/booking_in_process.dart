@@ -45,7 +45,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff( 2);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(2, context);
     return bookingLists;
   }
 

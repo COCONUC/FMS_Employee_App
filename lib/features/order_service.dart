@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_employee/constants/backend_query.dart';
+import 'package:fms_employee/features/login_service.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
+import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/pref_data.dart';
@@ -46,7 +50,7 @@ class OrderServices {
   }
 
   // lấy ra danh sách order với trạng thái phù hợp cho staff
-  Future<List<OrderWithStatusData>> getInProcessOrderListForStaff(statusId) async {
+  Future<List<OrderWithStatusData>> getInProcessOrderListForStaff(statusId, context) async {
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     int employeeId = await PrefData.getUserId();
     try {
@@ -64,15 +68,16 @@ class OrderServices {
             .map<OrderWithStatusData>((json) => OrderWithStatusData.fromJson(json))
             .toList();
       } else {
-        /*AwesomeDialog(
+        AwesomeDialog(
           context: context,
           animType: AnimType.SCALE,
           dialogType: DialogType.WARNING,
           title: 'Hết phiên đăng nhập',
           desc: 'Vui lòng đăng nhập lại',
           dismissOnTouchOutside: false,
-          btnOkOnPress: () { AuthService().logOut(context);},
-        ).show();*/
+          /*btnOkOnPress: () { AuthService().logOut(context);},*/
+          btnOkOnPress: () { Navigator.of(context).pushReplacementNamed(NewLoginScreen.routeName);},
+        ).show();
         throw Exception('Lấy dữ liệu thất bại');
       }
     } catch (e) {
