@@ -159,8 +159,8 @@ class _TabProfileState extends State<TabProfile> {
               sufixIcon: true,
               suffixImage: "arrow_right.svg"),*/
           getVerSpace(FetchPixels.getPixelHeight(20)),
-          getButtonWithIcon(context, Colors.white, "Báo cáo sự cố", Colors.black, () {
-            /*Constant.sendToNext(context, Routes.reportRoute);*/
+          /*getButtonWithIcon(context, Colors.white, "Báo cáo sự cố", Colors.black, () {
+            *//*Constant.sendToNext(context, Routes.reportRoute);*//*
             Navigator.of(context).pushNamed(MyProfileScreen.routeName);
           }, 16,
               weight: FontWeight.w400,
@@ -176,7 +176,7 @@ class _TabProfileState extends State<TabProfile> {
               prefixIcon: true,
               prefixImage: "documnet.svg",
               sufixIcon: true,
-              suffixImage: "arrow_right.svg"),
+              suffixImage: "arrow_right.svg"),*/
           getVerSpace(FetchPixels.getPixelHeight(40)),
         ],
       ),
