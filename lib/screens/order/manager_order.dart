@@ -9,6 +9,9 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/screens/order/booking_in_process.dart';
+import 'package:fms_employee/screens/tab_booking.dart';
+import 'package:fms_employee/widgets/bottom_bar.dart';
 
 class ManagerOrderDetail extends StatefulWidget {
   final String img;
@@ -273,6 +276,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                 /*Constant.backToPrev(context);*/
                 /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                 /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
+                Constant.sendToScreen(NavScreen(), context);
               }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

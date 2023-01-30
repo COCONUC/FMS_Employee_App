@@ -17,7 +17,7 @@ import '../models/account_data.dart';
 class TabBooking extends StatefulWidget {
   static const String routeName = '/tab_booking';
 
-  const TabBooking( {Key? key}) : super(key: key);
+  const TabBooking({Key? key}) : super(key: key);
 
   @override
   State<TabBooking> createState() => _TabBookingState();
