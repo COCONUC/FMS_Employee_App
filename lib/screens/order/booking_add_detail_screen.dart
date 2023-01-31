@@ -8,9 +8,11 @@ import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/screens/order/manager_order.dart';
+import 'package:fms_employee/widgets/dialog/delete_dialog.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog_temp.dart';
+import 'package:fms_employee/widgets/dialog/warning_dialog.dart';
 import 'package:fms_employee/widgets/image_screen.dart';
 import '../../features/order_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -468,7 +470,17 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-
+                      showDialog(
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return DeleteDialog(" ", "Xóa dịch vụ này?", data.listOrderServiceDto![index]);
+                          },
+                          context: context).then((value) {
+                            if(value == true){
+                              data.listOrderServiceDto!.removeAt(index);
+                            }
+                            setState(() {});
+                          });
                     },
                     child: getSvgImage("trash.svg",color: Colors.deepOrange,
                         width: FetchPixels.getPixelHeight(20),

@@ -38,6 +38,10 @@ class Constant {
     Navigator.of(context).pop();
   }
 
+  static backToPrevAfterDelete(BuildContext context, bool bool) {
+    Navigator.of(context).pop(bool);
+  }
+
   static  getCurrency(BuildContext context) {
     return "ETH";
   }
