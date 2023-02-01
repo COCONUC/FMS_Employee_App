@@ -34,6 +34,7 @@ class _TabProfileState extends State<TabProfile> {
             getVerSpace(FetchPixels.getPixelHeight(40)),
             buildExpand(context),
             buildButtonLogout(context),
+            getVerSpace(FetchPixels.getPixelHeight(10)),
           ],
         ),
       ),

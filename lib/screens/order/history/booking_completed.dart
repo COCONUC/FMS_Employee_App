@@ -8,6 +8,7 @@ import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/order/history/booking_detail_history.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
 
 class BookingCompleted extends StatefulWidget {
@@ -222,41 +223,48 @@ class _BookingCompletedState extends State<BookingCompleted> {
         ));
   }
 
+  bool loading = false;
+
   Widget nullListView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        getSvgImage("booking_null.svg",
-            height: FetchPixels.getPixelHeight(124),
-            width: FetchPixels.getPixelHeight(84.77)),
-        getVerSpace(FetchPixels.getPixelHeight(30)),
-        getCustomFont("Chưa Có Đơn Hàng !", 20, Colors.black, 1,
-            fontWeight: FontWeight.w900, textAlign: TextAlign.center),
-        getVerSpace(FetchPixels.getPixelHeight(10)),
-        getCustomFont(
-          "Vui lòng chờ cập nhật mới từ hệ thống! ",
-          16,
-          Colors.black,
-          2,
-          fontWeight: FontWeight.w400,
-        ),
-        getVerSpace(FetchPixels.getPixelHeight(30)),
-        getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
-          setState(() {
-            /*schedule = true;*/
-          });
-        }, 18,
-            weight: FontWeight.w600,
-            buttonHeight: FetchPixels.getPixelHeight(60),
-            insetsGeometry: EdgeInsets.symmetric(
-                horizontal: FetchPixels.getPixelWidth(98)),
-            borderRadius:
-            BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-            isBorder: true,
-            borderColor: blueColor,
-            borderWidth: 1.5)
-      ],
+    return LoadingOverlay(
+      isLoading: loading,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          getSvgImage("booking_null.svg",
+              height: FetchPixels.getPixelHeight(124),
+              width: FetchPixels.getPixelHeight(84.77)),
+          getVerSpace(FetchPixels.getPixelHeight(30)),
+          getCustomFont("Chưa Có Đơn Hàng !", 20, Colors.black, 1,
+              fontWeight: FontWeight.w900, textAlign: TextAlign.center),
+          getVerSpace(FetchPixels.getPixelHeight(10)),
+          getCustomFont(
+            "Vui lòng chờ cập nhật mới từ hệ thống! ",
+            16,
+            Colors.black,
+            2,
+            fontWeight: FontWeight.w400,
+          ),
+          getVerSpace(FetchPixels.getPixelHeight(30)),
+          getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () async {
+            loading = true;
+            setState(() {});
+            await Future.delayed(Duration(seconds: 2));
+            loading = false;
+            setState(() {});
+          }, 18,
+              weight: FontWeight.w600,
+              buttonHeight: FetchPixels.getPixelHeight(60),
+              insetsGeometry: EdgeInsets.symmetric(
+                  horizontal: FetchPixels.getPixelWidth(98)),
+              borderRadius:
+              BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+              isBorder: true,
+              borderColor: blueColor,
+              borderWidth: 1.5)
+        ],
+      ),
     );
   }
 

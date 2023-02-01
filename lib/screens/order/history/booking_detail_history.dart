@@ -230,7 +230,7 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                       getCustomFont("Tổng Cộng", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        snapshot.data!.totalPrice ?? "api: Tổng giá tiền đơn hàng",
+                        totalPrice(snapshot.data!.listOrderServiceDto!).toString() + " VNĐ" ?? "api: Tổng giá tiền đơn hàng",
                         20,
                         Colors.black,
                         1,
@@ -246,6 +246,14 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
           }
         }
     );
+  }
+
+  double totalPrice(List<ListOrderServiceDto> services){
+    double total = 0.0;
+    for(var e in services){
+      total = total + (double.parse(e.price!)* e.quantity!);
+    }
+    return total;
   }
 
   Container buttons(BuildContext context) {
