@@ -284,7 +284,6 @@ class _BookingInProcessState extends State<BookingInProcess> {
         getVerSpace(FetchPixels.getPixelHeight(30)),
         getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
           setState(() {
-            /*schedule = true;*/
           });
         }, 18,
             weight: FontWeight.w600,

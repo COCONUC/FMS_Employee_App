@@ -9,6 +9,7 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/widgets/image_grid.dart';
 import 'package:fms_employee/widgets/image_screen.dart';
 
 class BookingDetail extends StatefulWidget {
