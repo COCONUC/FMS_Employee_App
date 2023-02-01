@@ -7,6 +7,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/screens/order/booking_history.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
+import 'package:fms_employee/widgets/dialog/option_dialog.dart';
 
 
 class TabProfile extends StatefulWidget {
@@ -43,7 +44,16 @@ class _TabProfileState extends State<TabProfile> {
     return getButton(context, blueColor, "Đăng xuất", Colors.white, () {
       PrefData.setLogIn(false);
       /*Constant.sendToNext(context, Routes.homeRoute);*/
-      Navigator.of(context).pushReplacementNamed(NewLoginScreen.routeName);
+      showDialog(
+          barrierDismissible: false,
+          builder: (context) {
+            return const OptionDialog(" ", "Đăng xuất khỏi thiết bị?");
+          },
+          context: context).then((value) {
+        if(value == true){
+          Navigator.of(context).pushReplacementNamed(NewLoginScreen.routeName);
+        }
+      });
     }, 18,
         weight: FontWeight.w600,
         buttonHeight: FetchPixels.getPixelHeight(60),

@@ -64,17 +64,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    getButton(context, blueColor, "Quay lại", Colors.white, () {
-                      Constant.backToPrev(context);
-                    }, 18,
-                        weight: FontWeight.w600,
-                        buttonHeight: FetchPixels.getPixelHeight(60),
-                        buttonWidth: FetchPixels.getPixelWidth(100),
-                        borderRadius:
-                        BorderRadius.circular(FetchPixels.getPixelHeight(14))),
-                    getHorSpace(FetchPixels.getPixelWidth(20)),
-                    getButton(context, blueColor, "Xóa", Colors.white, () {
-                      print(widget.services.orderServiceId);
+                    getButton(context, Colors.redAccent.shade700, "Xóa", Colors.white, () {
                       if(widget.services.orderServiceId != null){
                         // xoa API trong day
                         Constant.backToPrevAfterDelete(context, false);
@@ -84,7 +74,16 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     }, 18,
                         weight: FontWeight.w600,
                         buttonHeight: FetchPixels.getPixelHeight(60),
-                        buttonWidth: FetchPixels.getPixelWidth(100),
+                        buttonWidth: FetchPixels.getPixelWidth(120),
+                        borderRadius:
+                        BorderRadius.circular(FetchPixels.getPixelHeight(14))),
+                    getHorSpace(FetchPixels.getPixelWidth(20)),
+                    getButton(context, blueColor, "Quay lại", Colors.white, () {
+                      Constant.backToPrev(context);
+                    }, 18,
+                        weight: FontWeight.w600,
+                        buttonHeight: FetchPixels.getPixelHeight(60),
+                        buttonWidth: FetchPixels.getPixelWidth(120),
                         borderRadius:
                         BorderRadius.circular(FetchPixels.getPixelHeight(14))),
                   ],

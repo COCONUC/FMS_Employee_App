@@ -473,7 +473,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                       showDialog(
                           barrierDismissible: false,
                           builder: (context) {
-                            return DeleteDialog(" ", "Xóa dịch vụ này?", data.listOrderServiceDto![index]);
+                            return DeleteDialog("Xóa dịch vụ này?", " ", data.listOrderServiceDto![index]);
                           },
                           context: context).then((value) {
                             if(value == true){

@@ -55,21 +55,24 @@ class _OptionDialogState extends State<OptionDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    getButton(context, blueColor, "Xác nhận", Colors.white, () {
-
+                    getButton(context, backGroundColor, "Xác nhận", blueColor, () {
+                      Constant.backToPrevAfterDelete(context, true);
                     }, 18,
                         weight: FontWeight.w600,
                         buttonHeight: FetchPixels.getPixelHeight(60),
-                        buttonWidth: FetchPixels.getPixelWidth(100),
+                        buttonWidth: FetchPixels.getPixelWidth(120),
+                        isBorder: true,
+                        borderWidth: 1.5,
+                        borderColor: blueColor,
                         borderRadius:
                         BorderRadius.circular(FetchPixels.getPixelHeight(14))),
                     getHorSpace(FetchPixels.getPixelWidth(20)),
                     getButton(context, blueColor, "Quay lại", Colors.white, () {
-                      Constant.backToPrev(context);
+                      Constant.backToPrevAfterDelete(context, false);
                     }, 18,
                         weight: FontWeight.w600,
                         buttonHeight: FetchPixels.getPixelHeight(60),
-                        buttonWidth: FetchPixels.getPixelWidth(100),
+                        buttonWidth: FetchPixels.getPixelWidth(120),
                         borderRadius:
                         BorderRadius.circular(FetchPixels.getPixelHeight(14))),
                   ],
