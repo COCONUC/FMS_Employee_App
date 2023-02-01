@@ -263,7 +263,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                       Expanded(
                                         flex: 1,
                                         child: getCustomFont(
-                                            "Ngày đăng ký:  ${snapshot.data![index].dayOff!.substring(0, 10)}",
+                                            "Ngày đăng ký:  ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data![index].dayOff!.substring(0, 10)))}",
                                             16,
                                             Colors.black,
                                             1,

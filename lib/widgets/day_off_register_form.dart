@@ -9,6 +9,7 @@ import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/day_off_register_data.dart';
 import 'package:fms_employee/widgets/dialog/confirm_dialog.dart';
+import 'package:intl/intl.dart';
 
 
 class DayOffRegisterScreen extends StatefulWidget {
@@ -98,7 +99,7 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
                   minLines: true),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
-                  context, "Ngày đăng ký nghỉ: ${widget.date}",
+                  context, "Ngày đăng ký nghỉ: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.date))}",
                   nameController,
                   Colors.grey,
                   function: () {},
