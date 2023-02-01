@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fms_employee/data/data_file.dart';
 import 'package:fms_employee/features/order_service.dart';
@@ -309,7 +312,7 @@ class _BookingDetailState extends State<BookingDetail> {
                     getCustomFont("Giá tạm tính", 16, textColor, 1, fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
-                      snapshot.data!.totalPrice.toString() + " VNĐ" ?? "api: Tổng giá tiền đơn hàng",
+                      totalPrice(snapshot.data!.listOrderServiceDto!).toString() + " VNĐ" ?? "api: Tổng giá tiền đơn hàng",
                       20,
                       Colors.black,
                       1,
@@ -325,6 +328,14 @@ class _BookingDetailState extends State<BookingDetail> {
         }
       }
     );
+  }
+
+  double totalPrice(List<ListOrderServiceDto> services){
+    double total = 0.0;
+    for(var e in services){
+      total = total + (double.parse(e.price!)* e.quantity!);
+    }
+  return total;
   }
 
   Container buttons(BuildContext context) {
