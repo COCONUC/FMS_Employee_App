@@ -213,15 +213,71 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                      getCustomFont("Dịch Vụ", 16, textColor, 1,
-                          fontWeight: FontWeight.w400),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              getCustomFont("Tên Dịch Vụ", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont("\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Số lượng", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont("Đơn giá (VNĐ)", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                        ],
+                      ),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      getCustomFont(
-                        " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ"+ " Số lượng: " + e.quantity.toString()).join('\n\n ') ?? "api: Danh sách dịch vụ",
-                        16,
-                        Colors.black,
-                        100,
-                        fontWeight: FontWeight.w400,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName!).join('\n').toString() ?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              /*Text(snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()),*/
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),

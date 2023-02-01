@@ -563,7 +563,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
       height: FetchPixels.getPixelHeight(50),
       width: FetchPixels.getPixelWidth(370),
       child: FloatingActionButton(
-        backgroundColor: mSecondaryColor,
+        backgroundColor: mBlueColor,
         shape: const RoundedRectangleBorder(),
         onPressed: () {
           reportOrder.description = descriptionController.text;
@@ -575,12 +575,11 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                   status: true
               )
           );
-          print(jsonEncode(reportOrder));
           OrderServices().sendReportOrder(widget.orderId, reportOrder);
           Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context);
         },
         child: const Text("Gửi cho quản lý", style: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 16,
           /* fontWeight: FontWeight.w600,*/
         ),),
