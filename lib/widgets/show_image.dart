@@ -132,8 +132,8 @@ class _ShowImageState extends State<ShowImage> {
                   return Card(
                     child: Container(
                       constraints: const BoxConstraints.tightFor(
-                        height: 100,
-                        width: 100,
+                        height: 150,
+                        width: 150,
                       ),
                       decoration: BoxDecoration(
                         image: DecorationImage(
