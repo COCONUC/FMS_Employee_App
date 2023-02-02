@@ -135,7 +135,7 @@ class _BookingDetailState extends State<BookingDetail> {
                         ),
                     ),*/
                     getVerSpace(FetchPixels.getPixelHeight(10)),
-                    getCustomFont("Tên Khách Hàng:", 16, textColor, 1,
+                    getCustomFont("Tên khách hàng:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
@@ -163,7 +163,7 @@ class _BookingDetailState extends State<BookingDetail> {
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                    getCustomFont("Địa Chỉ:", 16, textColor, 1,
+                    getCustomFont("Địa chỉ:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
@@ -177,11 +177,11 @@ class _BookingDetailState extends State<BookingDetail> {
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                    getCustomFont("Ngày & Giờ", 16, textColor, 1,
+                    getCustomFont("Giờ & Ngày khách hẹn:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
-                      "${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))} | ${snapshot.data!.listOrderServiceDto!.first.implementationTime}" ?? 'api: Thời gian khách đặt',
+                      "${snapshot.data!.listOrderServiceDto!.first.implementationTime}  Ngày: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))}" ?? 'api: Thời gian khách đặt',
                       16,
                       Colors.black,
                       1,
@@ -194,13 +194,24 @@ class _BookingDetailState extends State<BookingDetail> {
                     getCustomFont("Mô tả:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
-                    getCustomFont(
-                      snapshot.data!.description ?? "api: Mô tả của Manager",
-                      16,
-                      Colors.black,
-                      1,
-                      fontWeight: FontWeight.w400,
-                    ),
+
+                    if(snapshot.data!.description!.isNotEmpty)
+                      getCustomFont(
+                        snapshot.data!.description ?? "Không có mô tả",
+                        16,
+                        Colors.black,
+                        1,
+                        fontWeight: FontWeight.w400,
+                      )
+                    else
+                      getCustomFont(
+                        "Không có mô tả",
+                        16,
+                        Colors.black,
+                        1,
+                        fontWeight: FontWeight.w400,
+                      ),
+
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),

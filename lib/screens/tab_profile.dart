@@ -29,7 +29,7 @@ class _TabProfileState extends State<TabProfile> {
             horizontal: FetchPixels.getDefaultHorSpace(context)),
         child: Column(
           children: [
-            getVerSpace(FetchPixels.getPixelHeight(10)),
+            getVerSpace(FetchPixels.getPixelHeight(20)),
             buildHeader(),
             getVerSpace(FetchPixels.getPixelHeight(40)),
             buildExpand(context),

@@ -68,7 +68,7 @@ class _TabDayOffState extends State<TabDayOff> {
         primary: true,
         shrinkWrap: true,
         children: [
-          getVerSpace(FetchPixels.getPixelHeight(30)),
+          /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
           calendar(edgeInsets),
           getVerSpace(FetchPixels.getPixelHeight(30)),
           registerButton(context),
@@ -82,21 +82,10 @@ class _TabDayOffState extends State<TabDayOff> {
   ListView buildScheduleList(EdgeInsets edgeInsets) {
     return ListView.builder(
       itemBuilder: (context, index) {
-       /* ModelDayOff boolModel = scheduleList[index];*/
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /*getPaddingWidget(edgeInsets,getCustomFont(
-              boolModel.date ?? "",
-              16,
-              textColor,
-              1,
-              fontWeight: FontWeight.w400,
-            )),*/
-            /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
-             /*buildBookingListItem(
-                boolModel, context, index, () {}, () {}),*/
             dayOffPendingList(),
           ],
         );
@@ -263,7 +252,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                       Expanded(
                                         flex: 1,
                                         child: getCustomFont(
-                                            "Ngày đăng ký:  ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data![index].dayOff!.substring(0, 10)))}",
+                                            "Ngày đăng ký nghỉ:  ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data![index].dayOff!.substring(0, 10)))}",
                                             16,
                                             Colors.black,
                                             1,
@@ -285,7 +274,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                   getCustomFont(
                                       "Lý do: ${snapshot.data![index].reason}",
                                       14,
-                                      textColor,
+                                      Colors.black,
                                       1,
                                       fontWeight: FontWeight.w400),
                                   getVerSpace(FetchPixels.getPixelHeight(20)),
@@ -316,7 +305,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                       ),
                                       /*getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
                                     fontWeight: FontWeight.w400),*/
-                                      if (snapshot.data![index].status == true)
+                                      if (snapshot.data![index].status == 3)
                                         Wrap(
                                           children: [
                                             getButton(
