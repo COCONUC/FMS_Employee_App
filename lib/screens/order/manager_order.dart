@@ -370,7 +370,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                   borderWidth: 1.5)),
           getHorSpace(FetchPixels.getPixelWidth(20)),
           Expanded(
-              child: getButton(context, blueColor, "Bắt Đầu", Colors.white, () {
+              child: getButton(context, blueColor, "Thực Hiện Công Việc", Colors.white, () {
                 // addressList.removeAt(selection!.getInt("index")!);
                 // setState(() {});
                 /*Constant.backToPrev(context);*/
