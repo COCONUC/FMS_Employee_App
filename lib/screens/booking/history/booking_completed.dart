@@ -1,27 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
-import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/order/in_process_detail.dart';
-import 'package:fms_employee/screens/order/manager_order.dart';
-import 'package:loading_overlay/loading_overlay.dart';
+import 'package:fms_employee/screens/booking/history/booking_detail_history.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
-class BookingInProcess extends StatefulWidget {
-  static const String routeName = '/booking_ing_process';
 
-  const BookingInProcess( {Key? key}) : super(key: key);
+class BookingCompleted extends StatefulWidget {
+  static const String routeName = '/booking_completed';
+
+  const BookingCompleted( {Key? key}) : super(key: key);
 
   @override
-  State<BookingInProcess> createState() => _BookingInProcessState();
+  State<BookingCompleted> createState() => _BookingCompletedState();
 }
 
-class _BookingInProcessState extends State<BookingInProcess> {
+class _BookingCompletedState extends State<BookingCompleted> {
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(3, context);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff( 6, context);
     return bookingLists;
   }
 
@@ -101,11 +101,15 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
+                                getSvgImage("check_complete.svg",
+                                    color: completed,
+                                    width: FetchPixels.getPixelHeight(24),
+                                    height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  mSecondaryColor,
+                                  completed,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )
@@ -176,7 +180,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(InProcessDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(BookingDetailHistory("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -194,7 +198,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
     );
   }
 
-  Widget dateHeader(OrderData modelBooking, int index) {
+  Widget dateHeader(OrderWithStatusData modelBooking, int index) {
     return getPaddingWidget(
         EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)),

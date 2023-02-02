@@ -8,7 +8,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
-import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
@@ -398,7 +398,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                         /*Constant.backToPrev(context);*/
                         /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                         /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                        Constant.sendToScreen(NavScreen(), context);
+                        Constant.sendToScreen(NavScreen(1), context);
                       }, 16,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),

@@ -8,21 +8,21 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
-import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 
-class ManagerOrderDetail extends StatefulWidget {
+class InProcessDetail extends StatefulWidget {
   final String img;
   final int orderId;
-  const ManagerOrderDetail(this.img, this.orderId, {Key? key}) : super(key: key);
+  const InProcessDetail(this.img, this.orderId, {Key? key}) : super(key: key);
 
   @override
-  State<ManagerOrderDetail> createState() => _ManagerOrderDetailState();
+  State<InProcessDetail> createState() => _InProcessDetailState();
 }
 
-class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
+class _InProcessDetailState extends State<InProcessDetail> {
 
   List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
     ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
@@ -380,7 +380,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                                       '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
                                   context);
                             }
-                          }, 18,
+                          }, 16,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),
                           borderRadius:
@@ -391,15 +391,15 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                   getHorSpace(FetchPixels.getPixelWidth(20)),
                   Expanded(
                       child: getButton(
-                          context, blueColor, "Thực Hiện Công Việc",
+                          context, blueColor, "Hoàn Thành Công Việc",
                           Colors.white, () {
                         // addressList.removeAt(selection!.getInt("index")!);
                         // setState(() {});
                         /*Constant.backToPrev(context);*/
                         /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                         /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                        Constant.sendToScreen(NavScreen(), context);
-                      }, 18,
+                        Constant.sendToScreen(NavScreen(1), context);
+                      }, 16,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),
                           borderRadius:
@@ -408,7 +408,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                 ],
               ),
             );
-        }
+          }
         }
     );
   }

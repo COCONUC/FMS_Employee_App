@@ -7,7 +7,8 @@ import 'package:fms_employee/screens/tab_repair.dart';
 
 class NavScreen extends StatefulWidget {
   static const String routeName = '/actual-home';
-  const NavScreen({Key? key}) : super(key: key);
+  final int changePage;
+  const NavScreen(this.changePage, {Key? key}) : super(key: key);
 
   @override
   State<NavScreen> createState() => _NavScreenState();
@@ -31,8 +32,8 @@ class _NavScreenState extends State<NavScreen> {
   }
   @override
   void initState(){
-
     super.initState();
+    currentIndex = widget.changePage;
   }
 
   @override

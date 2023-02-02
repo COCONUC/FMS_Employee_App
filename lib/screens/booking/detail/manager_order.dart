@@ -8,21 +8,21 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
-import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
+import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 
-class InProcessDetail extends StatefulWidget {
+class ManagerOrderDetail extends StatefulWidget {
   final String img;
   final int orderId;
-  const InProcessDetail(this.img, this.orderId, {Key? key}) : super(key: key);
+  const ManagerOrderDetail(this.img, this.orderId, {Key? key}) : super(key: key);
 
   @override
-  State<InProcessDetail> createState() => _InProcessDetailState();
+  State<ManagerOrderDetail> createState() => _ManagerOrderDetailState();
 }
 
-class _InProcessDetailState extends State<InProcessDetail> {
+class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
 
   List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
     ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
@@ -380,7 +380,7 @@ class _InProcessDetailState extends State<InProcessDetail> {
                                       '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
                                   context);
                             }
-                          }, 16,
+                          }, 18,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),
                           borderRadius:
@@ -391,15 +391,11 @@ class _InProcessDetailState extends State<InProcessDetail> {
                   getHorSpace(FetchPixels.getPixelWidth(20)),
                   Expanded(
                       child: getButton(
-                          context, blueColor, "Hoàn Thành Công Việc",
+                          context, blueColor, "Gửi cho quản lý",
                           Colors.white, () {
-                        // addressList.removeAt(selection!.getInt("index")!);
-                        // setState(() {});
-                        /*Constant.backToPrev(context);*/
-                        /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                        /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                        Constant.sendToScreen(NavScreen(), context);
-                      }, 16,
+
+                        Constant.sendToScreen(NavScreen(1), context);
+                      }, 18,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),
                           borderRadius:
@@ -408,7 +404,7 @@ class _InProcessDetailState extends State<InProcessDetail> {
                 ],
               ),
             );
-          }
+        }
         }
     );
   }

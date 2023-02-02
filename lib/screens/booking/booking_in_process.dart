@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
+import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
-import 'package:fms_employee/screens/order/booking_detail.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/booking/detail/in_process_detail.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:intl/intl.dart';
 
+class BookingInProcess extends StatefulWidget {
+  static const String routeName = '/booking_ing_process';
 
-class BookingActive extends StatefulWidget {
-  static const String routeName = '/booking_active';
-
-  const BookingActive({Key? key}) : super(key: key);
+  const BookingInProcess( {Key? key}) : super(key: key);
 
   @override
-  State<BookingActive> createState() => _BookingActiveState();
+  State<BookingInProcess> createState() => _BookingInProcessState();
 }
 
-class _BookingActiveState extends State<BookingActive> {
+class _BookingInProcessState extends State<BookingInProcess> {
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _BookingActiveState extends State<BookingActive> {
     FetchPixels(context);
     return SafeArea(
       child: Container(
-            child: bookingList(),
+        child: bookingList(),
       ),
     );
   }
@@ -47,7 +47,7 @@ class _BookingActiveState extends State<BookingActive> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff( 4, context);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(3, context);
     return bookingLists;
   }
 
@@ -104,7 +104,7 @@ class _BookingActiveState extends State<BookingActive> {
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  success,
+                                  mSecondaryColor,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )
@@ -127,14 +127,14 @@ class _BookingActiveState extends State<BookingActive> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  /*tag: snapshot.data![index].customerId ?? "",*/
+                                Hero(
+                                  tag: snapshot.data![index].customerId ?? "",
                                   child: Container(
                                     height: FetchPixels.getPixelHeight(42),
                                     width: FetchPixels.getPixelHeight(42),
                                     decoration: BoxDecoration(
                                         image: getDecorationAssetImage(
-                                            context, "booking_owner1.png" ?? "")),
+                                            context, "booking_owner1.png")),
                                   ),
                                 ),
                                 getHorSpace(FetchPixels.getPixelWidth(9)),
@@ -175,7 +175,7 @@ class _BookingActiveState extends State<BookingActive> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetail('/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'?? "", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(InProcessDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -193,7 +193,7 @@ class _BookingActiveState extends State<BookingActive> {
     );
   }
 
-  Widget dateHeader(OrderWithStatusData modelBooking, int index) {
+  Widget dateHeader(OrderData modelBooking, int index) {
     return getPaddingWidget(
         EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)),
@@ -206,7 +206,7 @@ class _BookingActiveState extends State<BookingActive> {
                 : Container(),
             if (index == 0)
               getCustomFont(
-                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt" ?? "",
+                /*modelBooking.createAssignAt?.substring(0,10)*/ "api: thời gian khách đặt",
                 16,
                 Colors.black,
                 1,
@@ -216,7 +216,7 @@ class _BookingActiveState extends State<BookingActive> {
               Container()
             else
               getCustomFont(
-                "api: thời gian khách đặt" ?? "",
+                "api: thời gian khách đặt",
                 14,
                 textColor,
                 1,
@@ -250,7 +250,7 @@ class _BookingActiveState extends State<BookingActive> {
             fontWeight: FontWeight.w400,
           ),
           getVerSpace(FetchPixels.getPixelHeight(30)),
-          getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () async{
+          getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () async {
             loading = true;
             setState(() {});
             await Future.delayed(Duration(seconds: 2));

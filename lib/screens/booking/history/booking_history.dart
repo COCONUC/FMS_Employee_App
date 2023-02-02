@@ -3,9 +3,8 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/order/booking_active.dart';
-import 'package:fms_employee/screens/order/history/booking_canceled.dart';
-import 'package:fms_employee/screens/order/history/booking_completed.dart';
+import 'package:fms_employee/screens/booking/history/booking_canceled.dart';
+import 'package:fms_employee/screens/booking/history/booking_completed.dart';
 
 class BookingHistory extends StatefulWidget {
 

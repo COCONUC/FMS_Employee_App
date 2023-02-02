@@ -7,7 +7,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/models/model_salon.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
-import 'package:fms_employee/screens/order/manager_order.dart';
+import 'package:fms_employee/screens/booking/detail/manager_order.dart';
 import 'package:fms_employee/widgets/dialog/delete_dialog.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
@@ -575,7 +575,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           OrderServices().sendReportOrder(widget.orderId, reportOrder);
           Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context);
         },
-        child: const Text("Gửi cho quản lý", style: TextStyle(
+        child: const Text("Xác nhận", style: TextStyle(
           color: Colors.white,
           fontSize: 16,
           /* fontWeight: FontWeight.w600,*/

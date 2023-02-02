@@ -5,7 +5,7 @@ import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
-import 'package:fms_employee/screens/order/booking_history.dart';
+import 'package:fms_employee/screens/booking/history/booking_history.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
 import 'package:fms_employee/widgets/dialog/option_dialog.dart';
 

@@ -97,7 +97,6 @@ class OrderServices {
     );
     if (response.statusCode == 200) {
       final parsed = OrderDetailData.fromJson(json.decode(response.body));
-      print(parsed.toJson());
       return parsed;
     } else {
       throw('Dữ liệu lỗi');

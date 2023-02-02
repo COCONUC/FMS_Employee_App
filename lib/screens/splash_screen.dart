@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 2),
             () {
           (value)
-              ? Constant.sendToScreen(const NavScreen(), context)
+              ? Constant.sendToScreen(const NavScreen(0), context)
               : Constant.sendToScreen(const NewLoginScreen(), context);
         },
       );

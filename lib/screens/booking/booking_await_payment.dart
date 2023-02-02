@@ -1,27 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
+import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/order/history/booking_detail_history.dart';
-import 'package:intl/intl.dart';
+import 'package:fms_employee/screens/booking/detail/manager_order.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:intl/intl.dart';
 
+class BookingAwaitPayment extends StatefulWidget {
+  static const String routeName = '/booking_ing_process';
 
-class BookingCompleted extends StatefulWidget {
-  static const String routeName = '/booking_completed';
-
-  const BookingCompleted( {Key? key}) : super(key: key);
+  const BookingAwaitPayment( {Key? key}) : super(key: key);
 
   @override
-  State<BookingCompleted> createState() => _BookingCompletedState();
+  State<BookingAwaitPayment> createState() => _BookingAwaitPaymentState();
 }
 
-class _BookingCompletedState extends State<BookingCompleted> {
+class _BookingAwaitPaymentState extends State<BookingAwaitPayment> {
 
   @override
   void initState() {
@@ -48,7 +47,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff( 6, context);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(5, context);
     return bookingLists;
   }
 
@@ -101,15 +100,11 @@ class _BookingCompletedState extends State<BookingCompleted> {
                                       16, Colors.black, 1,
                                       fontWeight: FontWeight.w900),
                                 ),
-                                getSvgImage("check_complete.svg",
-                                    color: completed,
-                                    width: FetchPixels.getPixelHeight(24),
-                                    height: FetchPixels.getPixelHeight(24)),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  completed,
+                                  mSecondaryColor,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )
@@ -180,7 +175,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(BookingDetailHistory("booking_owner1.png", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -198,7 +193,7 @@ class _BookingCompletedState extends State<BookingCompleted> {
     );
   }
 
-  Widget dateHeader(OrderWithStatusData modelBooking, int index) {
+  Widget dateHeader(OrderData modelBooking, int index) {
     return getPaddingWidget(
         EdgeInsets.symmetric(
             horizontal: FetchPixels.getDefaultHorSpace(context)),

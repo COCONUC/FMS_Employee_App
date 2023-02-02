@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                                 if(value.statusCode==200){
                                   /*Constant.sendToNext(context, Routes.homeScreenRoute);*/
-                                  Constant.sendToScreen(const NavScreen(), context);
+                                  Constant.sendToScreen(const NavScreen(0), context);
                                 }else{
                                   showDialog(
                                     barrierDismissible: true,

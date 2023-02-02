@@ -123,7 +123,7 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
               isLoading = false;
             });
             if(value.statusCode==200){
-              Constant.sendToScreen(const NavScreen(), context);
+              Constant.sendToScreen(const NavScreen(0), context);
             }else{
               showDialog(
                 barrierDismissible: true,
