@@ -157,11 +157,11 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                      getCustomFont("Ngày & Giờ", 16, textColor, 1,
+                      getCustomFont("Giờ & Ngày thực hiện công việc:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))} | ${snapshot.data!.listOrderServiceDto!.first.implementationTime}" ?? 'api: Thời gian khách đặt',
+                        "${snapshot.data!.listOrderServiceDto!.first.implementationTime}  Ngày: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))}" ?? 'api: Thời gian khách đặt',
                         16,
                         Colors.black,
                         1,
@@ -313,7 +313,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       getCustomFont("Tổng Cộng", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        totalPrice(snapshot.data!.listOrderServiceDto!).toString() + " VNĐ" ?? "api: Tổng giá tiền đơn hàng",
+                        totalPrice(snapshot.data!.listOrderServiceDto!).toInt().toString() + " VNĐ" ?? "Tổng giá tiền đơn hàng",
                         20,
                         Colors.black,
                         1,

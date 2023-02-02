@@ -343,7 +343,7 @@ class _BookingDetailState extends State<BookingDetail> {
                     getCustomFont("Giá tạm tính", 16, textColor, 1, fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont(
-                      totalPrice(snapshot.data!.listOrderServiceDto!).toString() + " VNĐ" ?? "api: Tổng giá tiền đơn hàng",
+                      totalPrice(snapshot.data!.listOrderServiceDto!).toInt().toString() + " VNĐ" ?? "Tổng giá tiền đơn hàng",
                       20,
                       Colors.black,
                       1,
