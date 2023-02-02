@@ -150,7 +150,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 textColor: Colors.black,
                 fontsize: 24,
                 istext: true,
-                isrightimage: true,
+                isrightimage: false,
                 rightimage: "more.svg",
                 rightFunction: () {})),
         getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -172,17 +172,17 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         /*addServiceButton(context),*/
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+            ),
+              onPressed:  getNewService,
+              child: const Text("Cập nhật dịch vụ", style: TextStyle(
+                  color: Colors.blue,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),),
           ),
-            onPressed:  getNewService,
-            child: const Text("Thêm dịch vụ", style: TextStyle(
-                color: Colors.blue,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),),
-        ),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -350,12 +350,10 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             Colors.black,
             fontWeight: FontWeight.bold,
             txtHeight: 1.3),
-        getVerSpace(FetchPixels.getPixelHeight(3)),
         TextFormField(decoration:
-          const InputDecoration(hintText:"api thợ nhập vào mô tả"),
+          const InputDecoration(hintText:"Mô tả ngắn gọn tình trạng hư hỏng", hintStyle: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
           controller: descriptionController,
         ),
-        getVerSpace(FetchPixels.getPixelHeight(4)),
       ],
     );
   }
@@ -483,8 +481,8 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                           });
                     },
                     child: getSvgImage("trash.svg",color: Colors.deepOrange,
-                        width: FetchPixels.getPixelHeight(20),
-                        height: FetchPixels.getPixelHeight(20)),
+                        width: FetchPixels.getPixelHeight(25),
+                        height: FetchPixels.getPixelHeight(25)),
                   )
                 ],
               ),
