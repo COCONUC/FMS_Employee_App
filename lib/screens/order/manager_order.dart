@@ -10,6 +10,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:fms_employee/widgets/show_image.dart';
 
 class ManagerOrderDetail extends StatefulWidget {
   final String img;
@@ -21,6 +22,10 @@ class ManagerOrderDetail extends StatefulWidget {
 }
 
 class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
+
+  List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'];
 
   getPrefData() async {
     index = await PrefData.getDefIndex();
@@ -79,7 +84,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                     istext: true,
                     textColor: Colors.black,
                     fontsize: 24,
-                    isrightimage: true,
+                    isrightimage: false,
                     rightimage: "more.svg",
                     rightFunction: () {}),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -92,25 +97,24 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       fontWeight: FontWeight.w600,
                     )
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(40)),
+                getVerSpace(FetchPixels.getPixelHeight(20)),
+                Center(
+                    child:   getCustomFont(
+                      "Thông tin chi tiết",
+                      20,
+                      textColor,
+                      1,
+                      fontWeight: FontWeight.w800,
+                    )
+                ),
+                getVerSpace(FetchPixels.getPixelHeight(20)),
                 Expanded(
                   flex: 1,
                   child: ListView(
                     shrinkWrap: true,
                     primary: true,
                     children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                          child: Container(
-                            height: FetchPixels.getPixelHeight(100),
-                            width: FetchPixels.getPixelHeight(100),
-                            decoration: BoxDecoration(
-                                image: getDecorationNetworkImage(context, widget.img)
-                            ),
-                          ),
-                      ),
-                      getVerSpace(FetchPixels.getPixelHeight(40)),
-
+                      getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont("Tên Khách Hàng:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -171,11 +175,28 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        snapshot.data!.description ?? "api: Mô tả của Manager",
+                        snapshot.data!.description ?? "api: Mô tả",
                         16,
                         Colors.black,
                         1,
                         fontWeight: FontWeight.w400,
+                      ),
+                      getVerSpace(FetchPixels.getPixelHeight(5)),
+                      getDivider(dividerColor, 0, 1),
+                      getVerSpace(FetchPixels.getPixelHeight(20)),
+
+                      getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
+                          fontWeight: FontWeight.w400),
+                      getVerSpace(FetchPixels.getPixelHeight(10)),
+                      InkWell(
+                        child: const Icon(
+                          Icons.image,
+                          color: Colors.orange,
+                        ),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath)));
+                        },
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),

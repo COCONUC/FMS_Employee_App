@@ -9,6 +9,7 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:intl/intl.dart';
+import 'package:fms_employee/widgets/show_image.dart';
 
 class BookingDetailHistory extends StatefulWidget {
   final String img;
@@ -20,6 +21,10 @@ class BookingDetailHistory extends StatefulWidget {
 }
 
 class _BookingDetailHistoryState extends State<BookingDetailHistory> {
+
+  List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'];
 
   getPrefData() async {
     index = await PrefData.getDefIndex();
@@ -79,7 +84,7 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                     istext: true,
                     textColor: Colors.black,
                     fontsize: 24,
-                    isrightimage: true,
+                    isrightimage: false,
                     rightimage: "more.svg",
                     rightFunction: () {}),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -92,28 +97,24 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                       fontWeight: FontWeight.w600,
                     )
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(40)),
+                getVerSpace(FetchPixels.getPixelHeight(20)),
+                Center(
+                    child:   getCustomFont(
+                      "Thông tin chi tiết",
+                      20,
+                      textColor,
+                      1,
+                      fontWeight: FontWeight.w800,
+                    )
+                ),
+                getVerSpace(FetchPixels.getPixelHeight(20)),
                 Expanded(
                   flex: 1,
                   child: ListView(
                     shrinkWrap: true,
                     primary: true,
                     children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Hero(
-                          tag: widget.img,
-                          child: Container(
-                            height: FetchPixels.getPixelHeight(100),
-                            width: FetchPixels.getPixelHeight(100),
-                            decoration: BoxDecoration(
-                                image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/FMS_logo.png?alt=media&token=ba7e5f55-db6f-4d2c-9d53-cd3da0d952b3')
-                            ),
-                          ),
-                        ),
-                      ),
-                      getVerSpace(FetchPixels.getPixelHeight(40)),
-
+                      getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont("Tên Khách Hàng:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -179,6 +180,23 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                         Colors.black,
                         1,
                         fontWeight: FontWeight.w400,
+                      ),
+                      getVerSpace(FetchPixels.getPixelHeight(5)),
+                      getDivider(dividerColor, 0, 1),
+                      getVerSpace(FetchPixels.getPixelHeight(20)),
+
+                      getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
+                          fontWeight: FontWeight.w400),
+                      getVerSpace(FetchPixels.getPixelHeight(10)),
+                      InkWell(
+                        child: const Icon(
+                          Icons.image,
+                          color: Colors.orange,
+                        ),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath)));
+                        },
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),

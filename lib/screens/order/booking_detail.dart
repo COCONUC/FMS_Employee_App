@@ -9,8 +9,7 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
-import 'package:fms_employee/widgets/image_grid.dart';
-import 'package:fms_employee/widgets/image_screen.dart';
+import 'package:fms_employee/widgets/show_image.dart';
 import 'package:intl/intl.dart';
 
 class BookingDetail extends StatefulWidget {
@@ -23,6 +22,10 @@ class BookingDetail extends StatefulWidget {
 }
 
 class _BookingDetailState extends State<BookingDetail> {
+
+  List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'];
 
   getPrefData() async {
     index = await PrefData.getDefIndex();
@@ -82,7 +85,7 @@ class _BookingDetailState extends State<BookingDetail> {
                   istext: true,
                   textColor: Colors.black,
                   fontsize: 24,
-                  isrightimage: true,
+                  isrightimage: false,
                   rightimage: "more.svg",
                   rightFunction: () {}),
               getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -95,21 +98,32 @@ class _BookingDetailState extends State<BookingDetail> {
                   fontWeight: FontWeight.w600,
                 )
               ),
-              getVerSpace(FetchPixels.getPixelHeight(40)),
+              getVerSpace(FetchPixels.getPixelHeight(20)),
+              Center(
+                  child:   getCustomFont(
+                    "Thông tin chi tiết",
+                    20,
+                    textColor,
+                    1,
+                    fontWeight: FontWeight.w800,
+                  )
+              ),
+
+              getVerSpace(FetchPixels.getPixelHeight(20)),
               Expanded(
                 flex: 1,
                 child: ListView(
                   shrinkWrap: true,
                   primary: true,
                   children: [
-                    Align(
+                   /* Align(
                       alignment: Alignment.topCenter,
                         widthFactor: FetchPixels.mockupWidth,
                         child: Container(
                           height: FetchPixels.getPixelHeight(100),
-                          /*decoration: BoxDecoration(
+                          *//*decoration: BoxDecoration(
                               image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
-                          ),*/
+                          ),*//*
                           child: PhotoGrid(
                             imageUrls: ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
                             ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
@@ -119,9 +133,8 @@ class _BookingDetailState extends State<BookingDetail> {
                             maxImages: 3,
                           ),
                         ),
-                    ),
-                    getVerSpace(FetchPixels.getPixelHeight(40)),
-
+                    ),*/
+                    getVerSpace(FetchPixels.getPixelHeight(10)),
                     getCustomFont("Tên Khách Hàng:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -192,9 +205,6 @@ class _BookingDetailState extends State<BookingDetail> {
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                    /*getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
-                        fontWeight: FontWeight.w400),
-                    getVerSpace(FetchPixels.getPixelHeight(10)),*/
                     /*getCustomFont(
                       snapshot.data!.description ?? "api: Mô tả của Manager",
                       16,
@@ -202,19 +212,23 @@ class _BookingDetailState extends State<BookingDetail> {
                       1,
                       fontWeight: FontWeight.w400,
                     ),*/
-                   /* InkWell(
+
+                    getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
+                        fontWeight: FontWeight.w400),
+                    getVerSpace(FetchPixels.getPixelHeight(10)),
+                    InkWell(
                       child: const Icon(
                         Icons.image,
                         color: Colors.orange,
                       ),
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => ImageScreen(id: widget.orderId, imgURL: listImages)));
+                            builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath)));
                       },
-                    ),*/
-                    /*getVerSpace(FetchPixels.getPixelHeight(5)),
+                    ),
+                    getVerSpace(FetchPixels.getPixelHeight(5)),
                     getDivider(dividerColor, 0, 1),
-                    getVerSpace(FetchPixels.getPixelHeight(20)),*/
+                    getVerSpace(FetchPixels.getPixelHeight(20)),
 
                     getCustomFont("Nhân viên thực hiện:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
