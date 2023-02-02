@@ -195,9 +195,9 @@ class _BookingDetailState extends State<BookingDetail> {
                         fontWeight: FontWeight.w400),
                     getVerSpace(FetchPixels.getPixelHeight(10)),
 
-                    if(snapshot.data!.description!.isNotEmpty)
+                    if(snapshot.data!.description! != null)
                       getCustomFont(
-                        snapshot.data!.description ?? "Không có mô tả",
+                        " ${snapshot.data!.description}" ?? "Không có mô tả",
                         16,
                         Colors.black,
                         1,

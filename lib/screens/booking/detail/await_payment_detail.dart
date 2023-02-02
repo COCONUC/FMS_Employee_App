@@ -9,20 +9,20 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
-import 'package:fms_employee/widgets/bottom_bar.dart';
-import 'package:intl/intl.dart';
+import 'package:fms_employee/screens/booking/history/booking_history.dart';
 import 'package:fms_employee/widgets/show_image.dart';
+import 'package:intl/intl.dart';
 
-class AwaitPaymentDetail extends StatefulWidget {
+class AwaitPaymmentDetail extends StatefulWidget {
   final String img;
   final int orderId;
-  const AwaitPaymentDetail(this.img, this.orderId, {Key? key}) : super(key: key);
+  const AwaitPaymmentDetail(this.img, this.orderId, {Key? key}) : super(key: key);
 
   @override
-  State<AwaitPaymentDetail> createState() => _AwaitPaymentDetailState();
+  State<AwaitPaymmentDetail> createState() => _AwaitPaymmentDetailState();
 }
 
-class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
+class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
 
   List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
     ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
@@ -41,6 +41,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
 
   List<ModelBooking> bookingLists = DataFile.bookingList;
   var index = 0;
+  late List<String> listImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
 
   Widget buildBookingDetail(BuildContext context, ModelBooking modelBooking) {
     return FutureBuilder<OrderDetailData>(
-        future: OrderServices().getOrderDetailById(widget.orderId),
+        future: futureDetailData(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -80,7 +81,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                 gettoolbarMenu(context, "back.svg", () {
                   Constant.backToPrev(context);
                 },
-                    title: "Mã đơn: ${snapshot.data!.orderId}",
+                    title: "Mã đơn: " + snapshot.data!.orderId.toString(),
                     weight: FontWeight.w900,
                     istext: true,
                     textColor: Colors.black,
@@ -108,6 +109,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                       fontWeight: FontWeight.w800,
                     )
                 ),
+
                 getVerSpace(FetchPixels.getPixelHeight(20)),
                 Expanded(
                   flex: 1,
@@ -115,8 +117,26 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                     shrinkWrap: true,
                     primary: true,
                     children: [
+                      /* Align(
+                      alignment: Alignment.topCenter,
+                        widthFactor: FetchPixels.mockupWidth,
+                        child: Container(
+                          height: FetchPixels.getPixelHeight(100),
+                          *//*decoration: BoxDecoration(
+                              image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
+                          ),*//*
+                          child: PhotoGrid(
+                            imageUrls: ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+                            ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+                            ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'],
+                            onImageClicked: (i) => print('Image $i was clicked!'),
+                            onExpandClicked: () => print('Expand Image was clicked'),
+                            maxImages: 3,
+                          ),
+                        ),
+                    ),*/
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      getCustomFont("Tên Khách Hàng:", 16, textColor, 1,
+                      getCustomFont("Tên khách hàng:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
@@ -144,7 +164,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                      getCustomFont("Địa Chỉ:", 16, textColor, 1,
+                      getCustomFont("Địa chỉ:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
@@ -158,7 +178,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                      getCustomFont("Giờ & Ngày thực hiện công việc:", 16, textColor, 1,
+                      getCustomFont("Giờ & Ngày khách hẹn:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
@@ -175,9 +195,10 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                       getCustomFont("Mô tả:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      if(snapshot.data!.description!.isNotEmpty)
+
+                      if(snapshot.data!.description! != null)
                         getCustomFont(
-                          snapshot.data!.description ?? "Không có mô tả",
+                          " ${snapshot.data!.description}" ?? "Không có mô tả",
                           16,
                           Colors.black,
                           1,
@@ -191,9 +212,18 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                           1,
                           fontWeight: FontWeight.w400,
                         ),
+
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
+
+                      /*getCustomFont(
+                      snapshot.data!.description ?? "api: Mô tả của Manager",
+                      16,
+                      Colors.black,
+                      1,
+                      fontWeight: FontWeight.w400,
+                    ),*/
 
                       getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
@@ -284,7 +314,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                           Column(
                             children: [
                               getCustomFont(
-                                snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString() ?? "api: Danh sách dịch vụ",
                                 16,
                                 Colors.black,
                                 100,
@@ -297,7 +327,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                             children: [
                               /*Text(snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()),*/
                               getCustomFont(
-                                snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString() ?? "api: Danh sách dịch vụ",
                                 16,
                                 Colors.black,
                                 100,
@@ -311,7 +341,7 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
-                      getCustomFont("Tổng Cộng", 16, textColor, 1, fontWeight: FontWeight.w400),
+                      getCustomFont("Giá tạm tính", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
                         "${totalPrice(snapshot.data!.listOrderServiceDto!).toInt()} VNĐ" ?? "Tổng giá tiền đơn hàng",
@@ -354,62 +384,46 @@ class _AwaitPaymentDetailState extends State<AwaitPaymentDetail> {
     return total;
   }
 
-  Widget buttons(BuildContext context) {
-    return FutureBuilder<OrderDetailData>(
-        future: OrderServices().getOrderDetailById(widget.orderId),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return Container(
-              color: backGroundColor,
-              padding: EdgeInsets.only(
-                  left: FetchPixels.getPixelWidth(20),
-                  right: FetchPixels.getPixelWidth(20),
-                  bottom: FetchPixels.getPixelHeight(30)),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: getButton(
-                          context, backGroundColor, "Sửa Đơn", blueColor,
-                              () {
-                            if (snapshot.data! != null) {
-                              Constant.sendToScreen(
-                                  DetailEditingScreen(widget.orderId, snapshot
-                                      .data!,
-                                      '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
-                                  context);
-                            }
-                          }, 16,
-                          weight: FontWeight.w600,
-                          buttonHeight: FetchPixels.getPixelHeight(60),
-                          borderRadius:
-                          BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-                          borderColor: blueColor,
-                          isBorder: true,
-                          borderWidth: 1.5)),
-                  getHorSpace(FetchPixels.getPixelWidth(20)),
-                  Expanded(
-                      child: getButton(
-                          context, blueColor, "Hoàn Tất Đơn",
-                          Colors.white, () {
-                        // addressList.removeAt(selection!.getInt("index")!);
-                        // setState(() {});
-                        /*Constant.backToPrev(context);*/
-                        /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                        /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                        Constant.sendToScreen(NavScreen(1), context);
-                      }, 16,
-                          weight: FontWeight.w600,
-                          buttonHeight: FetchPixels.getPixelHeight(60),
-                          borderRadius:
-                          BorderRadius.circular(
-                              FetchPixels.getPixelHeight(14)))),
-                ],
-              ),
-            );
-          }
-        }
+  Container buttons(BuildContext context) {
+    return Container(
+      color: backGroundColor,
+      padding: EdgeInsets.only(
+          left: FetchPixels.getPixelWidth(20),
+          right: FetchPixels.getPixelWidth(20),
+          bottom: FetchPixels.getPixelHeight(30)),
+      child: Row(
+        children: [
+          Expanded(
+              child: getButton(context, backGroundColor, "Trở Về", blueColor,
+                      () {
+                    Constant.backToPrev(context);
+                  }, 18,
+                  weight: FontWeight.w600,
+                  buttonHeight: FetchPixels.getPixelHeight(60),
+                  borderRadius:
+                  BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+                  borderColor: blueColor,
+                  isBorder: true,
+                  borderWidth: 1.5)),
+          getHorSpace(FetchPixels.getPixelWidth(20)),
+          Expanded(
+              child: getButton(context, blueColor, "Hoàn Tất Đơn", Colors.white, () {
+                Constant.sendToScreen(BookingHistory(), context);
+              }, 18,
+                  weight: FontWeight.w600,
+                  buttonHeight: FetchPixels.getPixelHeight(60),
+                  borderRadius:
+                  BorderRadius.circular(FetchPixels.getPixelHeight(14)))),
+        ],
+      ),
     );
   }
+
+  late OrderDetailData detailData;
+
+  Future<OrderDetailData> futureDetailData() async{
+    detailData = await OrderServices().getOrderDetailById(widget.orderId);
+    return detailData;
+  }
+
 }

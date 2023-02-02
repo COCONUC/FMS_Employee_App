@@ -7,7 +7,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/booking/detail/manager_order.dart';
+import 'package:fms_employee/screens/booking/detail/await_payment_detail.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:intl/intl.dart';
 
@@ -175,13 +175,7 @@ class _BookingAwaitPaymentState extends State<BookingAwaitPayment> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
-                        /*Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BookingDetail("booking_owner1.png"?? "", snapshot.data![index].orderId!)
-                          )
-                      );*/
+                        Constant.sendToScreen(AwaitPaymmentDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
                       },
                     )
                   ],
