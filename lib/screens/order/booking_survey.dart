@@ -7,21 +7,20 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/order/in_process_detail.dart';
 import 'package:fms_employee/screens/order/manager_order.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:intl/intl.dart';
 
-class BookingInProcess extends StatefulWidget {
+class BookingSurVey extends StatefulWidget {
   static const String routeName = '/booking_ing_process';
 
-  const BookingInProcess( {Key? key}) : super(key: key);
+  const BookingSurVey( {Key? key}) : super(key: key);
 
   @override
-  State<BookingInProcess> createState() => _BookingInProcessState();
+  State<BookingSurVey> createState() => _BookingSurVeyState();
 }
 
-class _BookingInProcessState extends State<BookingInProcess> {
+class _BookingSurVeyState extends State<BookingSurVey> {
 
   @override
   void initState() {
@@ -48,7 +47,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
   List<OrderWithStatusData> bookingLists = [];
 
   Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(3, context);
+    bookingLists = await OrderServices().getInProcessOrderListForStaff(2, context);
     return bookingLists;
   }
 
@@ -176,7 +175,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                       ),
                       onTap: () {
                         PrefData.setDefIndex(index);
-                        Constant.sendToScreen(InProcessDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
+                        Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png", snapshot.data![index].orderId!), context);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(

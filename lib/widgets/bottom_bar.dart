@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/screens/tab_booking.dart';
 import 'package:fms_employee/screens/tab_day_off.dart';
 import 'package:fms_employee/screens/tab_profile.dart';
+import 'package:fms_employee/screens/tab_repair.dart';
 
 class NavScreen extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -18,9 +18,10 @@ class _NavScreenState extends State<NavScreen> {
   int currentIndex = 0;
 
   List<Widget> tabPages = const [
-     TabBooking(),
-     TabDayOff(),
-     TabProfile(),
+    TabBooking(),
+    TabRepair(),
+    TabDayOff(),
+    TabProfile(),
   ];
 
   void updatePage(int page) {
@@ -42,8 +43,9 @@ class _NavScreenState extends State<NavScreen> {
       bottomNavigationBar: Row(
         children: <Widget>[
           buildNavBarItem(Icons.home, 0),
-          buildNavBarItem(Icons.calendar_month, 1),
-          buildNavBarItem(Icons.person, 2),
+          buildNavBarItem(Icons.handyman, 1),
+          buildNavBarItem(Icons.calendar_month, 2),
+          buildNavBarItem(Icons.person, 3),
         ],
       ),
     );
@@ -58,11 +60,11 @@ class _NavScreenState extends State<NavScreen> {
       },
       child: Container(
         height: 60,
-        width: MediaQuery.of(context).size.width / 3,
+        width: MediaQuery.of(context).size.width / 4,
         decoration: index == currentIndex
             ? BoxDecoration(
             border: const Border(
-              bottom: BorderSide(width: 3, color: Colors.orangeAccent),
+              bottom: BorderSide(width: 4, color: Colors.orangeAccent),
             ),
             gradient: LinearGradient(
               colors: [

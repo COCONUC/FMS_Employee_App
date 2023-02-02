@@ -7,20 +7,22 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/order/booking_await_payment.dart';
 import 'package:fms_employee/screens/order/booking_in_process.dart';
+import 'package:fms_employee/screens/order/booking_survey.dart';
 import '../features/account_service.dart';
 import '../models/account_data.dart';
 
-class TabBooking extends StatefulWidget {
-  static const String routeName = '/tab_booking';
+class TabRepair extends StatefulWidget {
+  static const String routeName = '/tab_repair';
 
-  const TabBooking({Key? key}) : super(key: key);
+  const TabRepair({Key? key}) : super(key: key);
 
   @override
-  State<TabBooking> createState() => _TabBookingState();
+  State<TabRepair> createState() => _TabRepairState();
 }
 
-class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateMixin {
+class _TabRepairState extends State<TabRepair> with SingleTickerProviderStateMixin {
 
   final PageController _controller = PageController(
     initialPage: 0,
@@ -29,11 +31,11 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
   late TabController tabController;
   var position = 0;
 
-  List<String> tabsList = ["Đơn mới"];
+  List<String> tabsList = ["Đang khảo sát", "Đang thực hiện", "Chờ Thanh Toán"];
 
   @override
   void initState() {
-    tabController = TabController(length: 1, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -62,7 +64,9 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
               controller: _controller,
               scrollDirection: Axis.horizontal,
               children: /*const*/ [
-                BookingActive(),
+                BookingSurVey(),
+                BookingInProcess(),
+                BookingAwaitPayment(),
               ],
               onPageChanged: (value) {
                 tabController.animateTo(value);
@@ -79,40 +83,40 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
   Widget buildTopRow(BuildContext context) {
     return FutureBuilder<AccountData>(
         future: getAccountService(),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return const Center();
-      } else {
-        return getPaddingWidget(
-          EdgeInsets.symmetric(
-              horizontal: FetchPixels.getDefaultHorSpace(context)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: FetchPixels.getPixelHeight(46),
-                width: FetchPixels.getPixelHeight(46),
-                decoration: BoxDecoration(
-                    image: getDecorationAssetImage(context, snapshot.data!.imageUrl ?? "profile.png")),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center();
+          } else {
+            return getPaddingWidget(
+              EdgeInsets.symmetric(
+                  horizontal: FetchPixels.getDefaultHorSpace(context)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: FetchPixels.getPixelHeight(46),
+                    width: FetchPixels.getPixelHeight(46),
+                    decoration: BoxDecoration(
+                        image: getDecorationAssetImage(context, snapshot.data!.imageUrl ?? "profile.png")),
+                  ),
+                  getHorSpace(FetchPixels.getPixelWidth(12)),
+                  Expanded(
+                    flex: 1,
+                    child: getCustomFont(snapshot.data!.employeeName ?? "api: Tên Nhân Viên", 16, Colors.black, 1,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  InkWell(
+                    child: getSvgImage("notification.svg",
+                        height: FetchPixels.getPixelHeight(24),
+                        width: FetchPixels.getPixelHeight(24)),
+                    onTap: () => {Constant.sendToScreen(NotificationScreen(), context)},
+                  ),
+                ],
               ),
-              getHorSpace(FetchPixels.getPixelWidth(12)),
-              Expanded(
-                flex: 1,
-                child: getCustomFont(snapshot.data!.employeeName ?? "api: Tên Nhân Viên", 16, Colors.black, 1,
-                    fontWeight: FontWeight.w400),
-              ),
-              InkWell(
-                  child: getSvgImage("notification.svg",
-                  height: FetchPixels.getPixelHeight(24),
-                  width: FetchPixels.getPixelHeight(24)),
-                onTap: () => {Constant.sendToScreen(NotificationScreen(), context)},
-              ),
-            ],
-          ),
-        );
-      }
-    }
+            );
+          }
+        }
     );
   }
 
@@ -147,7 +151,7 @@ class _TabBookingState extends State<TabBooking> with SingleTickerProviderStateM
           children: [
             index == 0
                 ? getCustomFont("Đơn Hàng", 16, Colors.black, 1,
-                    fontWeight: FontWeight.w900)
+                fontWeight: FontWeight.w900)
                 : Container(),
             if (index == 0)
               getCustomFont(
