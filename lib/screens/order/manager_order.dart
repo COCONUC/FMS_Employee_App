@@ -8,10 +8,8 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
-import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
-import 'package:fms_employee/screens/order/booking_in_process.dart';
-import 'package:fms_employee/screens/tab_booking.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
+import 'package:intl/intl.dart';
 
 class ManagerOrderDetail extends StatefulWidget {
   final String img;
@@ -159,7 +157,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        "api: Thời gian khách đặt" ?? '',
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))} | ${snapshot.data!.listOrderServiceDto!.first.implementationTime}" ?? 'api: Thời gian khách đặt',
                         16,
                         Colors.black,
                         1,
@@ -202,7 +200,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        snapshot.data!.estimateTimeFinish ?? "api: thời gian làm việc dự kiến",
+                        "${totalTime(snapshot.data!.listOrderServiceDto!).toString()} slot(s)" ?? "api: thời gian làm việc dự kiến",
                         16,
                         Colors.black,
                         1,
@@ -307,6 +305,14 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
     double total = 0.0;
     for(var e in services){
       total = total + (double.parse(e.price!)* e.quantity!);
+    }
+    return total;
+  }
+
+  double totalTime(List<ListOrderServiceDto> time){
+    double total = 0.0;
+    for(var e in time){
+      total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0,1)));
     }
     return total;
   }
