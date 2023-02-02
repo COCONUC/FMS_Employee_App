@@ -8,18 +8,42 @@ class OrderWithStatusData {
   String? address;
   String? customerPhone;
   String? customerName;
+  String? implementationDate;
+  String? implementationTime;
 
-  OrderWithStatusData({this.orderId, this.totalPrice, this.customerId, this.workingStatusId, this.statusName, this.address, this.customerPhone, this.customerName});
+  OrderWithStatusData({this.orderId, this.totalPrice, this.customerId, this.workingStatusId, this.statusName, this.address, this.customerPhone, this.customerName, this.implementationDate, this.implementationTime});
 
   OrderWithStatusData.fromJson(Map<String, dynamic> json) {
-    orderId = json["orderId"];
-    totalPrice = json["totalPrice"];
-    customerId = json["customerId"];
-    workingStatusId = json["workingStatusId"];
-    statusName = json["statusName"];
-    address = json["address"];
-    customerPhone = json["customerPhone"];
-    customerName = json["customerName"];
+    if(json["orderId"] is int) {
+      orderId = json["orderId"];
+    }
+    if(json["totalPrice"] is String) {
+      totalPrice = json["totalPrice"];
+    }
+    if(json["customerId"] is int) {
+      customerId = json["customerId"];
+    }
+    if(json["workingStatusId"] is int) {
+      workingStatusId = json["workingStatusId"];
+    }
+    if(json["statusName"] is String) {
+      statusName = json["statusName"];
+    }
+    if(json["address"] is String) {
+      address = json["address"];
+    }
+    if(json["customerPhone"] is String) {
+      customerPhone = json["customerPhone"];
+    }
+    if(json["customerName"] is String) {
+      customerName = json["customerName"];
+    }
+    if(json["implementationDate"] is String) {
+      implementationDate = json["implementationDate"];
+    }
+    if(json["implementationTime"] is String) {
+      implementationTime = json["implementationTime"];
+    }
   }
 
   static List<OrderWithStatusData> fromList(List<Map<String, dynamic>> list) {
@@ -36,6 +60,8 @@ class OrderWithStatusData {
     _data["address"] = address;
     _data["customerPhone"] = customerPhone;
     _data["customerName"] = customerName;
+    _data["implementationDate"] = implementationDate;
+    _data["implementationTime"] = implementationTime;
     return _data;
   }
 }
