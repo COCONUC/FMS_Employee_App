@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/router.dart';
 import 'package:fms_employee/screens/splash_screen.dart';
-import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'firebase_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +29,15 @@ class AppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('vi'),
+      ],
+      locale: const Locale('vi'),
       debugShowCheckedModeBanner: false,
       title: 'FMS',
       theme: ThemeData(

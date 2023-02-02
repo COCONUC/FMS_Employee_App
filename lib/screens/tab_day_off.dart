@@ -327,7 +327,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                                             .getPixelWidth(12)))
                                           ],
                                         )
-                                      else
+                                      else if(snapshot.data![index].status == 4)
                                         Wrap(
                                           children: [
                                             getButton(
@@ -348,25 +348,32 @@ class _TabDayOffState extends State<TabDayOff> {
                                                         horizontal: FetchPixels
                                                             .getPixelWidth(12)))
                                           ],
-                                        ),
-                                      // Container(
-                                      //   height: FetchPixels.getPixelHeight(42),
-                                      //   width: FetchPixels.getPixelHeight(42),
-                                      //   decoration: BoxDecoration(
-                                      //       image: getDecorationAssetImage(
-                                      //           context, "round_chat.png")),
-                                      //
+                                        )
+                                      else if(snapshot.data![index].status == 1)
+                                          Wrap(
+                                            children: [
+                                              getButton(
+                                                  context,
+                                                  Colors.yellow.shade700,
+                                                  "Chờ duyệt",
+                                                  Colors.white,
+                                                      () {},
+                                                  16,
+                                                  weight: FontWeight.w600,
+                                                  borderRadius: BorderRadius
+                                                      .circular(FetchPixels
+                                                      .getPixelHeight(37)),
+                                                  insetsGeometrypadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: FetchPixels
+                                                          .getPixelHeight(6),
+                                                      horizontal: FetchPixels
+                                                          .getPixelWidth(12)))
+                                            ],
+                                          ),
 
-                                      getHorSpace(
-                                          FetchPixels.getPixelWidth(12)),
+                                      getHorSpace(FetchPixels.getPixelWidth(12)),
 
-                                      // Container(
-                                      //   height: FetchPixels.getPixelHeight(42),
-                                      //   width: FetchPixels.getPixelHeight(42),
-                                      //   decoration: BoxDecoration(
-                                      //       image: getDecorationAssetImage(
-                                      //           context, "call_bg.png")),
-                                      // ),
                                     ],
                                   )
                                 ],
