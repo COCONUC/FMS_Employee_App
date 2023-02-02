@@ -104,11 +104,19 @@ class _BookingDetailState extends State<BookingDetail> {
                   children: [
                     Align(
                       alignment: Alignment.topCenter,
+                        widthFactor: FetchPixels.mockupWidth,
                         child: Container(
                           height: FetchPixels.getPixelHeight(100),
-                          width: FetchPixels.getPixelHeight(100),
-                          decoration: BoxDecoration(
+                          /*decoration: BoxDecoration(
                               image: getDecorationNetworkImage(context,'/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7')
+                          ),*/
+                          child: PhotoGrid(
+                            imageUrls: ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+                            ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+                            ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'],
+                            onImageClicked: (i) => print('Image $i was clicked!'),
+                            onExpandClicked: () => print('Expand Image was clicked'),
+                            maxImages: 3,
                           ),
                         ),
                     ),
@@ -184,9 +192,9 @@ class _BookingDetailState extends State<BookingDetail> {
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                    getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
+                    /*getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
-                    getVerSpace(FetchPixels.getPixelHeight(10)),
+                    getVerSpace(FetchPixels.getPixelHeight(10)),*/
                     /*getCustomFont(
                       snapshot.data!.description ?? "api: Mô tả của Manager",
                       16,
@@ -194,7 +202,7 @@ class _BookingDetailState extends State<BookingDetail> {
                       1,
                       fontWeight: FontWeight.w400,
                     ),*/
-                    InkWell(
+                   /* InkWell(
                       child: const Icon(
                         Icons.image,
                         color: Colors.orange,
@@ -203,10 +211,10 @@ class _BookingDetailState extends State<BookingDetail> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) => ImageScreen(id: widget.orderId, imgURL: listImages)));
                       },
-                    ),
-                    getVerSpace(FetchPixels.getPixelHeight(5)),
+                    ),*/
+                    /*getVerSpace(FetchPixels.getPixelHeight(5)),
                     getDivider(dividerColor, 0, 1),
-                    getVerSpace(FetchPixels.getPixelHeight(20)),
+                    getVerSpace(FetchPixels.getPixelHeight(20)),*/
 
                     getCustomFont("Nhân viên thực hiện:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
