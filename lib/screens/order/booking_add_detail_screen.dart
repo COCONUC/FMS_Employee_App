@@ -153,7 +153,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 rightFunction: () {})),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         Center(
-          child: getCustomFont(serviceLists.statusName ?? "api: trạng thái đơn hàng", 16, success, 1, fontWeight: FontWeight.w600)
+          child: getCustomFont(widget._data.statusName ?? "api: trạng thái đơn hàng", 16, success, 1, fontWeight: FontWeight.w600)
         ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
         /*getPaddingWidget(edgeInsets, productImage(index)),*/
@@ -504,7 +504,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     );
   }
 
-  final ReportOrder reportOrder = ReportOrder(listEmployeeCreateOrderImageListDto: [], listService: []);
+  final ReportOrder reportOrder = ReportOrder(statusId: 2,listEmployeeCreateOrderImageListDto: [], listService: []);
 
   void getNewService() async {
     List<ListOrderServiceDto> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
@@ -564,10 +564,11 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         onPressed: () {
           reportOrder.description = descriptionController.text;
           reportOrder.orderId = widget.orderId;
+          reportOrder.statusId = 2;
           reportOrder.listEmployeeCreateOrderImageListDto?.add(
               ListEmployeeCreateOrderImageListDto(
                   orderId: widget.orderId,
-                imageUrl: widget.img??'url',
+                imageUrl: widget.img ?? 'url',
                   status: true
               )
           );

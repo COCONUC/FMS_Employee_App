@@ -286,7 +286,13 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
   double totalTime(List<ListOrderServiceDto> time){
     double total = 0.0;
     for(var e in time){
-      total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0,1)));
+      if(e.estimateTimeFinish != null) {
+        total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0, 1)));
+      }
+      if(e.estimateTimeFinish == null) {
+        double slot = 1;
+        total = total + 1;
+      }
     }
     return total;
   }

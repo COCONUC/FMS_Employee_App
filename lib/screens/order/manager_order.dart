@@ -8,6 +8,7 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/screens/order/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
@@ -79,7 +80,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                 gettoolbarMenu(context, "back.svg", () {
                   Constant.backToPrev(context);
                 },
-                    title: "Mã đơn: " + snapshot.data!.orderId.toString(),
+                    title: "Mã đơn: ${snapshot.data!.orderId}",
                     weight: FontWeight.w900,
                     istext: true,
                     textColor: Colors.black,
@@ -342,48 +343,73 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
   double totalTime(List<ListOrderServiceDto> time){
     double total = 0.0;
     for(var e in time){
-      total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0,1)));
+      if(e.estimateTimeFinish != null) {
+        total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0, 1)));
+      }
+      if(e.estimateTimeFinish == null) {
+        double slot = 1;
+        total = total + 1;
+      }
     }
     return total;
   }
 
-  Container buttons(BuildContext context) {
-    return Container(
-      color: backGroundColor,
-      padding: EdgeInsets.only(
-          left: FetchPixels.getPixelWidth(20),
-          right: FetchPixels.getPixelWidth(20),
-          bottom: FetchPixels.getPixelHeight(30)),
-      child: Row(
-        children: [
-          Expanded(
-              child: getButton(context, backGroundColor, "Sửa Đơn", blueColor,
-                      () {
-                    Constant.backToPrev(context);
-                  }, 18,
-                  weight: FontWeight.w600,
-                  buttonHeight: FetchPixels.getPixelHeight(60),
-                  borderRadius:
-                  BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-                  borderColor: blueColor,
-                  isBorder: true,
-                  borderWidth: 1.5)),
-          getHorSpace(FetchPixels.getPixelWidth(20)),
-          Expanded(
-              child: getButton(context, blueColor, "Thực Hiện Công Việc", Colors.white, () {
-                // addressList.removeAt(selection!.getInt("index")!);
-                // setState(() {});
-                /*Constant.backToPrev(context);*/
-                /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                Constant.sendToScreen(NavScreen(), context);
-              }, 18,
-                  weight: FontWeight.w600,
-                  buttonHeight: FetchPixels.getPixelHeight(60),
-                  borderRadius:
-                  BorderRadius.circular(FetchPixels.getPixelHeight(14)))),
-        ],
-      ),
+  Widget buttons(BuildContext context) {
+    return FutureBuilder<OrderDetailData>(
+        future: OrderServices().getOrderDetailById(widget.orderId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return Container(
+              color: backGroundColor,
+              padding: EdgeInsets.only(
+                  left: FetchPixels.getPixelWidth(20),
+                  right: FetchPixels.getPixelWidth(20),
+                  bottom: FetchPixels.getPixelHeight(30)),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: getButton(
+                          context, backGroundColor, "Sửa Đơn", blueColor,
+                              () {
+                            if (snapshot.data! != null) {
+                              Constant.sendToScreen(
+                                  DetailEditingScreen(widget.orderId, snapshot
+                                      .data!,
+                                      '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
+                                  context);
+                            }
+                          }, 18,
+                          weight: FontWeight.w600,
+                          buttonHeight: FetchPixels.getPixelHeight(60),
+                          borderRadius:
+                          BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+                          borderColor: blueColor,
+                          isBorder: true,
+                          borderWidth: 1.5)),
+                  getHorSpace(FetchPixels.getPixelWidth(20)),
+                  Expanded(
+                      child: getButton(
+                          context, blueColor, "Thực Hiện Công Việc",
+                          Colors.white, () {
+                        // addressList.removeAt(selection!.getInt("index")!);
+                        // setState(() {});
+                        /*Constant.backToPrev(context);*/
+                        /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
+                        /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
+                        Constant.sendToScreen(NavScreen(), context);
+                      }, 18,
+                          weight: FontWeight.w600,
+                          buttonHeight: FetchPixels.getPixelHeight(60),
+                          borderRadius:
+                          BorderRadius.circular(
+                              FetchPixels.getPixelHeight(14)))),
+                ],
+              ),
+            );
+        }
+        }
     );
   }
 }

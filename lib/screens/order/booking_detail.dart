@@ -372,7 +372,13 @@ class _BookingDetailState extends State<BookingDetail> {
   double totalTime(List<ListOrderServiceDto> time){
     double total = 0.0;
     for(var e in time){
-      total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0,1)));
+      if(e.estimateTimeFinish != null) {
+        total = total + (double.parse(e.estimateTimeFinish!.toString().substring(0, 1)));
+      }
+      if(e.estimateTimeFinish == null) {
+        double slot = 1;
+        total = total + 1;
+      }
     }
     return total;
   }
@@ -401,10 +407,6 @@ class _BookingDetailState extends State<BookingDetail> {
           getHorSpace(FetchPixels.getPixelWidth(20)),
           Expanded(
               child: getButton(context, blueColor, "Khảo Sát", Colors.white, () {
-            // addressList.removeAt(selection!.getInt("index")!);
-            // setState(() {});
-            /*Constant.backToPrev(context);*/
-                /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
                 if (detailData != null) {
                   Constant.sendToScreen(
                       DetailEditingScreen(widget.orderId, detailData, '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'), context);

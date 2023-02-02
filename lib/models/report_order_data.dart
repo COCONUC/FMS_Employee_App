@@ -33,10 +33,11 @@
 class ReportOrder {
   int? orderId;
   String? description;
+  int? statusId;
   List<ListService>? listService;
   List<ListEmployeeCreateOrderImageListDto>? listEmployeeCreateOrderImageListDto;
 
-  ReportOrder({this.orderId, this.description, this.listService, this.listEmployeeCreateOrderImageListDto});
+  ReportOrder({this.orderId, this.description, this.statusId, this.listService, this.listEmployeeCreateOrderImageListDto});
 
   ReportOrder.fromJson(Map<String, dynamic> json) {
     if(json["orderId"] is int) {
@@ -44,6 +45,9 @@ class ReportOrder {
     }
     if(json["description"] is String) {
       description = json["description"];
+    }
+    if(json["statusId"] is int) {
+      statusId = json["statusId"];
     }
     if(json["listService"] is List) {
       listService = json["listService"] == null ? null : (json["listService"] as List).map((e) => ListService.fromJson(e)).toList();
@@ -61,6 +65,7 @@ class ReportOrder {
     final Map<String, dynamic> _data = <String, dynamic>{};
     _data["orderId"] = orderId;
     _data["description"] = description;
+    _data["statusId"] = statusId;
     if(listService != null) {
       _data["listService"] = listService?.map((e) => e.toJson()).toList();
     }
