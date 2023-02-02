@@ -12,8 +12,6 @@ import 'package:fms_employee/widgets/dialog/delete_dialog.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog_temp.dart';
-import 'package:fms_employee/widgets/dialog/warning_dialog.dart';
-import 'package:fms_employee/widgets/image_screen.dart';
 import '../../features/order_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
