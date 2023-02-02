@@ -282,7 +282,7 @@ class _BookingDetailState extends State<BookingDetail> {
                         Column(
                           children: [
                             getCustomFont(
-                              snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                              snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString() ?? "api: Danh sách dịch vụ",
                               16,
                               Colors.black,
                               100,
@@ -295,7 +295,7 @@ class _BookingDetailState extends State<BookingDetail> {
                           children: [
                             /*Text(snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()),*/
                             getCustomFont(
-                              snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString()?? "api: Danh sách dịch vụ",
+                              snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString() ?? "api: Danh sách dịch vụ",
                               16,
                               Colors.black,
                               100,

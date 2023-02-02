@@ -143,8 +143,10 @@ class ListOrderServiceDto {
   String? categoryName;
   int? quantity;
   String? estimateTimeFinish;
+  String? implementationDate;
+  String? implementationTime;
 
-  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.quantity, this.estimateTimeFinish});
+  ListOrderServiceDto({this.orderServiceId, this.orderId, this.serviceId, this.serviceName, this.price, this.categoryName, this.quantity, this.estimateTimeFinish, this.implementationDate, this.implementationTime});
 
   ListOrderServiceDto.fromJson(Map<String, dynamic> json) {
     if(json["orderServiceId"] is int) {
@@ -171,6 +173,12 @@ class ListOrderServiceDto {
     if(json["estimateTimeFinish"] is String) {
       estimateTimeFinish = json["estimateTimeFinish"];
     }
+    if(json["implementationDate"] is String) {
+      implementationDate = json["implementationDate"];
+    }
+    if(json["implementationTime"] is String) {
+      implementationTime = json["implementationTime"];
+    }
   }
 
   static List<ListOrderServiceDto> fromList(List<Map<String, dynamic>> list) {
@@ -187,6 +195,8 @@ class ListOrderServiceDto {
     _data["categoryName"] = categoryName;
     _data["quantity"] = quantity;
     _data["estimateTimeFinish"] = estimateTimeFinish;
+    _data["implementationDate"] = implementationDate;
+    _data["implementationTime"] = implementationTime;
     return _data;
   }
 }
