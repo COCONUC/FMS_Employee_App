@@ -9,6 +9,7 @@ import 'package:fms_employee/features/day_off_service.dart';
 import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/models/day_off_register_data.dart';
 import 'package:fms_employee/widgets/dialog/confirm_dialog.dart';
+import 'package:fms_employee/widgets/dialog/warning_dialog.dart';
 import 'package:intl/intl.dart';
 
 
@@ -88,29 +89,29 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
             primary: true,
             children: [
               getDefaultTextFiledWithLabel(
-                  context, snapshot.data!.employeeName ?? "Name",
+                  context, "${snapshot.data!.employeeName}" ?? "Name",
                   nameController,
-                  Colors.grey,
+                  Colors.black,
                   function: () {},
                   height: FetchPixels.getPixelHeight(60),
                   withprefix: true,
-                  image: "profile.svg",
+                  image: "user.svg",
                   isEnable: true,
                   minLines: true),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
                   context, "Ngày đăng ký nghỉ: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.date))}",
                   nameController,
-                  Colors.grey,
+                  Colors.black,
                   function: () {},
                   height: FetchPixels.getPixelHeight(60),
                   withprefix: true,
-                  image: "profile.svg",
+                  image: "calender.svg",
                   isEnable: true,
                   minLines: true),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
-                  context, "Lý do", reasonController, Colors.grey,
+                  context, "Nhập lý do xin nghỉ", reasonController, Colors.black,
                   function: () {},
                   isEnable: false,
                   withprefix: false,
@@ -119,15 +120,16 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
                   alignment: Alignment.topLeft),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
-                  context, snapshot.data!.email ?? "Email", pinCodeController, Colors.grey,
+                  context, "Email: ${snapshot.data!.email}" ?? "Email", pinCodeController, Colors.black,
                   function: () {},
                   isEnable: true,
                   withprefix: false,
+                  image: 'mail.png',
                   minLines: true,
                   height: FetchPixels.getPixelHeight(60)),
               getVerSpace(FetchPixels.getPixelHeight(20)),
               getDefaultTextFiledWithLabel(
-                  context, snapshot.data!.employeePhoneNumber ?? "Số điện thoại", phoneController, Colors.grey,
+                  context, snapshot.data!.employeePhoneNumber ?? "Số điện thoại", phoneController, Colors.black,
                   function: () {},
                   height: FetchPixels.getPixelHeight(60),
                   withprefix: true,
@@ -161,16 +163,25 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
           right: FetchPixels.getPixelWidth(20),
           bottom: FetchPixels.getPixelHeight(30)),
       child: getButton(context, blueColor, "Gửi Đơn", Colors.white, () {
-        _dayOffRegisterData.dayOff = widget.date;
-        _dayOffRegisterData.reason = reasonController.text;
-        _dayOffRegisterData.status = false;
-        DayOffServices().sendDayOffForm(_dayOffRegisterData);
-        showDialog(
-            barrierDismissible: false,
-            builder: (context) {
-              return const ConfirmDialog("check_complete.sgv", "Gửi đơn thành công", "Vui lòng đợi xét duyệt");
-            },
-            context: context);
+        if(reasonController.text.isNotEmpty){
+    _dayOffRegisterData.dayOff = widget.date;
+    _dayOffRegisterData.reason = reasonController.text;
+    _dayOffRegisterData.status = false;
+    DayOffServices().sendDayOffForm(_dayOffRegisterData);
+    showDialog(
+    barrierDismissible: false,
+    builder: (context) {
+    return const ConfirmDialog("Gửi đơn thành công", "Vui lòng đợi xét duyệt");
+    },
+    context: context);
+    }else{
+          showDialog(
+              barrierDismissible: false,
+              builder: (context) {
+                return const WarningDialog("Chưa nhập lý do", "Vui lòng ghi rõ lý do xin nghỉ!");
+              },
+              context: context);
+        }
       }, 18,
           weight: FontWeight.w600,
           buttonHeight: FetchPixels.getPixelHeight(60),

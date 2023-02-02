@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fms_employee/constants/assets.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
-import 'package:fms_employee/screens/tab_booking.dart';
+
 
 class ConfirmDialog extends StatefulWidget {
-  final String icon;
   final String title;
   final String message;
-  const ConfirmDialog(this. icon, this.title, this.message, {Key? key}) : super(key: key);
+  const ConfirmDialog(this.title, this.message, {Key? key}) : super(key: key);
 
   @override
   State<ConfirmDialog> createState() => _ConfirmDialogState();
@@ -37,7 +36,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getSvgImage(widget.icon,
+                getSvgImage(Assets.imagesCheckComplete,
                     width: FetchPixels.getPixelHeight(71.37),
                     height: FetchPixels.getPixelHeight(99.92)),
                 getVerSpace(FetchPixels.getPixelHeight(40)),

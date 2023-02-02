@@ -1,6 +1,4 @@
 
-
-
 class OrderDetailData {
   int? orderServiceId;
   int? orderId;

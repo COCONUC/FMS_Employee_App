@@ -226,51 +226,6 @@ class _BookingInProcessState extends State<BookingInProcess> {
         ));
   }
 
-  /*Expanded nullOrderView(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: FetchPixels.getPixelHeight(124),
-            width: FetchPixels.getPixelHeight(124),
-            decoration: BoxDecoration(
-              image: getDecorationAssetImage(context, "schedule.png"),
-            ),
-          ),
-          getVerSpace(FetchPixels.getPixelHeight(40)),
-          getCustomFont("Chưa có đơn hàng.", 20, Colors.black, 1,
-              fontWeight: FontWeight.w900),
-          getVerSpace(FetchPixels.getPixelHeight(10)),
-          getCustomFont(
-            "Vui lòng chờ cập nhật mới nhất từ hệ thống! ",
-            16,
-            Colors.black,
-            2,
-            fontWeight: FontWeight.w400,
-          ),
-          getVerSpace(FetchPixels.getPixelHeight(30)),
-          getButton(context, backGroundColor, "Tải lại dữ liệu", blueColor, () {
-            setState(() {
-              *//*schedule = true;*//*
-            });
-          }, 18,
-              weight: FontWeight.w600,
-              buttonHeight: FetchPixels.getPixelHeight(60),
-              insetsGeometry: EdgeInsets.symmetric(
-                  horizontal: FetchPixels.getPixelWidth(98)),
-              borderRadius:
-              BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-              isBorder: true,
-              borderColor: blueColor,
-              borderWidth: 1.5)
-        ],
-      ),
-    );
-  }*/
-
   bool loading = false;
 
   Widget nullListView() {
