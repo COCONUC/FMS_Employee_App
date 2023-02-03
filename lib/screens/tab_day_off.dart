@@ -278,7 +278,6 @@ class _TabDayOffState extends State<TabDayOff> {
                                       1,
                                       fontWeight: FontWeight.w400),
                                   getVerSpace(FetchPixels.getPixelHeight(20)),
-                                  getVerSpace(FetchPixels.getPixelHeight(20)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
