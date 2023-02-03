@@ -78,7 +78,14 @@ class _TabDayOffState extends State<TabDayOff> {
           calendar(edgeInsets),
           getVerSpace(FetchPixels.getPixelHeight(30)),
           registerButton(context),
-          getVerSpace(FetchPixels.getPixelHeight(20)),
+          getVerSpace(FetchPixels.getPixelHeight(30)),
+          Center(child: getCustomFont("Đơn Đã Gửi", 21, Colors.black, 1),),
+          getVerSpace(FetchPixels.getPixelHeight(5)),
+          Padding(padding: const EdgeInsets.only(left: 20, right: 20),
+            child: getDivider(dividerColor, 0, 1),
+          ),
+
+          getVerSpace(FetchPixels.getPixelHeight(10)),
           buildScheduleList(edgeInsets)
         ],
       ),
