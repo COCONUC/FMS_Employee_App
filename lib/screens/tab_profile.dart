@@ -4,6 +4,8 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/pref_data.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/features/account_service.dart';
+import 'package:fms_employee/models/account_data.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:fms_employee/screens/booking/history/booking_history.dart';
 import 'package:fms_employee/screens/profile/my_profile_screen.dart';
@@ -20,6 +22,14 @@ class TabProfile extends StatefulWidget {
 }
 
 class _TabProfileState extends State<TabProfile> {
+
+  AccountData accountData = AccountData();
+
+  Future<AccountData> getFutureService() async {
+    accountData = await AccountServices().getAccountDataByEmployeeId();
+    return accountData;
+  }
+  
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
@@ -72,7 +82,18 @@ class _TabProfileState extends State<TabProfile> {
             decoration: BoxDecoration(
                 image: getDecorationAssetImage(context, "profile.png")),
           ),
-          getVerSpace(FetchPixels.getPixelHeight(44)),
+          getVerSpace(FetchPixels.getPixelHeight(20)),
+          FutureBuilder<AccountData>(future: getFutureService(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+             return const Center(child: CircularProgressIndicator());
+            } else {
+            return Center(child: getCustomFont(accountData.employeeName.toString() ?? " ", 20, Colors.black, 1),);
+              }
+            }
+          ),
+
+          getVerSpace(FetchPixels.getPixelHeight(30)),
           getButtonWithIcon(context, Colors.white, "Thông tin cá nhân", Colors.black,
               () {
             /*Constant.sendToNext(context, Routes.myProfileScreenRoute);*/
