@@ -152,7 +152,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                         snapshot.data!.address ?? "api: Địa chỉ khách đặt",
                         16,
                         Colors.black,
-                        1,
+                        5,
                         fontWeight: FontWeight.w400,
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(5)),
