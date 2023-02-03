@@ -492,7 +492,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 ],
               ),
               getVerSpace(FetchPixels.getPixelHeight(70)),
-              getCustomFont("Thành tiền:  VNĐ", 16, blueColor, 1,
+              getCustomFont("Thành tiền: ${data.listOrderServiceDto![index].quantity! * int.parse(data.listOrderServiceDto![index].price!)} VNĐ", 14, blueColor, 1,
                   fontWeight: FontWeight.w900)
             ],
           ),
