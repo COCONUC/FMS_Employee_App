@@ -8,7 +8,9 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
+import 'package:fms_employee/widgets/dialog/forward_option_dialog.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 import 'package:intl/intl.dart';
 
@@ -384,6 +386,8 @@ class _BookingDetailState extends State<BookingDetail> {
     return total;
   }
 
+  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 2);
+
   Container buttons(BuildContext context) {
     return Container(
       color: backGroundColor,
@@ -408,10 +412,20 @@ class _BookingDetailState extends State<BookingDetail> {
           getHorSpace(FetchPixels.getPixelWidth(20)),
           Expanded(
               child: getButton(context, blueColor, "Khảo Sát", Colors.white, () {
-                if (detailData != null) {
-                  Constant.sendToScreen(
-                      DetailEditingScreen(widget.orderId, detailData, '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'), context);
-                }
+                showDialog(
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return const ForwardOptionDialog("Bắt đầu quy trình sữa chữa?", " ");
+                    },
+                    context: context).then((value) {
+                  if(value == true){
+                    if (detailData != null) {
+                      detailData.statusName = "Đang khảo sát";
+                      OrderServices().changeOrderStatus(widget.orderId, statusId).whenComplete(() =>   Constant.sendToScreen(
+                          DetailEditingScreen(widget.orderId, detailData, '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'), context));
+                    }
+                  }
+                });
           }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

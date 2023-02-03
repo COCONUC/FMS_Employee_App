@@ -153,7 +153,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 rightFunction: () {})),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         Center(
-          child: getCustomFont(widget._data.statusName ?? "api: trạng thái đơn hàng", 16, success, 1, fontWeight: FontWeight.w600)
+          child: getCustomFont(widget._data.statusName ?? " ", 16, success, 1, fontWeight: FontWeight.w600)
         ),
         getVerSpace(FetchPixels.getPixelHeight(20)),
         /*getPaddingWidget(edgeInsets, productImage(index)),*/

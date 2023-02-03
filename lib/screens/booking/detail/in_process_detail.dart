@@ -8,8 +8,10 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
+import 'package:fms_employee/widgets/dialog/forward_option_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 
@@ -348,6 +350,8 @@ class _InProcessDetailState extends State<InProcessDetail> {
     return total;
   }
 
+  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 5);
+
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(
         future: OrderServices().getOrderDetailById(widget.orderId),
@@ -387,12 +391,20 @@ class _InProcessDetailState extends State<InProcessDetail> {
                       child: getButton(
                           context, blueColor, "Hoàn Thành Công Việc",
                           Colors.white, () {
-                        // addressList.removeAt(selection!.getInt("index")!);
-                        // setState(() {});
-                        /*Constant.backToPrev(context);*/
-                        /*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*/
-                        /*Constant.sendToScreen(DetailScreen(widget.orderId), context);*/
-                        Constant.sendToScreen(NavScreen(1), context);
+
+                        showDialog(
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return const ForwardOptionDialog("Hoàn thành công việc?", "Hoàn thành công việc và tiến hành thu tiền");
+                            },
+                            context: context).then((value) {
+                          if(value == true){
+                            OrderServices().changeOrderStatus(widget.orderId, statusId).whenComplete(() =>
+                                Constant.sendToScreen(NavScreen(1), context)
+                            );
+                          }
+                        });
+
                       }, 16,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),

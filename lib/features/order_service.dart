@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_employee/constants/backend_query.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
@@ -128,7 +129,7 @@ class OrderServices {
   }
 
   //Thay đổi trạng thái đơn hàng dựa theo Id của đơn để thay đổi statusId
-  Future<void> changeOrderStatus(orderId, statusId) async{
+  Future<void> changeOrderStatus(orderId, ChangeOrderStatusData statusId) async{
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     try{
       final response = await http.put(
@@ -138,7 +139,10 @@ class OrderServices {
             'Authorization': 'Bearer $token',
             'Content-Type': 'application/json; charset=UTF-8',
           },
+          body: jsonEncode(statusId.toJson())
       );
+      print(response.statusCode);
+      print(response.body);
       if(response.statusCode == 200){
 
       } else{

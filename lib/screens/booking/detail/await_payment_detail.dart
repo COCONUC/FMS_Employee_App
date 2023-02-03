@@ -8,8 +8,10 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/screens/booking/history/booking_history.dart';
+import 'package:fms_employee/widgets/dialog/forward_option_dialog.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 import 'package:intl/intl.dart';
 
@@ -376,6 +378,8 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
     return total;
   }
 
+  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 6);
+
   Container buttons(BuildContext context) {
     return Container(
       color: backGroundColor,
@@ -400,7 +404,19 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
           getHorSpace(FetchPixels.getPixelWidth(20)),
           Expanded(
               child: getButton(context, blueColor, "Hoàn Tất Đơn", Colors.white, () {
-                Constant.sendToScreen(BookingHistory(), context);
+                showDialog(
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return const ForwardOptionDialog("Xác nhận hoàn tất đơn hàng?", " ");
+                    },
+                    context: context).then((value) {
+                  if(value == true){
+                    OrderServices().changeOrderStatus(widget.orderId, statusId).whenComplete(() =>
+                        Constant.sendToScreen(BookingHistory(), context)
+                    );
+                  }
+                });
+
               }, 18,
                   weight: FontWeight.w600,
                   buttonHeight: FetchPixels.getPixelHeight(60),

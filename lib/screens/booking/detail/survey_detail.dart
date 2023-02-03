@@ -8,8 +8,10 @@ import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
+import 'package:fms_employee/widgets/dialog/forward_option_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 
@@ -347,6 +349,8 @@ class _SurveyDetailState extends State<SurveyDetail> {
     return total;
   }
 
+  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
+
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(
         future: OrderServices().getOrderDetailById(widget.orderId),
@@ -386,8 +390,18 @@ class _SurveyDetailState extends State<SurveyDetail> {
                       child: getButton(
                           context, blueColor, "Bắt đầu công việc",
                           Colors.white, () {
-
-                        Constant.sendToScreen(NavScreen(1), context);
+                        showDialog(
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return const ForwardOptionDialog("Bắt đầu thực hiện công việc?", " ");
+                            },
+                            context: context).then((value) {
+                          if(value == true){
+                              OrderServices().changeOrderStatus(widget.orderId, statusId).whenComplete(() =>
+                                  Constant.sendToScreen(NavScreen(1), context)
+                              );
+                          }
+                        });
                       }, 16,
                           weight: FontWeight.w600,
                           buttonHeight: FetchPixels.getPixelHeight(60),
