@@ -175,7 +175,7 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
       _dayOffRegisterData.reason = reasonController.text;
       _dayOffRegisterData.status = 1;
       DayOffServices().sendDayOffForm(_dayOffRegisterData);
-    return const ConfirmDialog("Gửi đơn thành công", "Vui lòng đợi xét duyệt");
+    return ConfirmDialog("Gửi đơn thành công", "Vui lòng đợi xét duyệt");
     },
     context: context);
     }else{

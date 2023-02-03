@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/assets.dart';
 import 'package:fms_employee/constants/color_constant.dart';
+import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/screens/tab_day_off.dart';
 
 
 class ConfirmDialog extends StatefulWidget {
@@ -53,12 +55,8 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                     textAlign: TextAlign.center),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 getButton(context, blueColor, "Ok", Colors.white, () {
-                  /*Constant.backToPrev(context);*/
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  setState(() {
+                  Constant.sendToScreen(TabDayOff(), context);
 
-                  });
                 }, 18,
                     weight: FontWeight.w600,
                     buttonHeight: FetchPixels.getPixelHeight(60),

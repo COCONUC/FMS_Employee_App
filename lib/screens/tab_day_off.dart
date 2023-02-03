@@ -14,7 +14,7 @@ import '../constants/widget_utils.dart';
 
 class TabDayOff extends StatefulWidget {
   static const String routeName = '/tab_day_off';
-  const TabDayOff( {Key? key}) : super(key: key);
+  const TabDayOff({Key? key}) : super(key: key);
 
   @override
   State<TabDayOff> createState() => _TabDayOffState();
@@ -23,6 +23,11 @@ class TabDayOff extends StatefulWidget {
 class _TabDayOffState extends State<TabDayOff> {
   bool schedule = true;
   String date = " ";
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +154,14 @@ class _TabDayOffState extends State<TabDayOff> {
         child: SfDateRangePicker(
           enablePastDates: false,
           minDate: DateTime.now().add(const Duration(days: 2)),
+
+         /* selectableDayPredicate: (DateTime dateTime){
+            if (dateTime == DateTime(2023, 2, 24)) {
+              return false;
+            }
+            return true;
+          },*/
+
           monthViewSettings: const DateRangePickerMonthViewSettings(
             dayFormat: "EEE",
             firstDayOfWeek: 1,
