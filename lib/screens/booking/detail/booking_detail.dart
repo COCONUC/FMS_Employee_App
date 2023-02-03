@@ -229,18 +229,19 @@ class _BookingDetailState extends State<BookingDetail> {
 
                     getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
                         fontWeight: FontWeight.w400),
-                    getVerSpace(FetchPixels.getPixelHeight(10)),
-                    InkWell(
-                      child: const Icon(
-                        Icons.image,
-                        color: Colors.orange,
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: TextButton(onPressed: () =>  Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath))),
+                          child: getCustomFont(
+                           "Nhấn vào link để xem ảnh",
+                            18,
+                            Colors.blueAccent,
+                            1,
+                            fontWeight: FontWeight.w400,
+                          ),
                       ),
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath)));
-                      },
                     ),
-                    getVerSpace(FetchPixels.getPixelHeight(5)),
                     getDivider(dividerColor, 0, 1),
                     getVerSpace(FetchPixels.getPixelHeight(20)),
 
