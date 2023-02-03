@@ -143,7 +143,6 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
-
                       getCustomFont("Địa Chỉ:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -176,22 +175,15 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
                       getCustomFont("Mô tả:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      if(snapshot.data!.description! != null)
+
                         getCustomFont(
-                          " ${snapshot.data!.description}" ?? "Không có mô tả",
-                          16,
-                          Colors.black,
-                          1,
-                          fontWeight: FontWeight.w400,
-                        )
-                      else
-                        getCustomFont(
-                          "Không có mô tả",
+                          snapshot.data!.description ?? "Không có mô tả",
                           16,
                           Colors.black,
                           1,
                           fontWeight: FontWeight.w400,
                         ),
+
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),

@@ -125,7 +125,28 @@ class OrderServices {
     } catch (e){
       throw Exception(e);
     }
+  }
 
+  //Thay đổi trạng thái đơn hàng dựa theo Id của đơn để thay đổi statusId
+  Future<void> changeOrderStatus(orderId, statusId) async{
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    try{
+      final response = await http.put(
+          Uri.parse(
+              '$backEndUrl/employee/update_order_status_by_id/$orderId'),
+          headers: <String, String>{
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+      );
+      if(response.statusCode == 200){
+
+      } else{
+
+      }
+    } catch (e){
+      throw Exception(e);
+    }
   }
 
   //Xóa dịch vụ trong đơn khảo sát
