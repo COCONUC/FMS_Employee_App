@@ -11,7 +11,9 @@ import '../../models/service_data.dart';
 
 class ServiceDialogTemp extends StatefulWidget {
 
-  const ServiceDialogTemp({Key? key}) : super(key: key);
+  List<ListOrderServiceDto>? data;
+
+  ServiceDialogTemp(this.data, {Key? key}) : super(key: key);
 
   @override
   State<ServiceDialogTemp> createState() => _ServiceDialogTempState();
@@ -19,21 +21,25 @@ class ServiceDialogTemp extends StatefulWidget {
 
 class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   var total = 0.00;
-
+  List<ListOrderServiceDto>? chosenServices;
   List<ServiceData> serviceLists = [];
-  List<ListOrderServiceDto> listChosenService = [];
 
    _getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
     if(serviceLists.isNotEmpty){
       for(ServiceData e in serviceLists){
-        e.quantity = 0;
+        if(widget.data!.any((element) => element.serviceId == e.serviceId)){
+          e.quantity = widget.data?.firstWhere((element) => element.serviceId == e.serviceId).quantity;
+        }else {
+          e.quantity = 0;
+        }
       }
     setState(() {
     });}
   }
   @override
   void initState() {
+     chosenServices = widget.data;
     super.initState();
     _getFutureService();
   }
@@ -74,7 +80,6 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
                       serviceToChooseList(),
-
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       /*totalContainer(),*/
                       /*addServicesButton(context),*/
@@ -157,20 +162,20 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        if (serviceData.quantity == 0)
+        if (!chosenServices!.any((element) => element.serviceId == serviceData.serviceId))
           getButton(context, Colors.transparent, "Thêm", blueColor,
                   () {
                     setState(() {
                       serviceData.quantity = serviceData.quantity! +1;
-                      /*total = total + (modelColor.price! * 1);*/
-                      listChosenService.add(
-                      ListOrderServiceDto(
-                          serviceId: serviceData.serviceId,
-                          serviceName: serviceData.serviceName,
-                          categoryName: serviceData.categoryName,
-                          quantity: serviceData.quantity,
-                          price: serviceData.price)
-                      );
+                      chosenServices?.add(
+                          ListOrderServiceDto(
+                            serviceId: serviceData.serviceId,
+                            quantity: serviceData.quantity,
+                            serviceName: serviceData.serviceName,
+                            price: serviceData.price,
+                            categoryName: serviceData.categoryName,
+                      ));
+
                     });
 
 
@@ -194,7 +199,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                 onTap: () {
                   serviceData.quantity = (serviceData.quantity! + 1);
                   /*total = total + (modelColor.price! * 1);*/
-                  listChosenService.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
+                  chosenServices!.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity;
                   setState(() {});
                 },
               ),
@@ -209,12 +214,10 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                     width: FetchPixels.getPixelHeight(30),
                     height: FetchPixels.getPixelHeight(30)),
                 onTap: () {
-                  serviceData.quantity = (serviceData.quantity! - 1);
                   /*total = total - (modelColor.price! * 1);*/
-                  if (serviceData.quantity! > 0) {
-                    listChosenService.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity!;
-                  } else {
-                    listChosenService.removeWhere((element) => element.serviceId == serviceData.serviceId);
+                  if (serviceData.quantity! > 1) {
+                    serviceData.quantity = (serviceData.quantity! - 1);
+                    chosenServices!.firstWhere((element) => element.serviceId == serviceData.serviceId).quantity = serviceData.quantity;
                   }
                   setState(() {});
                 },
@@ -255,7 +258,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
       width: FetchPixels.getPixelWidth(370),
       child: getButton(context, blueColor, "Xác nhận", Colors.white, () {
         //printData();
-        Navigator.pop(context, listChosenService);
+        Navigator.pop(context, chosenServices);
         /*Constant.backToPrev(context);*/
         /*Constant.sendToNext(context, Routes.cartRoute);*/
       }, 18,

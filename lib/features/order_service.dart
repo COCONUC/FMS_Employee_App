@@ -117,17 +117,32 @@ class OrderServices {
         body: jsonEncode(service.toJson())
 
       );
-      print(service.toJson());
       if(response.statusCode == 200){
-        print("Gửi thành công");
+
       } else{
-        print("gửi không thành công");
-        print(response.body);
+
       }
     } catch (e){
       throw Exception(e);
     }
 
+  }
+
+  //Xóa dịch vụ trong đơn khảo sát
+  Future<bool> deleteServiceInOrder(orderId, orderServiceId) async{
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    final response = await http.delete(
+      Uri.parse('$backEndUrl/employee/deleteServiceInOrder/$orderId/orderServiceId/$orderServiceId'),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'text/plain; charset=UTF-8',
+      },
+    );
+    if(response.statusCode == 200){
+     return true;
+    }else{
+      return false;
+    }
   }
 
 }

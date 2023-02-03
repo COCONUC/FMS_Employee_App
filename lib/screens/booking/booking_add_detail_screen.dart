@@ -170,17 +170,20 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 fontWeight: FontWeight.w900)),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         /*addServiceButton(context),*/
-          ElevatedButton(
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
             ),
-              onPressed:  getNewService,
-              child: const Text("Cập nhật dịch vụ", style: TextStyle(
-                  color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),),
+            onPressed:  getNewService,
+            child: const Text("Cập nhật dịch vụ", style: TextStyle(
+              color: Colors.blue,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),),
           ),
+        ),
         getVerSpace(FetchPixels.getPixelHeight(15)),
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
@@ -241,7 +244,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                     horizontal: FetchPixels.getPixelWidth(18))
             ),
             getButton(
-                context, Colors.white, "Chụp ảnh", blueColor, () {
+                context, Colors.white, "Chọn ảnh", blueColor, () {
               openImages();
             }, 14,
                 weight: FontWeight.w400,
@@ -469,13 +472,17 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                       showDialog(
                           barrierDismissible: false,
                           builder: (context) {
-                            return DeleteDialog("Xóa dịch vụ này?", " ", data.listOrderServiceDto![index]);
+                            return DeleteDialog("Xóa dịch vụ này?", " ", widget.orderId, data.listOrderServiceDto![index]);
                           },
                           context: context).then((value) {
                             if(value == true){
                               data.listOrderServiceDto!.removeAt(index);
+                              setState(() {
+                              });
                             }
-                            setState(() {});
+                            else{
+                              //show dialog
+                            }
                           });
                     },
                     child: getSvgImage("trash.svg",color: Colors.deepOrange,
@@ -507,27 +514,28 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   final ReportOrder reportOrder = ReportOrder(statusId: 2,listEmployeeCreateOrderImageListDto: [], listService: []);
 
   void getNewService() async {
-    List<ListOrderServiceDto> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const ServiceDialogTemp()));
+    List<ListOrderServiceDto> result = await Navigator.push(context, MaterialPageRoute(builder: (_) => ServiceDialogTemp(data!.listOrderServiceDto)));
     if(result != null){
        for(var element in result){
-         print(element.quantity);
          // kiem tra xem service da ton tai trong list chua?
          // neu ton tai thi chi thay doi quantity, khong thi add vao _reportOrder va data
          if(!data.listOrderServiceDto!.any((e) => e.serviceId == element.serviceId)) {
-           reportOrder.listService?.add(ListService(serviceId: element.serviceId,
-               quantity: element.quantity));
-           print('data: ${jsonEncode(reportOrder)}');
+
            data.listOrderServiceDto?.add(
               element
            );
-         }
-         else{
+
 
          }
+         else{
+           data.listOrderServiceDto!.firstWhere((e) => e.serviceId == element.serviceId).quantity = element.quantity;
+         }
        }
+
        setState(() {
 
        });
+
       }
   }
 
@@ -572,8 +580,10 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                   status: true
               )
           );
-          OrderServices().sendReportOrder(widget.orderId, reportOrder);
-          Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context);
+          for(var e in data!.listOrderServiceDto!){
+            reportOrder.listService?.add(ListService(serviceId: e.serviceId, quantity: e.quantity));
+          }
+          OrderServices().sendReportOrder(widget.orderId, reportOrder).whenComplete(() => Constant.sendToScreen(ManagerOrderDetail(widget.img, widget.orderId), context));
         },
         child: const Text("Xác nhận", style: TextStyle(
           color: Colors.white,

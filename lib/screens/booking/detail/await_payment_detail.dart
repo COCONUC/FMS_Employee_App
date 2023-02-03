@@ -181,6 +181,7 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
                       getCustomFont("Giờ & Ngày khách hẹn:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
+                      if(snapshot.data!.listOrderServiceDto!.isNotEmpty)
                       getCustomFont(
                         "${snapshot.data!.listOrderServiceDto!.first.implementationTime}  Ngày: ${DateFormat('dd-MM-yyyy').format(DateTime.parse(snapshot.data!.listOrderServiceDto!.first.implementationDate.toString()))}" ?? 'api: Thời gian khách đặt',
                         16,

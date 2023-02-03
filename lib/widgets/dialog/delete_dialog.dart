@@ -3,13 +3,15 @@ import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
+import 'package:fms_employee/features/order_service.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 
 class DeleteDialog extends StatefulWidget {
   final String title;
   final String message;
+  final int orderId;
   final ListOrderServiceDto services;
-  const DeleteDialog(this.title, this.message, this.services, {Key? key}) : super(key: key);
+  const DeleteDialog(this.title, this.message,this.orderId, this.services, {Key? key}) : super(key: key);
 
   @override
   State<DeleteDialog> createState() => _DeleteDialogState();
@@ -66,8 +68,10 @@ class _DeleteDialogState extends State<DeleteDialog> {
                   children: [
                     getButton(context, Colors.redAccent.shade700, "Xóa", Colors.white, () {
                       if(widget.services.orderServiceId != null){
-                        // xoa API trong day
-                        Constant.backToPrevAfterDelete(context, false);
+                        //API xóa
+                        OrderServices().deleteServiceInOrder(widget.orderId, widget.services.orderServiceId).then((value) =>
+                            Constant.backToPrevAfterDelete(context, value));
+
                       }else{
                         Constant.backToPrevAfterDelete(context, true);
                       }
