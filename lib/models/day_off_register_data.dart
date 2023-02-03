@@ -1,9 +1,8 @@
-
 class DayOffRegisterData {
   int? employeeId;
   String? reason;
   String? dayOff;
-  bool? status;
+  int? status;
 
   DayOffRegisterData({this.employeeId, this.reason, this.dayOff, this.status});
 
@@ -17,7 +16,7 @@ class DayOffRegisterData {
     if(json["dayOff"] is String) {
       dayOff = json["dayOff"];
     }
-    if(json["status"] is bool) {
+    if(json["status"] is int) {
       status = json["status"];
     }
   }

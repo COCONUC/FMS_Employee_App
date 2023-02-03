@@ -58,10 +58,10 @@ Future<void> sendDayOffForm(DayOffRegisterData data) async{
         body: jsonEncode(data.toJson())
     );
     if(response.statusCode == 200){
-      print("Gửi thành công");
+      /*print("Gửi thành công");*/
     } else{
-      print("gửi không thành công");
-      print(response.body);
+     /* print("gửi không thành công");
+      print(response.body);*/
     }
   } catch (e){
     throw Exception(e);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
@@ -199,9 +200,8 @@ class _TabDayOffState extends State<TabDayOff> {
   List<DayOffData> dayOffList = [];
 
   Future<List<DayOffData>> getFutureService() async {
-    dayOffList =
-        await DayOffServices().getDateOffListOfStaff();
-    return dayOffList.reversed.toList().sublist(0, 2);
+    dayOffList = await DayOffServices().getDateOffListOfStaff();
+    return dayOffList.reversed.toList().sublist(0, 4);
   }
 
   Widget dayOffPendingList() {
@@ -305,6 +305,7 @@ class _TabDayOffState extends State<TabDayOff> {
                                       ),
                                       /*getCustomFont(snapshot.data![index].status.toString() ?? "", 14, textColor, 1,
                                     fontWeight: FontWeight.w400),*/
+
                                       if (snapshot.data![index].status == 3)
                                         Wrap(
                                           children: [
@@ -370,8 +371,29 @@ class _TabDayOffState extends State<TabDayOff> {
                                                       horizontal: FetchPixels
                                                           .getPixelWidth(12)))
                                             ],
+                                          )
+                                      else
+                                          Wrap(
+                                            children: [
+                                              getButton(
+                                                  context,
+                                                  Colors.yellow.shade700,
+                                                  "Chờ duyệt",
+                                                  Colors.white,
+                                                      () {},
+                                                  16,
+                                                  weight: FontWeight.w600,
+                                                  borderRadius: BorderRadius
+                                                      .circular(FetchPixels
+                                                      .getPixelHeight(37)),
+                                                  insetsGeometrypadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: FetchPixels
+                                                          .getPixelHeight(6),
+                                                      horizontal: FetchPixels
+                                                          .getPixelWidth(12)))
+                                            ],
                                           ),
-
                                       getHorSpace(FetchPixels.getPixelWidth(12)),
 
                                     ],

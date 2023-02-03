@@ -30,7 +30,7 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
   TextEditingController countryController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
-  final DayOffRegisterData _dayOffRegisterData = DayOffRegisterData();
+  final DayOffRegisterData _dayOffRegisterData = DayOffRegisterData(status: 1);
 
   AccountData accountData = AccountData();
 
@@ -53,7 +53,6 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: backGroundColor,
-          bottomNavigationBar: addAddressButton(context),
           body: SafeArea(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: FetchPixels.getDefaultHorSpace(context)),
@@ -136,6 +135,10 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
                   image: "call.svg",
                   isEnable: true,
                   minLines: true),
+
+              getVerSpace(FetchPixels.getPixelHeight(20)),
+
+              addAddressButton(context, snapshot.data!.employeeId!),
             ],
           ),
         );
@@ -155,22 +158,23 @@ class _DayOffRegisterScreenState extends State<DayOffRegisterScreen> {
         textColor: Colors.black);
   }
 
-  Container addAddressButton(BuildContext context) {
+  Container addAddressButton(BuildContext context, int employeeId) {
     return Container(
       color: backGroundColor,
       padding: EdgeInsets.only(
-          left: FetchPixels.getPixelWidth(20),
-          right: FetchPixels.getPixelWidth(20),
-          bottom: FetchPixels.getPixelHeight(30)),
+          left: FetchPixels.getPixelWidth(4),
+          right: FetchPixels.getPixelWidth(4),
+          top: FetchPixels.getPixelHeight(60)),
       child: getButton(context, blueColor, "Gửi Đơn", Colors.white, () {
         if(reasonController.text.isNotEmpty){
-    _dayOffRegisterData.dayOff = widget.date;
-    _dayOffRegisterData.reason = reasonController.text;
-    _dayOffRegisterData.status = false;
-    DayOffServices().sendDayOffForm(_dayOffRegisterData);
     showDialog(
     barrierDismissible: false,
     builder: (context) {
+      _dayOffRegisterData.employeeId = employeeId;
+      _dayOffRegisterData.dayOff = widget.date;
+      _dayOffRegisterData.reason = reasonController.text;
+      _dayOffRegisterData.status = 1;
+      DayOffServices().sendDayOffForm(_dayOffRegisterData);
     return const ConfirmDialog("Gửi đơn thành công", "Vui lòng đợi xét duyệt");
     },
     context: context);
