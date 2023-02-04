@@ -39,6 +39,7 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
     setState(() {
     });}
   }
+
   @override
   void initState() {
      chosenServices = widget.data;
@@ -80,6 +81,21 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                                   width: FetchPixels.getPixelHeight(24)))
                         ],
                       ),
+
+                      Align(alignment: Alignment.centerLeft,
+                        child:DropdownButton<String>(
+                          hint: Text("Lọc"),
+                          items: <String>['Vệ sinh', 'Sửa chữa'].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (_) {},
+                        ),
+                      ),
+
+
                       getVerSpace(FetchPixels.getPixelHeight(20)),
                       serviceToChooseList(),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
