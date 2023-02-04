@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
@@ -23,6 +23,8 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   var total = 0.00;
   List<ListOrderServiceDto>? chosenServices;
   List<ServiceData> serviceLists = [];
+
+  final oCcy = new NumberFormat("#,###", "vi_VI");
 
    _getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
@@ -139,11 +141,11 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                                           fontWeight: FontWeight.w400),
                                       getVerSpace(FetchPixels.getPixelHeight(4)),
                                       getCustomFont(
-                                          "Đơn vị: api: đơn vị tính", 14, textColor, 1,
+                                          "Đơn vị: ", 14, textColor, 1,
                                           fontWeight: FontWeight.w400),
                                       getVerSpace(FetchPixels.getPixelHeight(4)),
                                       getCustomFont(
-                                          "Giá tiền: ${serviceData.price}", 14, textColor, 1,
+                                          "Giá tiền: ${oCcy.format(int.parse(serviceData.price.toString()))} vnđ", 14, textColor, 1,
                                           fontWeight: FontWeight.w400),
                                       getVerSpace(FetchPixels.getPixelHeight(6)),
                                     ],

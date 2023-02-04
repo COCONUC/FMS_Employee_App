@@ -19,6 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 class DetailEditingScreen extends StatefulWidget {
   static const String routeName = '/detail_editing_screen';
@@ -34,6 +35,8 @@ class DetailEditingScreen extends StatefulWidget {
 class _DetailEditingScreenState extends State<DetailEditingScreen> {
   // SharedPreferences? selection;
   //var index = 0;
+
+  final oCcy = new NumberFormat("#,###", "vi_VI");
 
   final TextEditingController descriptionController = TextEditingController();
 
@@ -412,7 +415,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           getCustomFont("Số lượng: ${data.listOrderServiceDto![index].quantity}" , 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
-          getCustomFont("${data.listOrderServiceDto![index].price!} VNĐ", 14, Colors.black, 1,
+          getCustomFont("${oCcy.format(int.parse(data.listOrderServiceDto![index].price!))} vnđ", 14, Colors.black, 1,
               fontWeight: FontWeight.w400),
           ]),
           Column(
@@ -447,7 +450,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 ],
               ),
               getVerSpace(FetchPixels.getPixelHeight(70)),
-              getCustomFont("Thành tiền: ${data.listOrderServiceDto![index].quantity! * int.parse(data.listOrderServiceDto![index].price!)} VNĐ", 14, blueColor, 1,
+              getCustomFont("Thành tiền: ${oCcy.format(data.listOrderServiceDto![index].quantity! * int.parse(data.listOrderServiceDto![index].price!))} VNĐ", 14, blueColor, 1,
                   fontWeight: FontWeight.w900)
             ],
           ),

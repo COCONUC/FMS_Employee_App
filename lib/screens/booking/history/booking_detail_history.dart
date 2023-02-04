@@ -319,18 +319,6 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                   isBorder: true,
                   borderWidth: 1.5)),
           getHorSpace(FetchPixels.getPixelWidth(20)),
-         /* Expanded(
-              child: getButton(context, blueColor, "Khảo Sát", Colors.white, () {
-                // addressList.removeAt(selection!.getInt("index")!);
-                // setState(() {});
-                *//*Constant.backToPrev(context);*//*
-                *//*Navigator.of(context).pushReplacementNamed(DetailScreen.routeName);*//*
-                Constant.sendToScreen(DetailScreen(widget.orderId), context);
-              }, 18,
-                  weight: FontWeight.w600,
-                  buttonHeight: FetchPixels.getPixelHeight(60),
-                  borderRadius:
-                  BorderRadius.circular(FetchPixels.getPixelHeight(14)))),*/
         ],
       ),
     );
