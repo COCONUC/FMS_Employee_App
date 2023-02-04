@@ -40,7 +40,7 @@ class _ForwardOptionDialogState extends State<ForwardOptionDialog> {
                     width: FetchPixels.getPixelHeight(71.37),
                     height: FetchPixels.getPixelHeight(99.92)),*/
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getCustomFont(widget.title, 22, Colors.black, 1,
+                getCustomFont(widget.title, 22, Colors.black, 3,
                   fontWeight: FontWeight.w900, ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 getMultilineCustomFont(

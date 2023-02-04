@@ -355,6 +355,7 @@ class _SurveyDetailState extends State<SurveyDetail> {
   }
 
   final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
+  final ChangeOrderStatusData editStatusId = ChangeOrderStatusData(statusId: 2);
   final ChangeOrderStatusData deleteStatusId = ChangeOrderStatusData(statusId: 1002);
 
   Widget buttons(BuildContext context) {
@@ -372,26 +373,23 @@ class _SurveyDetailState extends State<SurveyDetail> {
                   bottom: FetchPixels.getPixelHeight(30)),
               child: Row(
                 children: [
-                  Expanded(
-                      child: getButton(
-                          context, backGroundColor, "Sửa Đơn", blueColor,
-                              () {
-                            if (snapshot.data! != null) {
-                              Constant.sendToScreen(
-                                  DetailEditingScreen(widget.orderId, snapshot
-                                      .data!,
-                                      '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
-                                  context);
-                            }
-                          }, 16,
-                          weight: FontWeight.w600,
-                          buttonHeight: FetchPixels.getPixelHeight(60),
-                          borderRadius:
-                          BorderRadius.circular(FetchPixels.getPixelHeight(14)),
-                          borderColor: blueColor,
-                          isBorder: true,
-                          borderWidth: 1.5)),
+                      Expanded(
+                          child: getButton(
+                              context, backGroundColor, "Quay lại", blueColor,
+                                  () {
+                               Constant.backToPrev(context);
+                              }, 16,
+                              weight: FontWeight.w600,
+                              buttonHeight: FetchPixels.getPixelHeight(60),
+                              borderRadius:
+                              BorderRadius.circular(FetchPixels.getPixelHeight(14)),
+                              borderColor: blueColor,
+                              isBorder: true,
+                              borderWidth: 1.5)),
+
                   getHorSpace(FetchPixels.getPixelWidth(20)),
+
+
                   if (snapshot.data!.statusName.toString() == "Chờ quản lý xác nhận")
                   Expanded(
                       child: getButton(
