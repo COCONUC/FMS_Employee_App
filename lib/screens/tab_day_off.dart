@@ -115,7 +115,7 @@ class _TabDayOffState extends State<TabDayOff> {
       if (date != " "){
       showModalBottomSheet(
           backgroundColor: Colors.white,
-          isDismissible: false,
+          isDismissible: true,
           isScrollControlled: true,
           context: context,
           constraints: BoxConstraints(maxHeight: FetchPixels.getPixelHeight(700)),

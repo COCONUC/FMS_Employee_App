@@ -5,6 +5,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/constants/resizer/fetch_pixels.dart';
 import 'package:fms_employee/constants/widget_utils.dart';
 import 'package:fms_employee/screens/tab_day_off.dart';
+import 'package:fms_employee/widgets/bottom_bar.dart';
 
 
 class ConfirmDialog extends StatefulWidget {
@@ -38,9 +39,9 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getSvgImage(Assets.imagesCheckComplete,
+                /* getSvgImage(Assets.imagesCheckComplete,
                     width: FetchPixels.getPixelHeight(71.37),
-                    height: FetchPixels.getPixelHeight(99.92)),
+                    height: FetchPixels.getPixelHeight(99.92)),*/
                 getVerSpace(FetchPixels.getPixelHeight(40)),
                 getCustomFont(widget.title, 22, Colors.black, 1,
                   fontWeight: FontWeight.w900, ),
@@ -55,7 +56,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                     textAlign: TextAlign.center),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 getButton(context, blueColor, "Ok", Colors.white, () {
-                  Constant.sendToScreen(TabDayOff(), context);
+                  Constant.sendToScreen(NavScreen(2), context);
 
                 }, 18,
                     weight: FontWeight.w600,

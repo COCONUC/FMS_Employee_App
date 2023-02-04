@@ -39,9 +39,9 @@ class _DeleteConfirmDialogState extends State<DeleteConfirmDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
-                getSvgImage(Assets.imagesCheckComplete,
+               /* getSvgImage(Assets.imagesCheckComplete,
                     width: FetchPixels.getPixelHeight(71.37),
-                    height: FetchPixels.getPixelHeight(99.92)),
+                    height: FetchPixels.getPixelHeight(99.92)),*/
                 getVerSpace(FetchPixels.getPixelHeight(40)),
                 getCustomFont(widget.title, 22, Colors.black, 1,
                   fontWeight: FontWeight.w900, ),

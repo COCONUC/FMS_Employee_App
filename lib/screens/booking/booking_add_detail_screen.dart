@@ -119,13 +119,22 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
     double defSpace = FetchPixels.getDefaultHorSpace(context);
     EdgeInsets edgeInsets = EdgeInsets.symmetric(horizontal: defSpace);
     return WillPopScope(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: backGroundColor,
-          floatingActionButton: floatingSendOrderButton(context),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          body: SafeArea(
-            child: buildPage(edgeInsets, context, 0, defSpace),
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: backGroundColor,
+            floatingActionButton: floatingSendOrderButton(context),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            body: SafeArea(
+              child: buildPage(edgeInsets, context, 0, defSpace),
+            ),
           ),
         ),
         onWillPop: () async {
