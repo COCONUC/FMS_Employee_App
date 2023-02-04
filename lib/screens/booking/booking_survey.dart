@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fms_employee/features/order_service.dart';
 import 'package:fms_employee/models/order_data.dart';
+import 'package:fms_employee/models/order_flow_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/constants/color_constant.dart';
 import 'package:fms_employee/constants/constant.dart';
@@ -44,15 +45,15 @@ class _BookingSurVeyState extends State<BookingSurVey> {
     );
   }
 
-  List<OrderWithStatusData> bookingLists = [];
+  List<OrderFlowData> bookingLists = [];
 
-  Future<List<OrderWithStatusData>> getFutureService() async {
-    bookingLists = await OrderServices().getInProcessOrderListForStaff(2, context);
+  Future<List<OrderFlowData>> getFutureService() async {
+    bookingLists = await OrderServices().getOrderFlowListForStaff();
     return bookingLists;
   }
 
   Widget bookingList() {
-    return FutureBuilder<List<OrderWithStatusData>> (
+    return FutureBuilder<List<OrderFlowData>> (
         future: getFutureService(),
         builder: (context, snapshot){
           if (!snapshot.hasData) {

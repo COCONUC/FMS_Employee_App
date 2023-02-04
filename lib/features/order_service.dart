@@ -51,8 +51,8 @@ class OrderServices {
 
   // lấy ra danh sách order của staff với các trạng thái Đang khảo sát, Chờ quản lý xác nhận, Chờ khách hàng xác nhận, Khách hàng đã duyệt
   Future<List<OrderFlowData>> getOrderFlowListForStaff() async {
-    int employeeId = await PrefData.getUserId();
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    int employeeId = await PrefData.getUserId();
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/employee/viewFourOrderStatus/employeeId/$employeeId'),
@@ -65,7 +65,7 @@ class OrderServices {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
         return parsed
-            .map<OrderData>((json) => OrderData.fromJson(json))
+            .map<OrderFlowData>((json) => OrderFlowData.fromJson(json))
             .toList();
       } else {
         /*AwesomeDialog(
