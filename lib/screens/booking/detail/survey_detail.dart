@@ -355,7 +355,6 @@ class _SurveyDetailState extends State<SurveyDetail> {
   }
 
   final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
-  final ChangeOrderStatusData editStatusId = ChangeOrderStatusData(statusId: 2);
   final ChangeOrderStatusData deleteStatusId = ChangeOrderStatusData(statusId: 1002);
 
   Widget buttons(BuildContext context) {

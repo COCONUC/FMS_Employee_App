@@ -354,6 +354,7 @@ class _InProcessDetailState extends State<InProcessDetail> {
   }
 
   final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 5);
+  final ChangeOrderStatusData editStatusId = ChangeOrderStatusData(statusId: 2);
 
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(
@@ -375,11 +376,11 @@ class _InProcessDetailState extends State<InProcessDetail> {
                           context, backGroundColor, "Sửa Đơn", blueColor,
                               () {
                             if (snapshot.data! != null) {
-                              Constant.sendToScreen(
+                              OrderServices().changeOrderStatus(widget.orderId, editStatusId).whenComplete(() => Constant.sendToScreen(
                                   DetailEditingScreen(widget.orderId, snapshot
                                       .data!,
                                       '/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'),
-                                  context);
+                                  context));
                             }
                           }, 16,
                           weight: FontWeight.w600,
