@@ -10,6 +10,7 @@ import 'package:fms_employee/constants/constant.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
+import 'package:intl/intl.dart';
 
 class BookingDetailHistory extends StatefulWidget {
   final String img;
@@ -23,13 +24,15 @@ class BookingDetailHistory extends StatefulWidget {
 class _BookingDetailHistoryState extends State<BookingDetailHistory> {
 
   List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
-    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
-    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'];
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/damaged-furniture.jpg?alt=media&token=6b1f1b31-8d04-4826-a2d4-49f655a3422d'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/istockphoto-898281526-612x612.jpg?alt=media&token=7c4ca68a-56cb-4033-95ea-a1c01209a1a5'];
 
   getPrefData() async {
     index = await PrefData.getDefIndex();
     setState(() {});
   }
+
+  final oCcy = new NumberFormat("#,###", "vi_VI");
 
   @override
   void initState() {
@@ -174,17 +177,8 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                       getCustomFont("Mô tả:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      if(snapshot.data!.description!.isNotEmpty)
                         getCustomFont(
                           snapshot.data!.description ?? "Không có mô tả",
-                          16,
-                          Colors.black,
-                          1,
-                          fontWeight: FontWeight.w400,
-                        )
-                      else
-                        getCustomFont(
-                          "Không có mô tả",
                           16,
                           Colors.black,
                           1,
@@ -196,18 +190,19 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
 
                       getCustomFont("Ảnh hiện trạng:", 16, textColor, 1,
                           fontWeight: FontWeight.w400),
-                      getVerSpace(FetchPixels.getPixelHeight(10)),
-                      InkWell(
-                        child: const Icon(
-                          Icons.image,
-                          color: Colors.orange,
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: TextButton(onPressed: () =>  Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath))),
+                          child: getCustomFont(
+                            "Nhấn vào link để xem ảnh",
+                            18,
+                            Colors.blueAccent,
+                            1,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath)));
-                        },
                       ),
-                      getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
@@ -241,15 +236,71 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                       getDivider(dividerColor, 0, 1),
                       getVerSpace(FetchPixels.getPixelHeight(20)),
 
-                      getCustomFont("Dịch Vụ", 16, textColor, 1,
-                          fontWeight: FontWeight.w400),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              getCustomFont("Tên Dịch Vụ", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont("\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Số lượng", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont("Đơn giá (VNĐ)", 16, textColor, 1,
+                                  fontWeight: FontWeight.w400),
+                            ],
+                          ),
+                        ],
+                      ),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
-                      getCustomFont(
-                        " " + snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName! + "\t\t\t\t\t\t\t\t\t\t\t\t\t" + e.price.toString() + " VNĐ"+ " Số lượng: " + e.quantity.toString()).join('\n\n ') ?? "api: Danh sách dịch vụ",
-                        16,
-                        Colors.black,
-                        100,
-                        fontWeight: FontWeight.w400,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.serviceName!).join('\n').toString() ?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString() ?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              /*Text(snapshot.data!.listOrderServiceDto!.map((e) => e.quantity!).join('\n').toString()),*/
+                              getCustomFont(
+                                snapshot.data!.listOrderServiceDto!.map((e) => e.price!).join('\n').toString() ?? "api: Danh sách dịch vụ",
+                                16,
+                                Colors.black,
+                                100,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(5)),
                       getDivider(dividerColor, 0, 1),
@@ -257,7 +308,7 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
                       getCustomFont("Tổng Cộng", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        "${totalPrice(snapshot.data!.listOrderServiceDto!).toInt()} VNĐ" ?? "Tổng giá tiền đơn hàng",
+                        "${oCcy.format(totalPrice(snapshot.data!.listOrderServiceDto!).toInt())} VNĐ" ?? "Tổng giá tiền đơn hàng",
                         20,
                         Colors.black,
                         1,
@@ -302,7 +353,7 @@ class _BookingDetailHistoryState extends State<BookingDetailHistory> {
       color: backGroundColor,
       padding: EdgeInsets.only(
           left: FetchPixels.getPixelWidth(20),
-          right: FetchPixels.getPixelWidth(20),
+          right: FetchPixels.getPixelWidth(5),
           bottom: FetchPixels.getPixelHeight(30)),
       child: Row(
         children: [
