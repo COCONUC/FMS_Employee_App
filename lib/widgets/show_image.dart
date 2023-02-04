@@ -3,7 +3,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/constants/color_constant.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -131,8 +130,8 @@ class _ShowImageState extends State<ShowImage> {
               widget.imgURL != [] ? Wrap(
                 children: widget.imgURL!.map((imageOne) {
                   return Card(
-                    child: FullScreenWidget(
-                      child: Container(
+                    child:
+                       Container(
                         constraints: const BoxConstraints.tightFor(
                           height: 150,
                           width: 150,
@@ -142,7 +141,6 @@ class _ShowImageState extends State<ShowImage> {
                             image: NetworkImage(imageOne),
                             fit: BoxFit.cover,
                           ),
-                        ),
                       ),
                     ),
                   );

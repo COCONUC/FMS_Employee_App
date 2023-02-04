@@ -12,6 +12,7 @@ import 'package:fms_employee/widgets/dialog/delete_dialog.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fms_employee/widgets/dialog/service_dialog_temp.dart';
+import 'package:fms_employee/widgets/show_image.dart';
 import '../../features/order_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -35,6 +36,10 @@ class DetailEditingScreen extends StatefulWidget {
 class _DetailEditingScreenState extends State<DetailEditingScreen> {
   // SharedPreferences? selection;
   //var index = 0;
+
+  List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/damaged-furniture.jpg?alt=media&token=6b1f1b31-8d04-4826-a2d4-49f655a3422d'
+    ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/istockphoto-898281526-612x612.jpg?alt=media&token=7c4ca68a-56cb-4033-95ea-a1c01209a1a5'];
 
   final oCcy = new NumberFormat("#,###", "vi_VI");
 
@@ -257,7 +262,20 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                     horizontal: FetchPixels.getPixelWidth(18)))
                     ]
             ),
-            getVerSpace(FetchPixels.getPixelHeight(12)),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton(onPressed: () =>  Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => ShowImage(id: widget.orderId, imgURL: imgPath))),
+                child: getCustomFont(
+                  "Nhấn vào link để xem ảnh",
+                  18,
+                  Colors.blueAccent,
+                  1,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            /*getVerSpace(FetchPixels.getPixelHeight(12)),*/
             Row(
               children: [
                 getHorSpace(FetchPixels.getPixelWidth(10)),
@@ -311,7 +329,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             )
           ],
         ),
-        getVerSpace(FetchPixels.getPixelHeight(24)),
+        /*getVerSpace(FetchPixels.getPixelHeight(10)),*/
         getMultilineCustomFont(
             "Mô Tả Tình Trạng: ",
             16,
@@ -383,19 +401,22 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
   Widget packageDescription(index) {
       return  Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        
         children: [
           Column(
               crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          getCustomFont(
-            data.listOrderServiceDto![index].serviceName ?? 'api: service name',
-            16,
-            Colors.black,
-            1,
-            fontWeight: FontWeight.w900,
-          ),
+              SizedBox(
+                width: FetchPixels.getPixelWidth(150),
+                child: getCustomFont(
+                data.listOrderServiceDto![index].serviceName ?? ' ',
+                16,
+                Colors.black,
+                2,
+                fontWeight: FontWeight.w900,
+              ),),
           getVerSpace(FetchPixels.getPixelHeight(4)),
-          getCustomFont( data.listOrderServiceDto![index].categoryName ?? 'api: category', 14, textColor, 1,
+          getCustomFont( data.listOrderServiceDto![index].categoryName ?? ' ', 14, textColor, 1,
               fontWeight: FontWeight.w400),
           getVerSpace(FetchPixels.getPixelHeight(6)),
           Row(
@@ -412,7 +433,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
               ),
               getHorSpace(FetchPixels.getPixelWidth(6)),
               getCustomFont(
-                ": đơn vị tính",
+                " ",
                 14,
                 textColor,
                 1,
