@@ -80,7 +80,7 @@ class _TabProfileState extends State<TabProfile> {
             height: FetchPixels.getPixelHeight(100),
             width: FetchPixels.getPixelHeight(100),
             decoration: BoxDecoration(
-                image: getDecorationAssetImage(context, "profile.png")),
+                image: getDecorationAssetImage(context, "booking4.png")),
           ),
           getVerSpace(FetchPixels.getPixelHeight(20)),
           FutureBuilder<AccountData>(future: getFutureService(),

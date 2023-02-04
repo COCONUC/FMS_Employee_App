@@ -98,7 +98,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    snapshot.data!.employeeName ?? "api: Họ và Tên",
+                    snapshot.data!.employeeName ?? " ",
                     16,
                     Colors.black,
                     1,
@@ -111,7 +111,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    snapshot.data!.employeePhoneNumber ?? "api: Số điện thoại",
+                    snapshot.data!.employeePhoneNumber ?? " ",
                     16,
                     Colors.black,
                     1,
@@ -124,7 +124,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    snapshot.data!.email ?? "api: sample@gmail.com",
+                    snapshot.data!.email ?? " ",
                     16,
                     Colors.black,
                     1,
@@ -137,7 +137,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    "api: Địa chỉ",
+                    " ",
                     16,
                     Colors.black,
                     1,
@@ -150,12 +150,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       fontWeight: FontWeight.w400),
                   getVerSpace(FetchPixels.getPixelHeight(6)),
                   getCustomFont(
-                    snapshot.data!.specialty ?? "api: Chuyên môn",
+                    snapshot.data!.specialty ?? " ",
                     16,
                     Colors.black,
                     1,
                     fontWeight: FontWeight.w400,
                   ),
+                  defVerSpaceSet,
+                  defDividerSet,
+                  defVerSpaceSet,
                 ],
               );
             }
@@ -170,7 +173,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         height: FetchPixels.getPixelHeight(100),
         width: FetchPixels.getPixelHeight(100),
         decoration: BoxDecoration(
-          image: getDecorationAssetImage(context, "profile.png"),
+          image: getDecorationAssetImage(context, "booking4.png"),
         ),
       ),
     );
