@@ -351,7 +351,7 @@ class _ManagerOrderDetailState extends State<ManagerOrderDetail> {
     return total;
   }
 
-  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 1004);
+  late ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 1004);
 
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(

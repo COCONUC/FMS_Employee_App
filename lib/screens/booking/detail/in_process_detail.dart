@@ -353,8 +353,8 @@ class _InProcessDetailState extends State<InProcessDetail> {
     return total;
   }
 
-  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 5);
-  final ChangeOrderStatusData editStatusId = ChangeOrderStatusData(statusId: 2);
+  late ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 5);
+  late ChangeOrderStatusData editStatusId = ChangeOrderStatusData(statusId: 2);
 
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(

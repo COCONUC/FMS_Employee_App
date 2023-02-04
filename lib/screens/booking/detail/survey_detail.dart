@@ -354,8 +354,8 @@ class _SurveyDetailState extends State<SurveyDetail> {
     return total;
   }
 
-  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
-  final ChangeOrderStatusData deleteStatusId = ChangeOrderStatusData(statusId: 1002);
+  late ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
+  late ChangeOrderStatusData deleteStatusId = ChangeOrderStatusData(statusId: 1002);
 
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(

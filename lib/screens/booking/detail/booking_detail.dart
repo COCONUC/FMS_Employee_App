@@ -389,7 +389,7 @@ class _BookingDetailState extends State<BookingDetail> {
     return total;
   }
 
-  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 2);
+  late ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 2);
 
   Container buttons(BuildContext context) {
     return Container(

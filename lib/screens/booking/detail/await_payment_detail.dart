@@ -381,7 +381,7 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
     return total;
   }
 
-  final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 6);
+  late ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 6);
 
   Container buttons(BuildContext context) {
     return Container(
