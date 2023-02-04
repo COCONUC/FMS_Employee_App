@@ -41,6 +41,8 @@ class _SurveyDetailState extends State<SurveyDetail> {
     getPrefData();
   }
 
+  final oCcy = new NumberFormat("#,###", "vi_VI");
+
   List<ModelBooking> bookingLists = DataFile.bookingList;
   var index = 0;
 
@@ -310,7 +312,7 @@ class _SurveyDetailState extends State<SurveyDetail> {
                       getCustomFont("Tổng Cộng", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        "${totalPrice(snapshot.data!.listOrderServiceDto!).toInt()} VNĐ" ?? "Tổng giá tiền đơn hàng",
+                        "${oCcy.format(totalPrice(snapshot.data!.listOrderServiceDto!).toInt())} VNĐ" ?? "Tổng giá tiền đơn hàng",
                         20,
                         Colors.black,
                         1,

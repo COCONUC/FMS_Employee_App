@@ -35,6 +35,8 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
     setState(() {});
   }
 
+  final oCcy = new NumberFormat("#,###", "vi_VI");
+
   @override
   void initState() {
     super.initState();
@@ -339,7 +341,7 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
                       getCustomFont("Giá tạm tính", 16, textColor, 1, fontWeight: FontWeight.w400),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       getCustomFont(
-                        "${totalPrice(snapshot.data!.listOrderServiceDto!).toInt()} VNĐ" ?? "Tổng giá tiền đơn hàng",
+                        "${oCcy.format(totalPrice(snapshot.data!.listOrderServiceDto!).toInt())} VNĐ" ?? "Tổng giá tiền đơn hàng",
                         20,
                         Colors.black,
                         1,
