@@ -11,7 +11,9 @@ import 'package:fms_employee/models/order_detail_data.dart';
 import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/screens/booking/booking_add_detail_screen.dart';
 import 'package:fms_employee/widgets/bottom_bar.dart';
+import 'package:fms_employee/widgets/dialog/delete_confirm_dialog.dart';
 import 'package:fms_employee/widgets/dialog/forward_option_dialog.dart';
+import 'package:fms_employee/widgets/dialog/option_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:fms_employee/widgets/show_image.dart';
 
@@ -353,6 +355,7 @@ class _SurveyDetailState extends State<SurveyDetail> {
   }
 
   final ChangeOrderStatusData statusId = ChangeOrderStatusData(statusId: 3);
+  final ChangeOrderStatusData deleteStatusId = ChangeOrderStatusData(statusId: 1002);
 
   Widget buttons(BuildContext context) {
     return FutureBuilder<OrderDetailData>(
@@ -389,28 +392,99 @@ class _SurveyDetailState extends State<SurveyDetail> {
                           isBorder: true,
                           borderWidth: 1.5)),
                   getHorSpace(FetchPixels.getPixelWidth(20)),
+                  if (snapshot.data!.statusName.toString() == "Chờ quản lý xác nhận")
                   Expanded(
                       child: getButton(
-                          context, blueColor, "Bắt đầu công việc",
-                          Colors.white, () {
+                          context, backGroundColor, "Hủy Đơn",
+                          Colors.black, () {
                         showDialog(
                             barrierDismissible: false,
                             builder: (context) {
-                              return const ForwardOptionDialog("Bắt đầu thực hiện công việc?", " ");
+                              return const OptionDialog("Hủy đơn hàng này?", "Vui lòng liên hệ với quản lý trước khi xác nhận hủy đơn hàng!");
                             },
                             context: context).then((value) {
                           if(value == true){
-                              OrderServices().changeOrderStatus(widget.orderId, statusId).whenComplete(() =>
-                                  Constant.sendToScreen(NavScreen(1), context)
-                              );
+                            OrderServices()
+                                .changeOrderStatus(
+                                widget.orderId, deleteStatusId);
+                            showDialog(
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  return DeleteConfirmDialog("Hủy đơn thành công", " ");
+                                },
+                                context: context);
                           }
                         });
-                      }, 16,
+                      }, 14,
                           weight: FontWeight.w600,
-                          buttonHeight: FetchPixels.getPixelHeight(60),
+                          buttonHeight: FetchPixels.getPixelHeight(40),
+                          borderColor: Colors.redAccent,
+                          isBorder: true,
+                          borderWidth: 1.5,
                           borderRadius:
                           BorderRadius.circular(
-                              FetchPixels.getPixelHeight(14)))),
+                              FetchPixels.getPixelHeight(14))))
+
+                  else if (snapshot.data!.statusName.toString() == "Chờ khách hàng xác nhận")
+                    Expanded(
+                        child: getButton(
+                            context, backGroundColor, "Hủy Đơn",
+                            Colors.black, () {
+                          showDialog(
+                              barrierDismissible: false,
+                              builder: (context) {
+                                return const OptionDialog("Hủy đơn hàng này?", "Vui lòng liên hệ với quản lý trước khi xác nhận hủy đơn hàng!");
+                              },
+                              context: context).then((value) {
+                            if(value == true){
+                              OrderServices()
+                                  .changeOrderStatus(
+                                  widget.orderId, deleteStatusId);
+                              showDialog(
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    return DeleteConfirmDialog("Hủy đơn thành công", " ");
+                                  },
+                                  context: context);
+                            }
+                          });
+                        }, 14,
+                            weight: FontWeight.w600,
+                            buttonHeight: FetchPixels.getPixelHeight(40),
+                            borderColor: Colors.redAccent,
+                            isBorder: true,
+                            borderWidth: 1.5,
+                            borderRadius:
+                            BorderRadius.circular(
+                                FetchPixels.getPixelHeight(14))))
+                  else if (snapshot.data!.statusName.toString() == "Khách hàng đã duyệt")
+                      Expanded(
+                          child: getButton(
+                              context, blueColor, "Bắt đầu công việc",
+                              Colors.white, () {
+                            showDialog(
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  return const ForwardOptionDialog(
+                                      "Bắt đầu thực hiện công việc?", " ");
+                                },
+                                context: context).then((value) {
+                              if (value == true) {
+                                OrderServices()
+                                    .changeOrderStatus(
+                                    widget.orderId, statusId)
+                                    .whenComplete(() =>
+                                    Constant.sendToScreen(
+                                        NavScreen(1), context)
+                                );
+                              }
+                            });
+                          }, 16,
+                              weight: FontWeight.w600,
+                              buttonHeight: FetchPixels.getPixelHeight(60),
+                              borderRadius:
+                              BorderRadius.circular(
+                                  FetchPixels.getPixelHeight(14)))),
                 ],
               ),
             );

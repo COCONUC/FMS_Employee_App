@@ -102,13 +102,30 @@ class _BookingSurVeyState extends State<BookingSurVey> {
                                       fontWeight: FontWeight.w900),
                                 ),
                                 getHorSpace(FetchPixels.getPixelWidth(6)),
+                                if (snapshot.data![index].statusName.toString() == "Chờ quản lý xác nhận")
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  mSecondaryColor,
+                                  Colors.blueGrey.shade700,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )
+                                else if (snapshot.data![index].statusName.toString() == "Chờ khách hàng xác nhận")
+                                  getCustomFont(
+                                    snapshot.data![index].statusName ?? "api: trạng thái đơn",
+                                    13,
+                                    Colors.green,
+                                    1,
+                                    fontWeight: FontWeight.w600,
+                                  )
+                                else if (snapshot.data![index].statusName.toString() == "Khách hàng đã duyệt")
+                                    getCustomFont(
+                                      snapshot.data![index].statusName ?? "api: trạng thái đơn",
+                                      13,
+                                      mSecondaryColor,
+                                      1,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ],
                             ),
                             getVerSpace(FetchPixels.getPixelHeight(6)),
