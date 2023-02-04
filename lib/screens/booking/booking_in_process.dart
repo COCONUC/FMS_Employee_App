@@ -104,7 +104,7 @@ class _BookingInProcessState extends State<BookingInProcess> {
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  mSecondaryColor,
+                                  Colors.blueAccent,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )

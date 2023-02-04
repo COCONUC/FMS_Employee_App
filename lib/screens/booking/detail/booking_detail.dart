@@ -26,8 +26,8 @@ class BookingDetail extends StatefulWidget {
 class _BookingDetailState extends State<BookingDetail> {
 
   List<String> imgPath = ['https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
-  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'
-  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/image2022-12-03%2017%3A45%3A20.601076?alt=media&token=77724f45-bb52-44ee-9c0e-ae7de8d5ffe7'];
+  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/damaged-furniture.jpg?alt=media&token=6b1f1b31-8d04-4826-a2d4-49f655a3422d'
+  ,'https://firebasestorage.googleapis.com/v0/b/fms-firebase-storage.appspot.com/o/istockphoto-898281526-612x612.jpg?alt=media&token=7c4ca68a-56cb-4033-95ea-a1c01209a1a5'];
 
   getPrefData() async {
     index = await PrefData.getDefIndex();

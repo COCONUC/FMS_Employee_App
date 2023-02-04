@@ -96,7 +96,7 @@ class _AwaitPaymmentDetailState extends State<AwaitPaymmentDetail> {
                     child:   getCustomFont(
                       snapshot.data!.statusName! ?? "api: trạng thái đơn hàng",
                       16,
-                      success,
+                      Colors.teal,
                       1,
                       fontWeight: FontWeight.w600,
                     )

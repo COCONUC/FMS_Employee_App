@@ -104,7 +104,7 @@ class _BookingAwaitPaymentState extends State<BookingAwaitPayment> {
                                 getCustomFont(
                                   snapshot.data![index].statusName ?? "api: trạng thái đơn",
                                   13,
-                                  mSecondaryColor,
+                                  Colors.teal,
                                   1,
                                   fontWeight: FontWeight.w600,
                                 )

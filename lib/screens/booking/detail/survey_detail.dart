@@ -95,7 +95,7 @@ class _SurveyDetailState extends State<SurveyDetail> {
                     child:   getCustomFont(
                       snapshot.data!.statusName! ?? "api: trạng thái đơn hàng",
                       16,
-                      success,
+                      mSecondaryColor,
                       1,
                       fontWeight: FontWeight.w600,
                     )

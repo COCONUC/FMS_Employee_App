@@ -188,23 +188,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
         buildListView(defSpace),
         getVerSpace(FetchPixels.getPixelHeight(10)),
         getPaddingWidget(edgeInsets, totalContainer(),),
-        /*sendOrderButton(context),*/
-        /*FloatingActionButton(
-          backgroundColor: mSecondaryColor,
-          shape: RoundedRectangleBorder(),
-          onPressed: () {
-            _reportOrder.description = descriptionController.text;
-            _reportOrder.urlImage = "assets/images/add.svg";
-
-            OrderServices().sendReportOrder(4, _reportOrder);
-            Constant.sendToScreen(ManagerOrderDetail("booking_owner1.png"?? "", widget.orderId), context);
-          },
-          child: Text("Gửi quản lý", style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-           *//* fontWeight: FontWeight.w600,*//*
-          ),),
-        ),*/
         getVerSpace(FetchPixels.getPixelHeight(60))
         // packageList(context)
       ],
@@ -222,9 +205,10 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-            getButton(
+                getCustomFont("Ảnh hiện trạng:", 16, Colors.black, 1),
+            /*getButton(
                 context, Colors.white, "Lưu ảnh", blueColor, ()
             {
               uploadFile();
@@ -242,9 +226,9 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                 buttonHeight: FetchPixels.getPixelHeight(40),
                 insetsGeometrypadding: EdgeInsets.symmetric(
                     horizontal: FetchPixels.getPixelWidth(18))
-            ),
+            ),*/
             getButton(
-                context, Colors.white, "Chọn ảnh", blueColor, () {
+                context, Colors.white, "Thêm ảnh", blueColor, () {
               openImages();
             }, 14,
                 weight: FontWeight.w400,
@@ -264,35 +248,7 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
             getVerSpace(FetchPixels.getPixelHeight(12)),
             Row(
               children: [
-                /*getSvgImage("check.svg",
-                    width: FetchPixels.getPixelHeight(25),
-                    height: FetchPixels.getPixelHeight(25)),*/
                 getHorSpace(FetchPixels.getPixelWidth(10)),
-                /*getCustomFont(
-                  "*api thợ chụp hình ảnh*",
-                  16,
-                  Colors.black,
-                  1,
-                  fontWeight: FontWeight.w400,
-                ),*/
-
-                  /*tag: widget.img,*/
-                /*const Text("Ảnh hiện trạng",
-                    style: TextStyle(
-                        color: mTextColorSecondary,
-                        fontSize: 16,
-                        fontFamily: 'Regular')),
-                InkWell(
-                  child: const Icon(
-                    Icons.image,
-                    color: Colors.orange,
-                  ),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => ImageScreen(id: widget.orderId, imgURL: listImages)));
-                  },
-                ),*/
-
                    Container(
                    /* height: FetchPixels.getPixelHeight(100),
                     width: FetchPixels.getPixelHeight(100),*/
@@ -302,7 +258,6 @@ class _DetailEditingScreenState extends State<DetailEditingScreen> {
                     ),*/
                      child: Row(
                          children: [
-                         const Text("Ảnh đã lưu:"),
                      const Divider(),
                      listImages != [] ? Wrap(
                        children: listImages.map((imageOne) {

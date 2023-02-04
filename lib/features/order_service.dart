@@ -5,12 +5,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_employee/constants/backend_query.dart';
 import 'package:fms_employee/models/order_data.dart';
 import 'package:fms_employee/models/order_detail_data.dart';
+import 'package:fms_employee/models/order_flow_data.dart';
 import 'package:fms_employee/models/order_status_data.dart';
 import 'package:fms_employee/models/order_with_status_data.dart';
 import 'package:fms_employee/models/report_order_data.dart';
 import 'package:fms_employee/screens/new_login_screen.dart';
 import 'package:http/http.dart' as http;
-
 import '../constants/pref_data.dart';
 
 class OrderServices {
@@ -21,6 +21,41 @@ class OrderServices {
     try {
       http.Response response = await http.get(
         Uri.parse('${backEndUrl}/employee/ViewAssign/employeeId/$employeeId'),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+          'content-encoding': 'gzip',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+        return parsed
+            .map<OrderData>((json) => OrderData.fromJson(json))
+            .toList();
+      } else {
+        /*AwesomeDialog(
+          context: context,
+          animType: AnimType.SCALE,
+          dialogType: DialogType.WARNING,
+          title: 'Hết phiên đăng nhập',
+          desc: 'Vui lòng đăng nhập lại',
+          dismissOnTouchOutside: false,
+          btnOkOnPress: () { AuthService().logOut(context);},
+        ).show();*/
+        throw Exception('Lấy dữ liệu thất bại');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // lấy ra danh sách order của staff với các trạng thái Đang khảo sát, Chờ quản lý xác nhận, Chờ khách hàng xác nhận, Khách hàng đã duyệt
+  Future<List<OrderFlowData>> getOrderFlowListForStaff() async {
+    int employeeId = await PrefData.getUserId();
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+    try {
+      http.Response response = await http.get(
+        Uri.parse('${backEndUrl}/employee/viewFourOrderStatus/employeeId/$employeeId'),
         headers: <String, String>{
           'Authorization': 'Bearer $token',
           'content-encoding': 'gzip',

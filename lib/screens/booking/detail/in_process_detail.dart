@@ -95,7 +95,7 @@ class _InProcessDetailState extends State<InProcessDetail> {
                     child:   getCustomFont(
                       snapshot.data!.statusName! ?? "api: trạng thái đơn hàng",
                       16,
-                      success,
+                      Colors.blueAccent,
                       1,
                       fontWeight: FontWeight.w600,
                     )
