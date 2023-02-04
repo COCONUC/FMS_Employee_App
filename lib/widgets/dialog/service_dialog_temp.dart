@@ -23,12 +23,15 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
   var total = 0.00;
   List<ListOrderServiceDto>? chosenServices;
   List<ServiceData> serviceLists = [];
-
+  String sltCate = 'Tất cả';
   final oCcy = new NumberFormat("#,###", "vi_VI");
 
    _getFutureService() async {
     serviceLists = await ServiceServices().getServiceListForStaff();
     if(serviceLists.isNotEmpty){
+      if(sltCate != 'Tất cả'){
+        serviceLists = serviceLists.where((element) => element.categoryName == sltCate).toList();
+      }
       for(ServiceData e in serviceLists){
         if(widget.data!.any((element) => element.serviceId == e.serviceId)){
           e.quantity = widget.data?.firstWhere((element) => element.serviceId == e.serviceId).quantity;
@@ -82,17 +85,26 @@ class _ServiceDialogTempState extends State<ServiceDialogTemp> {
                         ],
                       ),
 
-                      Align(alignment: Alignment.centerLeft,
-                        child:DropdownButton<String>(
-                          hint: Text("Lọc"),
-                          items: <String>['Vệ sinh', 'Sửa chữa'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (_) {},
-                        ),
+                      Row(
+                        children: [
+                          Text('Lọc:'),
+                          const SizedBox(width: 10,),
+                          DropdownButton<String>(
+                            value: sltCate,
+                            items: <String>['Tất cả','Vệ sinh', 'Sửa chữa'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                                sltCate = newValue!;
+                                _getFutureService();
+                                setState(() {
+                                });
+                            },
+                          ),
+                        ],
                       ),
 
 
